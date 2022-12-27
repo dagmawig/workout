@@ -1,6 +1,9 @@
 import React from 'react';
+import './Header.css';
+
 
 function Header() {
+    
     return (
         <div className="header container bg-success">
             <div className='header_row text-center row'>
