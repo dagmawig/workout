@@ -9,7 +9,7 @@ function Search() {
     console.log(exercisesLocal[991])
     const [filter, updateFilter] = useState(null);
     const [disable, updateDisable] = useState(true);
-    const [exerFilter, updateExer] = useState([]);
+    const [exerFilter, updateExer] = useState(exercisesLocal);
     const [hidden, updateHidden] = useState(true);
     const[myRef] = useState(React.createRef());
 
@@ -61,6 +61,7 @@ function Search() {
         if (value === 'empty') {
             updateDisable(true);
             updateHidden(true);
+            updateExer(exercisesLocal);
         }
         else {
             updateDisable(false);
@@ -82,11 +83,11 @@ function Search() {
             <div className='row search_select bg-success'>
                 <div className='row filter'>
                     <div className='col-4'>
-                        <b>Search By:</b>
+                        <b>Filter By:</b>
                     </div>
                     <div className='col-8'>
                         <select className='form-select' aria-label='Default select' id='filter' onChange={e => handleChange(e.target.value)}>
-                            <option defaultValue={true} className='small' value='empty'>Select</option>
+                            <option defaultValue={true} className='small' value='empty'>Select (All)</option>
                             <option value='Body Part' className='small'>Body Part</option>
                             <option value='Muscle Group' className='small'>Muscle Group</option>
                             <option value='Workout Name' className='small'>Workout Name</option>
