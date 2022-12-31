@@ -1,0 +1,41 @@
+.footer {
+    position: sticky;
+    width: 100%;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    height: 50px;
+    z-index: 20;
+    background-color:black;
+}
+
+.footer_row {
+    height: 100%;
+    display: flex;
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+    align-items: center;
+    justify-content: space-between; 
+}
+
+.footer_search, .footer_profile {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer_button {
+    width: 50%;
+    height: 75%;
+    background-color: Transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.footer_button:focus {
+    outline: none;
+}
