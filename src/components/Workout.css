@@ -1,0 +1,107 @@
+.workout {
+    width: 100%;
+    margin: 0 auto;
+    padding: 3px;
+    font-family: 'Courier New', Courier, monospace;
+ }
+ 
+ .workout::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-image: linear-gradient(to bottom, rgba(213, 243, 210, 0.52), rgba(13, 86, 18, 0.73)), url("../images/dumbbell.png");
+    opacity: .4;
+    background-repeat:repeat;
+    background-size:50px;
+    z-index: -1;
+ }
+
+ .workout_title {
+    position: sticky;
+    height: 50px;
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: 0;
+    padding: 1px;
+    align-items: center;
+    justify-content: center;
+    border: rgb(13, 99, 39) solid 1px;
+    border-radius: 15px;
+    font-size: 11pt !important;
+    color: black;
+ }
+
+ .workout_content {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin: auto;
+    padding: 0px;
+    align-items: flex-start;
+    justify-content: center;
+    height: calc(100vh - 180px);
+    overflow-y: scroll;
+ }
+
+ .workout_templates {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    width:100%;
+ }
+
+ .template_header {
+    padding: 0;
+ }
+
+ .template_header_row, .template_content_header, .template_content_time, .template_content_exer {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    margin:0;
+    padding: 0;
+ }
+
+ .template_title {
+    height: 26px;
+ }
+
+ .template_content {
+    border: black solid 1px;
+    width: 100%;
+    padding: 0;
+ }
+
+ .template_content_title {
+    height: 26px;
+ }
+
+ .template_add, .template_edit {
+    width: 16%;
+    justify-content: right;
+ }
+
+ .template_button {
+    width: auto;
+    height: 75%;
+    background-color: Transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.template_button:focus {
+    outline: none;
+}
+
+p {
+    height: 24px;
+    margin: 0;
+}
