@@ -16,7 +16,7 @@ function Workout() {
                                 <p className="row text-left">MY TEMPLATES</p>
                             </div>
                             <div className='template_add d-flex col-2'>
-                                <button className="template_button"><i className="fa fa-plus"></i></button>
+                                <button className="plus_button"><i className="fa fa-plus"></i></button>
                             </div>
                         </div>
                     </div>

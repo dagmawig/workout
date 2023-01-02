@@ -71,12 +71,16 @@
  }
 
  .template_title {
-    height: 26px;
+    height: 40px;
     font-weight: bold;
+    font-size: 20pt;
  }
 
  .template_content {
     border: black solid 1px;
+    border-radius: 5px;
+    background-color: rgb(125, 149, 90);
+    opacity: .7;
     width: 100%;
     padding: 2px;
     margin: 2px;
@@ -84,6 +88,16 @@
 
  .template_content_title {
     height: 26px;
+    font-weight: bold;
+    font-size: 15pt;
+ }
+ .template_content_time {
+    border-bottom: black solid 1px;
+    color: rgb(67, 12, 12);
+    font-weight: bold;
+ }
+
+ .template_content_exer {
     font-weight: bold;
  }
 
@@ -93,10 +107,19 @@
     z-index: 100;
  }
 
+ .plus_button {
+    width: auto;
+    height: 75%;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    cursor: pointer;  
+ }
+
  .template_button {
     width: auto;
     height: 75%;
-    background-color: Transparent;
+    background-color: transparent;
     outline: none;
     border: none;
     cursor: pointer;
