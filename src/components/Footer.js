@@ -9,7 +9,7 @@ function Footer() {
                     <button className="footer_button"><i className="fa fa-search fa-2x"></i></button>
                 </div>
                 <div className='footer_profile col-6'>
-                    <button className="footer_button"><i className="fa fa-user fa-2x"></i></button>
+                    <button className="footer_button"><i className="fa fa-dumbbell fa-2x"></i></button>
                 </div>
             </div>
         </div>
