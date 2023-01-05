@@ -1,6 +1,6 @@
 import React from 'react';
 import './Workout.css';
-
+import { Link } from 'react-router-dom';
 
 function Workout() {
     return (
@@ -16,7 +16,9 @@ function Workout() {
                                 <p className="row text-left">MY TEMPLATES</p>
                             </div>
                             <div className='template_add d-flex col-2'>
-                                <button className="plus_button"><i className="fa fa-plus  fa-2x"></i></button>
+                                <Link to="/template">
+                                    <button className="plus_button"><i className="fa fa-plus  fa-2x"></i></button>
+                                </Link>
                             </div>
                         </div>
                     </div>

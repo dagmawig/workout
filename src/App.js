@@ -4,6 +4,7 @@ import Search from './components/Search';
 import Footer from './components/Footer';
 import Workout from './components/Workout';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import NewTemplate from './components/NewTemplate';
 
 function App() {
   return (
@@ -21,6 +22,13 @@ function App() {
           <>
           <Header/>
           <Workout/>
+          <Footer/>
+          </>
+        }/>
+        <Route path="/template" element={
+          <>
+          <Header/>
+          <NewTemplate/>
           <Footer/>
           </>
         }/>
