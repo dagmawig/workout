@@ -1,22 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './NewTemplate.css';
 import { Link } from 'react-router-dom';
 var exercisesLocal = require('../exercisesLocal.json');
 var exerciseNames = require('../exerciseNames.json');
+var bodyParts = require('../exerBody.json');
 
 function NewTemplate() {
+
+    const [filterArr, updateFilter] = useState(exercisesLocal);
+
+    function handleChange(value) {
+        let tempArr = (value==='empty')? exercisesLocal : exercisesLocal.filter(ele=>ele.bodyPart===value)
+        updateFilter(tempArr);
+    }
 
     function openExercise() {
         console.log("ittt")
         window.$('#exerciseModal').modal('show');
     }
 
-    function handleChange() {
-
+    function optionsList() {
+        return filterArr.map((item, i) => {
+            return (
+                <option value={item.name} className='small' key={i + 'option'}><b>{item.name}</b></option>
+            )
+        })
     }
 
-    function optionsList() {
-        return exerciseNames.map((item, i) => {
+    function filterList() {
+        return bodyParts.map((item, i) => {
             return (
                 <option value={item} className='small' key={i + 'option'}><b>{item}</b></option>
             )
@@ -57,8 +69,17 @@ function NewTemplate() {
                                     <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div className="modal-body">
+                                    <div className='newtemplate_filter_text' style={{'marginBottom': '5px'}}>
+                                        <b>Filter by:</b>
+                                    </div>
+                                    <div className='newtemplate_filter_select'>
+                                        <select className='select form-select select_filter' aria-label='Default select' id='filter' style={{'fontWeight': 'bold'}} onChange={e => handleChange(e.target.value)}>
+                                            <option defaultValue={true} className='small' value='empty' style={{'fontWeight': 'bold'}}>Select (All)</option>
+                                            {filterList()}
+                                        </select>
+                                    </div>
                                     <select className="select select_exer form-select" size={10}>
-                                        <option defaultValue={true} className='small option_exer' value='empty'>Select Exercise</option>
+                                        <option defaultValue={true} className='small option_exer' value='empty' style={{'fontWeight': 'bold'}}>{filterArr.length} Total Exercises</option>
                                         {optionsList()}
                                     </select>
                                 </div>

@@ -130,6 +130,10 @@
 .select_exer {
    width: 98%;
    overflow: auto;
-   font-weight: bold !important;
+   margin-top: 10px;
 }
+
+/* .select_filter {
+   font-size: 10pt !important;
+} */
 
