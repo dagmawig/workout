@@ -129,6 +129,7 @@
 }
 .select_exer {
    width: 98%;
+   overflow: auto;
    font-weight: bold !important;
 }
 

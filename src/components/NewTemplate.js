@@ -57,7 +57,7 @@ function NewTemplate() {
                                     <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div className="modal-body">
-                                    <select className="select select_exer">
+                                    <select className="select select_exer form-select" size={10}>
                                         <option defaultValue={true} className='small option_exer' value='empty'>Select Exercise</option>
                                         {optionsList()}
                                     </select>
