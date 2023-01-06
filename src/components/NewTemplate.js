@@ -10,6 +10,7 @@ function NewTemplate() {
     const [filterArr, updateFilter] = useState(exercisesLocal);
 
     function handleChange(value) {
+        document.getElementById('exer-list').selectedIndex = 0;
         let tempArr = (value==='empty')? exercisesLocal : exercisesLocal.filter(ele=>ele.bodyPart===value)
         updateFilter(tempArr);
     }
@@ -78,7 +79,7 @@ function NewTemplate() {
                                             {filterList()}
                                         </select>
                                     </div>
-                                    <select className="select select_exer form-select" size={10}>
+                                    <select className="select select_exer form-select" id='exer-list' size={10}>
                                         <option defaultValue={true} className='small option_exer' value='empty' style={{'fontWeight': 'bold'}}>{filterArr.length} Total Exercises</option>
                                         {optionsList()}
                                     </select>
