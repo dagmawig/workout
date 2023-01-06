@@ -120,3 +120,15 @@
    cursor: pointer;
    font-weight: bold;
 }
+
+#exerciseModal {
+   margin-top: 100px;
+}
+.modal-content {
+   background-color: lightgreen;
+}
+.select_exer {
+   width: 98%;
+   font-weight: bold !important;
+}
+

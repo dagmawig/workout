@@ -1,8 +1,28 @@
 import React from 'react';
 import './NewTemplate.css';
 import { Link } from 'react-router-dom';
+var exercisesLocal = require('../exercisesLocal.json');
+var exerciseNames = require('../exerciseNames.json');
 
 function NewTemplate() {
+
+    function openExercise() {
+        console.log("ittt")
+        window.$('#exerciseModal').modal('show');
+    }
+
+    function handleChange() {
+
+    }
+
+    function optionsList() {
+        return exerciseNames.map((item, i) => {
+            return (
+                <option value={item} className='small' key={i + 'option'}><b>{item}</b></option>
+            )
+        })
+    }
+
     return (
         <div className='newtemplate container'>
             <div className='newtemplate_header row'>
@@ -26,10 +46,29 @@ function NewTemplate() {
                     </div>
                     <div className='newtemplate_content_add row'>
                         <div className='newtemplate_content_add_button row'>
-                            <button className='newtemplate_add_button col-6'>ADD EXERCISE</button>
+                            <button className='newtemplate_add_button col-6' onClick={openExercise}>ADD EXERCISE</button>
                         </div>
                     </div>
-
+                    <div className="modal" id='exerciseModal' tabindex="-1" aria-hidden={true}>
+                        <div className="modal-dialog">
+                            <div className="modal-content">
+                                <div className="modal-header bg-success">
+                                    <h5 className="modal-title"><b>Add Exercise</b></h5>
+                                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div className="modal-body">
+                                    <select className="select select_exer">
+                                        <option defaultValue={true} className='small option_exer' value='empty'>Select Exercise</option>
+                                        {optionsList()}
+                                    </select>
+                                </div>
+                                <div className="modal-footer">
+                                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal"><b>Close</b></button>
+                                    <button type="button" className="btn btn-primary"><b>Add</b></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
