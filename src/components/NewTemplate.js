@@ -73,7 +73,7 @@ function NewTemplate() {
                                         <b>Filter by:</b>
                                     </div>
                                     <div className='newtemplate_filter_select'>
-                                        <select className='select form-select select_filter' aria-label='Default select' id='filter' style={{'fontWeight': 'bold'}} onChange={e => handleChange(e.target.value)}>
+                                        <select className='select form-select select_filter' aria-label='Default select' id='filter' style={{'fontWeight': 'bold', 'backgroundColor': 'rgb(125, 149, 90)'}} onChange={e => handleChange(e.target.value)}>
                                             <option defaultValue={true} className='small' value='empty' style={{'fontWeight': 'bold'}}>Select (All)</option>
                                             {filterList()}
                                         </select>
