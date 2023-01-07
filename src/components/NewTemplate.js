@@ -8,6 +8,8 @@ var bodyParts = require('../exerBody.json');
 function NewTemplate() {
 
     const [filterArr, updateFilter] = useState(exercisesLocal);
+    const [exerciseList, updateExerList] = useState([]);
+    const [selectedExer, updateSelExer] = useState('empty');
 
     function handleChange(value) {
         document.getElementById('exer-list').selectedIndex = 0;
@@ -15,15 +17,119 @@ function NewTemplate() {
         updateFilter(tempArr);
     }
 
+    function handleSel(value) {
+        updateSelExer(value);
+    }
+
+    function addExer() {
+        if (selectedExer === 'empty') alert('please select exercise');
+        else if (exerciseList.filter(ele => ele.name === selectedExer).length !== 0) alert(`${selectedExer} already exists in template. Pick a different exercise.`);
+        else {
+            let exer = exercisesLocal.filter(ele => ele.name === selectedExer)[0];
+            exer.sets = 4;
+            let tempList = [...exerciseList];
+            tempList.push(exer);
+            updateExerList(tempList);
+            window.$('#exerciseModal').modal('hide');
+        }
+    }
+
     function openExercise() {
-        console.log("ittt")
         window.$('#exerciseModal').modal('show');
+    }
+
+    function exerListEle() {
+        console.log(exerciseList)
+        return exerciseList.map((item, i) => {
+            return (
+                <div className='newtemplate_exer_ele row' key={i + 'exerListEle'}>
+                    <div className='newtemplate_exer_ele_header row'>
+                        <div className='newtemplate_exer_name col-10'>
+                            <b>{item.name}</b>
+                        </div>
+                        <div className='newtemplate_exer_remove col-2' align='right'>
+                            <button className="remove_button"><i className="fa-solid fa-x"></i></button>
+                        </div>
+                    </div>
+                    <div className='newtemplate_exer_ele_content row'>
+                        <div className='newtemplate_exer_set_header row'>
+                            <div className='newtemplate_set col-2'>
+                                <div className='newtemplate_set_text row'>
+                                    <p className='col-12 text-center'>SET</p>
+                                </div>
+                            </div>
+                            <div className='newtemplate_prev col-2'>
+                                <div className='newtemplate_prev_text row'>
+                                    <p className='col-12 text-center'>PREV</p>
+                                </div>
+                            </div>
+                            <div className='newtemplate_lbs col-3'>
+                                <div className='newtemplate_lbs_text row'>
+                                    <p className='col-12 text-center'>LBS</p>
+                                </div>
+                            </div>
+                            <div className='newtemplate_reps col-3'>
+                                <div className='newtemplate_reps_text row'>
+                                    <p className='col-12 text-center'>REPS</p>
+                                </div>
+                            </div>
+                            <div className='newtemplate_reps_remove col-2'>
+                                <div className='newtemplate_reps_space row'>
+                                    <p className='col-12 text-center'></p>
+                                </div>
+                            </div>
+                        </div>
+                        {setList(item)}
+                    </div>
+                    <div className='newtemplate_reps_add_set row'>
+                        <div className='newtemplate_rep_add_button row'>
+                            <button className='newtemplate_add_button col-6' >ADD SET</button>
+                        </div>
+                    </div>
+                </div>
+            )
+        })
+    }
+
+    function setList(exer) {
+        let tempArr = [...Array(exer.sets).keys()];
+        return tempArr.map(item => {
+            return (
+                <div className='newtemplate_exer_set_content row' key={exer.name + 'setList'}>
+                    <div className='newtemplate_set col-2'>
+                        <div className='newtemplate_set_val row'>
+                            <p className='col-12 text-center'>{item + 1}</p>
+                        </div>
+                    </div>
+                    <div className='newtemplate_prev col-2'>
+                        <div className='newtemplate_prev_val row'>
+                            <p className='col-12 text-center'>-</p>
+                        </div>
+                    </div>
+                    <div className='newtemplate_lbs col-3'>
+                        <div className='newtemplate_lbs_val row'>
+                            <input className='lbs_input'></input>
+                        </div>
+                    </div>
+                    <div className='newtemplate_reps col-3'>
+                        <div className='newtemplate_reps_val row'>
+                            <input className='reps_input'></input>
+                        </div>
+                    </div>
+                    <div className='newtemplate_reps_remove col-2'>
+                        <div className='newtemplate_reps_button row'>
+                            <button className="reps_remove_button"><i className="fa-solid fa-minus"></i></button>
+                        </div>
+                    </div>
+                </div>
+            )
+        })
     }
 
     function optionsList() {
         return filterArr.map((item, i) => {
             return (
-                <option value={item.name} className='small' key={i + 'option'}><b>{item.name}</b></option>
+                <option value={item.name} className='small' key={i + 'option'} style={{ 'fontWeight': 'bold' }}>{item.name}</option>
             )
         })
     }
@@ -31,7 +137,7 @@ function NewTemplate() {
     function filterList() {
         return bodyParts.map((item, i) => {
             return (
-                <option value={item} className='small' key={i + 'option'}><b>{item}</b></option>
+                <option value={item} className='small' key={i + 'option'} style={{ 'fontWeight': 'bold' }}>{item}</option>
             )
         })
     }
@@ -58,70 +164,14 @@ function NewTemplate() {
                         </div>
                     </div>
                     <div className='newtemplate_exer_list row'>
-                        <div className='newtemplate_exer_ele row'>
-                            <div className='newtemplate_exer_ele_header row'>
-                                <div className='newtemplate_exer_name col-10'>
-                                    <b>Arnold Press (dumbbell)</b>
-                                </div>
-                                <div className='newtemplate_exer_remove col-2' align='right'>
-                                    <button className="remove_button"><i className="fa-solid fa-minus"></i></button>
-                                </div>
-                            </div>
-                            <div className='newtemplate_exer_ele_content row'>
-                                <div className='newtemplate_set col-2'>
-                                    <div className='newtemplate_set_text row'>
-                                        <p className='col-12 text-center'>SET</p>
-                                    </div>
-                                    <div className='newtemplate_set_val row'>
-                                        <p className='col-12 text-center'>1</p>
-                                    </div>
-                                </div>
-                                <div className='newtemplate_prev col-2'>
-                                    <div className='newtemplate_prev_text row'>
-                                        <p className='col-12 text-center'>PREV</p>
-                                    </div>
-                                    <div className='newtemplate_prev_val row'>
-                                        <p className='col-12 text-center'>-</p>
-                                    </div>
-                                </div>
-                                <div className='newtemplate_lbs col-3'>
-                                    <div className='newtemplate_lbs_text row'>
-                                        <p className='col-12 text-center'>LBS</p>
-                                    </div>
-                                    <div className='newtemplate_lbs_val row'>
-                                        <input className='lbs_input'></input>
-                                    </div>
-                                </div>
-                                <div className='newtemplate_reps col-3'>
-                                    <div className='newtemplate_reps_text row'>
-                                        <p className='col-12 text-center'>REPS</p>
-                                    </div>
-                                    <div className='newtemplate_reps_val row'>
-                                        <input className='reps_input'></input>
-                                    </div>
-                                </div>
-                                <div className='newtemplate_reps_remove col-2'>
-                                    <div className='newtemplate_reps_space row'>
-                                        <p className='col-12 text-center'></p>
-                                    </div>
-                                    <div className='newtemplate_reps_button row'>
-                                        <button className="reps_remove_button"><i className="fa-solid fa-x"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className='newtemplate_reps_add_set row'>
-                                <div className='newtemplate_rep_add_button row'>
-                                    <button className='newtemplate_add_button col-6' >ADD SET</button>
-                                </div>
-                            </div>
-                        </div>
+                        {exerListEle()}
                     </div>
                     <div className='newtemplate_content_add row'>
                         <div className='newtemplate_content_add_button row'>
                             <button className='newtemplate_add_button col-6' onClick={openExercise}>ADD EXERCISE</button>
                         </div>
                     </div>
-                    <div className="modal" id='exerciseModal' tabindex="-1" aria-hidden={true}>
+                    <div className="modal" id='exerciseModal' tabIndex="-1" aria-hidden={true}>
                         <div className="modal-dialog">
                             <div className="modal-content">
                                 <div className="modal-header bg-success">
@@ -138,14 +188,14 @@ function NewTemplate() {
                                             {filterList()}
                                         </select>
                                     </div>
-                                    <select className="select select_exer form-select" id='exer-list' size={10}>
+                                    <select className="select select_exer form-select" id='exer-list' size={10} onChange={e => handleSel(e.target.value)}>
                                         <option defaultValue={true} className='small option_exer' value='empty' style={{ 'fontWeight': 'bold' }}>{filterArr.length} Total Exercises</option>
                                         {optionsList()}
                                     </select>
                                 </div>
                                 <div className="modal-footer">
                                     <button type="button" className="btn btn-secondary" data-bs-dismiss="modal"><b>Close</b></button>
-                                    <button type="button" className="btn btn-primary"><b>Add</b></button>
+                                    <button type="button" className="btn btn-primary" onClick={addExer}><b>Add</b></button>
                                 </div>
                             </div>
                         </div>

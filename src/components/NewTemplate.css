@@ -159,6 +159,16 @@
    width: 100%;
 }
 
+.newtemplate_exer_set_content, .newtemplate_exer_set_header {
+   display: flex;
+   flex-direction: row;
+   align-items: left;
+   justify-content: flex-start;
+   margin: 0;
+   padding: 0;
+   width: 100%;
+}
+
 .newtemplate_reps_add_set, .newtemplate_rep_add_button {
    display: flex;
    flex-direction: row;
@@ -187,7 +197,7 @@
 }
 .select_exer {
    width: 98%;
-   overflow: auto;
+   overflow: scroll;
    margin-top: 10px;
    background-color: rgb(125, 149, 90);
 }
