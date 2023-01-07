@@ -11,7 +11,7 @@ function NewTemplate() {
 
     function handleChange(value) {
         document.getElementById('exer-list').selectedIndex = 0;
-        let tempArr = (value==='empty')? exercisesLocal : exercisesLocal.filter(ele=>ele.bodyPart===value)
+        let tempArr = (value === 'empty') ? exercisesLocal : exercisesLocal.filter(ele => ele.bodyPart === value)
         updateFilter(tempArr);
     }
 
@@ -57,6 +57,65 @@ function NewTemplate() {
                             <input className="form-control newtemplate_name_input" type="text" placeholder="Enter Workout Name" />
                         </div>
                     </div>
+                    <div className='newtemplate_exer_list row'>
+                        <div className='newtemplate_exer_ele row'>
+                            <div className='newtemplate_exer_ele_header row'>
+                                <div className='newtemplate_exer_name col-10'>
+                                    <b>Arnold Press (dumbbell)</b>
+                                </div>
+                                <div className='newtemplate_exer_remove col-2' align='right'>
+                                    <button className="remove_button"><i className="fa-solid fa-minus"></i></button>
+                                </div>
+                            </div>
+                            <div className='newtemplate_exer_ele_content row'>
+                                <div className='newtemplate_set col-2'>
+                                    <div className='newtemplate_set_text row'>
+                                        <p className='col-12 text-center'>SET</p>
+                                    </div>
+                                    <div className='newtemplate_set_val row'>
+                                        <p className='col-12 text-center'>1</p>
+                                    </div>
+                                </div>
+                                <div className='newtemplate_prev col-2'>
+                                    <div className='newtemplate_prev_text row'>
+                                        <p className='col-12 text-center'>PREV</p>
+                                    </div>
+                                    <div className='newtemplate_prev_val row'>
+                                        <p className='col-12 text-center'>-</p>
+                                    </div>
+                                </div>
+                                <div className='newtemplate_lbs col-3'>
+                                    <div className='newtemplate_lbs_text row'>
+                                        <p className='col-12 text-center'>LBS</p>
+                                    </div>
+                                    <div className='newtemplate_lbs_val row'>
+                                        <input className='lbs_input'></input>
+                                    </div>
+                                </div>
+                                <div className='newtemplate_reps col-3'>
+                                    <div className='newtemplate_reps_text row'>
+                                        <p className='col-12 text-center'>REPS</p>
+                                    </div>
+                                    <div className='newtemplate_reps_val row'>
+                                        <input className='reps_input'></input>
+                                    </div>
+                                </div>
+                                <div className='newtemplate_reps_remove col-2'>
+                                    <div className='newtemplate_reps_space row'>
+                                        <p className='col-12 text-center'></p>
+                                    </div>
+                                    <div className='newtemplate_reps_button row'>
+                                        <button className="reps_remove_button"><i className="fa-solid fa-x"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className='newtemplate_reps_add_set row'>
+                                <div className='newtemplate_rep_add_button row'>
+                                    <button className='newtemplate_add_button col-6' >ADD SET</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div className='newtemplate_content_add row'>
                         <div className='newtemplate_content_add_button row'>
                             <button className='newtemplate_add_button col-6' onClick={openExercise}>ADD EXERCISE</button>
@@ -70,17 +129,17 @@ function NewTemplate() {
                                     <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div className="modal-body">
-                                    <div className='newtemplate_filter_text' style={{'marginBottom': '5px'}}>
+                                    <div className='newtemplate_filter_text' style={{ 'marginBottom': '5px' }}>
                                         <b>Filter by:</b>
                                     </div>
                                     <div className='newtemplate_filter_select'>
-                                        <select className='select form-select select_filter' aria-label='Default select' id='filter' style={{'fontWeight': 'bold', 'backgroundColor': 'rgb(125, 149, 90)'}} onChange={e => handleChange(e.target.value)}>
-                                            <option defaultValue={true} className='small' value='empty' style={{'fontWeight': 'bold'}}>Select (All)</option>
+                                        <select className='select form-select select_filter' aria-label='Default select' id='filter' style={{ 'fontWeight': 'bold', 'backgroundColor': 'rgb(125, 149, 90)' }} onChange={e => handleChange(e.target.value)}>
+                                            <option defaultValue={true} className='small' value='empty' style={{ 'fontWeight': 'bold' }}>Select (All)</option>
                                             {filterList()}
                                         </select>
                                     </div>
                                     <select className="select select_exer form-select" id='exer-list' size={10}>
-                                        <option defaultValue={true} className='small option_exer' value='empty' style={{'fontWeight': 'bold'}}>{filterArr.length} Total Exercises</option>
+                                        <option defaultValue={true} className='small option_exer' value='empty' style={{ 'fontWeight': 'bold' }}>{filterArr.length} Total Exercises</option>
                                         {optionsList()}
                                     </select>
                                 </div>
