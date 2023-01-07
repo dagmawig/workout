@@ -34,12 +34,16 @@ function NewTemplate() {
         }
     }
 
+    function removeExer(index) {
+        console.log('it clicks', index)
+        exerciseList.splice(index,1);
+        updateExerList([...exerciseList]);
+    }
     function openExercise() {
         window.$('#exerciseModal').modal('show');
     }
 
     function exerListEle() {
-        console.log(exerciseList)
         return exerciseList.map((item, i) => {
             return (
                 <div className='newtemplate_exer_ele row' key={i + 'exerListEle'}>
@@ -48,7 +52,7 @@ function NewTemplate() {
                             <b>{item.name}</b>
                         </div>
                         <div className='newtemplate_exer_remove col-2' align='right'>
-                            <button className="remove_button"><i className="fa-solid fa-x"></i></button>
+                            <button className="remove_button fa-solid fa-x" value={i} onClick={e=>removeExer(e.target.value)}></button>
                         </div>
                     </div>
                     <div className='newtemplate_exer_ele_content row'>
@@ -95,7 +99,7 @@ function NewTemplate() {
         let tempArr = [...Array(exer.sets).keys()];
         return tempArr.map(item => {
             return (
-                <div className='newtemplate_exer_set_content row' key={exer.name + 'setList'}>
+                <div className='newtemplate_exer_set_content row' key={item + exer.name + 'setList'}>
                     <div className='newtemplate_set col-2'>
                         <div className='newtemplate_set_val row'>
                             <p className='col-12 text-center'>{item + 1}</p>
