@@ -9,10 +9,11 @@ function NewTemplate() {
 
     const [filterArr, updateFilter] = useState(exercisesLocal);
     const [exerciseList, updateExerList] = useState([]);
-    const [selectedExer, updateSelExer] = useState('empty');
+    const [selectedExer, updateSelExer] = useState('3/4 sit-up');
 
     function handleChange(value) {
         document.getElementById('exer-list').selectedIndex = 0;
+        updateSelExer(filterArr[0].name);
         let tempArr = (value === 'empty') ? exercisesLocal : exercisesLocal.filter(ele => ele.bodyPart === value)
         updateFilter(tempArr);
     }
@@ -36,7 +37,7 @@ function NewTemplate() {
 
     function removeExer(index) {
         console.log('it clicks', index)
-        exerciseList.splice(index,1);
+        exerciseList.splice(index, 1);
         updateExerList([...exerciseList]);
     }
 
@@ -65,7 +66,7 @@ function NewTemplate() {
                             <b>{item.name}</b>
                         </div>
                         <div className='newtemplate_exer_remove col-2' align='right'>
-                            <button className="remove_button fa-solid fa-x" value={i} onClick={e=>removeExer(e.target.value)}></button>
+                            <button className="remove_button fa-solid fa-x" value={i} onClick={e => removeExer(e.target.value)}></button>
                         </div>
                     </div>
                     <div className='newtemplate_exer_ele_content row'>
@@ -100,7 +101,7 @@ function NewTemplate() {
                     </div>
                     <div className='newtemplate_reps_add_set row'>
                         <div className='newtemplate_rep_add_button row'>
-                            <button className='newtemplate_add_button col-6' value={i} onClick={e=>addSet(e.target.value)} >ADD SET</button>
+                            <button className='newtemplate_add_button col-6' value={i} onClick={e => addSet(e.target.value)} >ADD SET</button>
                         </div>
                     </div>
                 </div>
@@ -135,7 +136,7 @@ function NewTemplate() {
                     </div>
                     <div className='newtemplate_reps_remove col-2'>
                         <div className='newtemplate_reps_button row'>
-                           {(item!==0)? <button className="reps_remove_button fa-solid fa-minus" value={index} onClick={e=>removeSet(e.target.value)}></button> : <></>} 
+                            {(item !== 0) ? <button className="reps_remove_button fa-solid fa-minus" value={index} onClick={e => removeSet(e.target.value)}></button> : <></>}
                         </div>
                     </div>
                 </div>
@@ -146,7 +147,7 @@ function NewTemplate() {
     function optionsList() {
         return filterArr.map((item, i) => {
             return (
-                <option value={item.name} className='small' key={i + 'option'} style={{ 'fontWeight': 'bold' }}>{item.name}</option>
+                <option value={item.name}  className='small' key={i + 'option'} style={{ 'fontWeight': 'bold' }}>{item.name}</option>
             )
         })
     }
@@ -197,7 +198,7 @@ function NewTemplate() {
                                 </div>
                                 <div className="modal-body">
                                     <div className='newtemplate_filter_text' style={{ 'marginBottom': '5px' }}>
-                                        <b>Filter by:</b>
+                                        <b style={{ 'fontWeight': 'bold', 'fontSize': '15pt' }}>Filter by:</b>
                                     </div>
                                     <div className='newtemplate_filter_select'>
                                         <select className='select form-select select_filter' aria-label='Default select' id='filter' style={{ 'fontWeight': 'bold', 'backgroundColor': 'rgb(125, 149, 90)' }} onChange={e => handleChange(e.target.value)}>
@@ -205,8 +206,10 @@ function NewTemplate() {
                                             {filterList()}
                                         </select>
                                     </div>
-                                    <select className="select select_exer form-select" id='exer-list' size={10} onChange={e => handleSel(e.target.value)}>
-                                        <option defaultValue={true} className='small option_exer' value='empty' style={{ 'fontWeight': 'bold', 'textDecoration': 'underline', 'fontSize': '15pt'}}>{filterArr.length} Total Exercises</option>
+                                    <div className='select_exer_title' style={{ 'fontWeight': 'bold', 'fontSize': '15pt' }}>
+                                        {filterArr.length} Total Exercises
+                                    </div>
+                                    <select className="select select_exer form-select" id='exer-list' size={10} onChange={e => handleSel(e.target.value)} defaultValue={filterArr[0].name}>
                                         {optionsList()}
                                     </select>
                                 </div>

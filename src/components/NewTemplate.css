@@ -198,8 +198,10 @@
 .select_exer {
    width: 98%;
    overflow: scroll;
-   margin-top: 10px;
    background-color: rgb(125, 149, 90);
+}
+.select_exer_title {
+   margin-top: 10px;
 }
 
 input {
