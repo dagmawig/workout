@@ -162,7 +162,7 @@
 .newtemplate_exer_set_content, .newtemplate_exer_set_header {
    display: flex;
    flex-direction: row;
-   align-items: left;
+   align-items: center;
    justify-content: flex-start;
    margin: 0;
    padding: 0;

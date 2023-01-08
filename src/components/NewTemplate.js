@@ -39,6 +39,13 @@ function NewTemplate() {
         exerciseList.splice(index,1);
         updateExerList([...exerciseList]);
     }
+
+    function addSet(index) {
+        let tempList = [...exerciseList];
+        tempList[index].sets++;
+        updateExerList(tempList);
+    }
+    
     function openExercise() {
         window.$('#exerciseModal').modal('show');
     }
@@ -87,7 +94,7 @@ function NewTemplate() {
                     </div>
                     <div className='newtemplate_reps_add_set row'>
                         <div className='newtemplate_rep_add_button row'>
-                            <button className='newtemplate_add_button col-6' >ADD SET</button>
+                            <button className='newtemplate_add_button col-6' value={i} onClick={e=>addSet(e.target.value)} >ADD SET</button>
                         </div>
                     </div>
                 </div>
@@ -122,7 +129,7 @@ function NewTemplate() {
                     </div>
                     <div className='newtemplate_reps_remove col-2'>
                         <div className='newtemplate_reps_button row'>
-                            <button className="reps_remove_button"><i className="fa-solid fa-minus"></i></button>
+                            <button className="reps_remove_button fa-solid fa-minus "></button>
                         </div>
                     </div>
                 </div>
