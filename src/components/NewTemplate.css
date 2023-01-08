@@ -202,3 +202,7 @@
    background-color: rgb(125, 149, 90);
 }
 
+input {
+   background-color: lightgreen;
+   border: black solid 1pt;
+}

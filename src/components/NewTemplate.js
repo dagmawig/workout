@@ -45,7 +45,13 @@ function NewTemplate() {
         tempList[index].sets++;
         updateExerList(tempList);
     }
-    
+
+    function removeSet(index) {
+        let tempList = [...exerciseList];
+        tempList[index].sets--;
+        updateExerList(tempList);
+    }
+
     function openExercise() {
         window.$('#exerciseModal').modal('show');
     }
@@ -90,7 +96,7 @@ function NewTemplate() {
                                 </div>
                             </div>
                         </div>
-                        {setList(item)}
+                        {setList(item, i)}
                     </div>
                     <div className='newtemplate_reps_add_set row'>
                         <div className='newtemplate_rep_add_button row'>
@@ -102,7 +108,7 @@ function NewTemplate() {
         })
     }
 
-    function setList(exer) {
+    function setList(exer, index) {
         let tempArr = [...Array(exer.sets).keys()];
         return tempArr.map(item => {
             return (
@@ -129,7 +135,7 @@ function NewTemplate() {
                     </div>
                     <div className='newtemplate_reps_remove col-2'>
                         <div className='newtemplate_reps_button row'>
-                            <button className="reps_remove_button fa-solid fa-minus "></button>
+                           {(item!==0)? <button className="reps_remove_button fa-solid fa-minus" value={index} onClick={e=>removeSet(e.target.value)}></button> : <></>} 
                         </div>
                     </div>
                 </div>
@@ -200,7 +206,7 @@ function NewTemplate() {
                                         </select>
                                     </div>
                                     <select className="select select_exer form-select" id='exer-list' size={10} onChange={e => handleSel(e.target.value)}>
-                                        <option defaultValue={true} className='small option_exer' value='empty' style={{ 'fontWeight': 'bold' }}>{filterArr.length} Total Exercises</option>
+                                        <option defaultValue={true} className='small option_exer' value='empty' style={{ 'fontWeight': 'bold', 'textDecoration': 'underline', 'fontSize': '15pt'}}>{filterArr.length} Total Exercises</option>
                                         {optionsList()}
                                     </select>
                                 </div>
