@@ -1,8 +1,42 @@
 import React from 'react';
 import './Workout.css';
 import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 
 function Workout() {
+
+    const stateSelector = useSelector(state=>state.workout);
+
+    function templateEle() {
+        return stateSelector.templateArr.map((item, i) => {
+            return (
+                <button className='template_button col-12' key={i+item.name}>
+                        <div className='template_content col-12'>
+                            <div className='template_content_header row'>
+                                <div className='template_content_title col-10'>
+                                    <p className="row text-left">{item.name}</p>
+                                </div>
+                            </div>
+                            <div className='template_content_time row text-left'>
+                                Last performed: 3 days ago
+                            </div>
+                            <div className='template_content_exer row'>
+                                {tempExerEle(item)}
+                            </div>
+                        </div>
+                    </button>
+            )
+        })
+    }
+
+    function tempExerEle(template) {
+            return template.exerList.map((item, i) => {
+                return (
+                    <p className="row text-left" key={i+template.name}>{item.sets} X {item.name}</p>
+                )
+            })
+    }
+
     return (
         <div className='workout container'>
             {/* <div className='workout_title row'>
@@ -22,40 +56,7 @@ function Workout() {
                             </div>
                         </div>
                     </div>
-                    <button className='template_button col-12'>
-                        <div className='template_content col-12'>
-                            <div className='template_content_header row'>
-                                <div className='template_content_title col-10'>
-                                    <p className="row text-left">Template 1</p>
-                                </div>
-                            </div>
-                            <div className='template_content_time row text-left'>
-                                Last performed: 3 days ago
-                            </div>
-                            <div className='template_content_exer row'>
-                                <p className="row text-left">3 X Squat (Barbell)</p>
-                                <p className="row text-left">3 X Leg Extension (Machine)</p>
-                                <p className="row text-left">3 Flat Leg Raise</p>
-                            </div>
-                        </div>
-                    </button>
-                    <button className='template_button col-12'>
-                        <div className='template_content col-12'>
-                            <div className='template_content_header row'>
-                                <div className='template_content_title col-10'>
-                                    <p className="row text-left">Template 1</p>
-                                </div>
-                            </div>
-                            <div className='template_content_time row text-left'>
-                                Last performed: 3 days ago
-                            </div>
-                            <div className='template_content_exer row'>
-                                <p className="row text-left">3 X Squat (Barbell)</p>
-                                <p className="row text-left">3 X Leg Extension (Machine)</p>
-                                <p className="row text-left">3 Flat Leg Raise</p>
-                            </div>
-                        </div>
-                    </button>
+                    {templateEle()}
                 </div>
                 <div className='workout_samples row'>
                     <div className='template_header col-12>'>

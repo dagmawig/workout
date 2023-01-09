@@ -3,11 +3,13 @@ import './NewTemplate.css';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateTemp } from './workoutSlice';
+import { useNavigate } from 'react-router-dom';
 var exercisesLocal = require('../exercisesLocal.json');
 var exerciseNames = require('../exerciseNames.json');
 var bodyParts = require('../exerBody.json');
 
 function NewTemplate() {
+    const navigate = useNavigate();
     const stateSelector = useSelector(state=>state.workout);
     const dispatch = useDispatch();
 
@@ -15,6 +17,7 @@ function NewTemplate() {
     const [filterArr, updateFilter] = useState(exercisesLocal);
     const [exerciseList, updateExerList] = useState([]);
     const [selectedExer, updateSelExer] = useState('3/4 sit-up');
+    const [templateName, updateName] = useState('');
 
     function handleChange(value) {
         document.getElementById('exer-list').selectedIndex = 0;
@@ -33,7 +36,7 @@ function NewTemplate() {
         else {
             let exer = exercisesLocal.filter(ele => ele.name === selectedExer)[0];
             exer.sets = 4;
-            let tempList = [...exerciseList];
+            let tempList = JSON.parse(JSON.stringify(exerciseList));
             tempList.push(exer);
             updateExerList(tempList);
             window.$('#exerciseModal').modal('hide');
@@ -41,21 +44,38 @@ function NewTemplate() {
     }
 
     function removeExer(index) {
-        console.log('it clicks', index)
-        exerciseList.splice(index, 1);
-        updateExerList([...exerciseList]);
+        let tempList = JSON.parse(JSON.stringify(exerciseList));
+        tempList.splice(index, 1);
+        updateExerList(tempList);
     }
 
     function addSet(index) {
-        let tempList = [...exerciseList];
+        let tempList = JSON.parse(JSON.stringify(exerciseList));
         tempList[index].sets++;
         updateExerList(tempList);
     }
 
     function removeSet(index) {
-        let tempList = [...exerciseList];
+        let tempList = JSON.parse(JSON.stringify(exerciseList));
         tempList[index].sets--;
         updateExerList(tempList);
+    }
+
+    function saveTemp () {
+        if (!templateName.split(' ').join('')) alert('enter wolrkout template name');
+        else if(stateSelector.templateArr.filter(ele=>ele.name===templateName).length!==0) alert('workout template name already exist. use a different template name.');
+        else if(exerciseList.length===0) alert('add at least one exercise')
+        else {
+            let workoutTemp = {
+                name: templateName,
+                exerList: JSON.parse(JSON.stringify(exerciseList))
+            }
+            let newTempArr = JSON.parse(JSON.stringify(stateSelector.templateArr));
+            newTempArr.push(workoutTemp);
+
+            dispatch(updateTemp(newTempArr));
+            navigate('/workout', {replace: true})
+        }
     }
 
     function openExercise() {
@@ -176,14 +196,14 @@ function NewTemplate() {
                     <p className='temp_header_text'>New workout template</p>
                 </div>
                 <div className='newtemplate_content_save col-2'>
-                    <button className="save_button"><i className="fa-solid fa-floppy-disk fa-2x"></i></button>
+                    <button className="save_button" onClick={saveTemp}><i className="fa-solid fa-floppy-disk fa-2x"></i></button>
                 </div>
             </div>
             <div className='newtemplate_content row'>
                 <div className='newtemplate_content_form row'>
                     <div className='newtemplate_content_header row'>
                         <div className='newtemplate_content_name col-8'>
-                            <input className="form-control newtemplate_name_input" type="text" placeholder="Enter Workout Name" />
+                            <input className="form-control newtemplate_name_input" type="text" placeholder="Enter Workout Name" onChange={e=>updateName(e.target.value)} />
                         </div>
                     </div>
                     <div className='newtemplate_exer_list row'>
