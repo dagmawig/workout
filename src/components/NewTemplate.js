@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
 import './NewTemplate.css';
 import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateTemp } from './workoutSlice';
 var exercisesLocal = require('../exercisesLocal.json');
 var exerciseNames = require('../exerciseNames.json');
 var bodyParts = require('../exerBody.json');
 
 function NewTemplate() {
+    const stateSelector = useSelector(state=>state.workout);
+    const dispatch = useDispatch();
+
 
     const [filterArr, updateFilter] = useState(exercisesLocal);
     const [exerciseList, updateExerList] = useState([]);
@@ -147,7 +152,7 @@ function NewTemplate() {
     function optionsList() {
         return filterArr.map((item, i) => {
             return (
-                <option value={item.name}  className='small' key={i + 'option'} style={{ 'fontWeight': 'bold' }}>{item.name}</option>
+                <option value={item.name} className='small' key={i + 'option'} style={{ 'fontWeight': 'bold' }}>{item.name}</option>
             )
         })
     }
