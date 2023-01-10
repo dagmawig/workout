@@ -57,6 +57,7 @@
 
  .template_header {
     padding: 0;
+    margin-bottom: 5px;
     background-color: rgb(91, 160, 91);
  }
 
@@ -81,15 +82,10 @@
     border-radius: 5px;
     background-color: rgb(125, 149, 90);
     width: 100%;
-    padding: 2px;
+    padding: 10px;
     margin: 2px;
  }
 
- .template_content_title {
-    height: 26px;
-    font-weight: bold;
-    font-size: 13pt;
- }
  .template_content_time {
     border-bottom: black solid 1px;
     color: rgb(67, 12, 12);

@@ -5,6 +5,7 @@ import Footer from './components/Footer';
 import Workout from './components/Workout';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import NewTemplate from './components/NewTemplate';
+import ShowTemp from './components/ShowTemp';
 
 function App() {
   return (
@@ -29,6 +30,13 @@ function App() {
           <>
           <Header/>
           <NewTemplate/>
+          <Footer/>
+          </>
+        }/>
+        <Route path="/showtemp" element={
+          <>
+          <Header/>
+          <ShowTemp/>
           <Footer/>
           </>
         }/>
