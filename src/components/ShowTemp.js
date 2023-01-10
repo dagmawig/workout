@@ -43,7 +43,7 @@ function ShowTemp() {
             <div className='showtemp_content row'>
                 <div className='showtemp_content_form row'>
                     <div className='showtemp_content_title col-12'>
-                        <p className='row showtemp_header_text text-right'>Template 1</p>
+                        <p className='row showtemp_header_text text-right'>{template.name}</p>
                     </div>
                     <div className='showtemp_content_time col-12'>
                         <p className='row showtemp_header_last text-left'>Last performed: 2 days ago</p>
