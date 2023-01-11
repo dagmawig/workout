@@ -99,3 +99,7 @@
    border: none;
    cursor: pointer;  
 }
+
+#delTempModal, #exerDetModal {
+   margin-top: 100px;
+}
