@@ -6,6 +6,7 @@ import Workout from './components/Workout';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import NewTemplate from './components/NewTemplate';
 import ShowTemp from './components/ShowTemp';
+import EditTemplate from './components/EditTemplate';
 
 function App() {
   return (
@@ -37,6 +38,13 @@ function App() {
           <>
           <Header/>
           <ShowTemp/>
+          <Footer/>
+          </>
+        }/>
+        <Route path="/edittemp" element={
+          <>
+          <Header/>
+          <EditTemplate/>
           <Footer/>
           </>
         }/>

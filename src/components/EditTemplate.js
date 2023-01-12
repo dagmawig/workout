@@ -1,32 +1,78 @@
 import React, { useState } from 'react';
-import './NewTemplate.css';
-import { Link } from 'react-router-dom';
+import './EditTemplate.css';
+import { useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateTemp } from './workoutSlice';
 import { useNavigate } from 'react-router-dom';
-var exercisesLocal = require('../exercisesLocal.json');
 var bodyParts = require('../exerBody.json');
+var exercisesLocal = require('../exercisesLocal.json');
 
-function NewTemplate() {
-    const navigate = useNavigate();
-    const stateSelector = useSelector(state=>state.workout);
+function EditTemplate() {
+    const stateSelector = useSelector(state => state.workout);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const { state } = useLocation();
 
-
+    let template = stateSelector.templateArr[state.index];
+    const [tempName, updateName] = useState(template.name);
+    const [exerciseList, updateExerList] = useState(template.exerList);
     const [filterArr, updateFilter] = useState(exercisesLocal);
-    const [exerciseList, updateExerList] = useState([]);
     const [selectedExer, updateSelExer] = useState('3/4 sit-up');
-    const [templateName, updateName] = useState('');
 
     function handleChange(value) {
-        document.getElementById('exer-list').selectedIndex = 0;
+        document.getElementById('exer-edit-list').selectedIndex = 0;
         let tempArr = (value === 'empty') ? exercisesLocal : exercisesLocal.filter(ele => ele.bodyPart === value)
         updateFilter(tempArr);
         updateSelExer(tempArr[0].name);
     }
 
     function handleSel(value) {
+        console.log(value)
         updateSelExer(value);
+    }
+
+    function saveTemp() {
+        if (!tempName.split(' ').join('')) alert('enter wolrkout template name');
+        else if (stateSelector.templateArr.filter((ele, i) => ele.name === tempName && i !== state.index).length !== 0) alert('workout template name already exist. use a different template name.');
+        else if (exerciseList.length === 0) alert('add at least one exercise')
+        else {
+            let workoutTemp = {
+                name: tempName,
+                exerList: JSON.parse(JSON.stringify(exerciseList))
+            }
+            let newTempArr = JSON.parse(JSON.stringify(stateSelector.templateArr));
+            newTempArr[state.index] = workoutTemp;
+
+            dispatch(updateTemp(newTempArr));
+            navigate('/workout', { replace: true })
+        }
+    }
+
+    function saveTempModal() {
+        if (!tempName.split(' ').join('')) alert('enter wolrkout template name');
+        else if (stateSelector.templateArr.filter((ele, i) => ele.name === tempName && i !== state.index).length !== 0) alert('workout template name already exist. use a different template name.');
+        else if (exerciseList.length === 0) alert('add at least one exercise')
+        else {
+            let workoutTemp = {
+                name: tempName,
+                exerList: JSON.parse(JSON.stringify(exerciseList))
+            }
+            let newTempArr = JSON.parse(JSON.stringify(stateSelector.templateArr));
+            newTempArr[state.index] = workoutTemp;
+
+            dispatch(updateTemp(newTempArr));
+            window.$('#saveModal').modal('hide');
+            navigate('/workout', { replace: true })
+        }
+    }
+
+    function noSaveModal() {
+        window.$('#saveModal').modal('hide');
+        navigate('/workout', { replace: true })
+    }
+
+    function openSaveModal() {
+        window.$('#saveModal').modal('show');
     }
 
     function addExer() {
@@ -38,7 +84,7 @@ function NewTemplate() {
             let tempList = JSON.parse(JSON.stringify(exerciseList));
             tempList.push(exer);
             updateExerList(tempList);
-            window.$('#exerciseModal').modal('hide');
+            window.$('#exerModal').modal('hide');
         }
     }
 
@@ -58,27 +104,6 @@ function NewTemplate() {
         let tempList = JSON.parse(JSON.stringify(exerciseList));
         tempList[index].sets--;
         updateExerList(tempList);
-    }
-
-    function saveTemp () {
-        if (!templateName.split(' ').join('')) alert('enter wolrkout template name');
-        else if(stateSelector.templateArr.filter(ele=>ele.name===templateName).length!==0) alert('workout template name already exist. use a different template name.');
-        else if(exerciseList.length===0) alert('add at least one exercise')
-        else {
-            let workoutTemp = {
-                name: templateName,
-                exerList: JSON.parse(JSON.stringify(exerciseList))
-            }
-            let newTempArr = JSON.parse(JSON.stringify(stateSelector.templateArr));
-            newTempArr.push(workoutTemp);
-
-            dispatch(updateTemp(newTempArr));
-            navigate('/workout', {replace: true})
-        }
-    }
-
-    function openExercise() {
-        window.$('#exerciseModal').modal('show');
     }
 
     function exerListEle() {
@@ -168,6 +193,10 @@ function NewTemplate() {
         })
     }
 
+    function openExercise() {
+        window.$('#exerModal').modal('show');
+    }
+
     function optionsList() {
         return filterArr.map((item, i) => {
             return (
@@ -188,11 +217,10 @@ function NewTemplate() {
         <div className='newtemplate container'>
             <div className='newtemplate_header row'>
                 <div className='newtemplate_header_x col-2'>
-                    <Link to='/workout'>
-                        <button className="x_button"><i className="fa-solid fa-xmark fa-2x"></i></button></Link>
+                    <button className="x_button"><i className="fa-solid fa-xmark fa-2x" onClick={() => openSaveModal()}></i></button>
                 </div>
                 <div className='newtemplate_content_title col-8'>
-                    <p className='temp_header_text'>New workout template</p>
+                    <p className='temp_header_text'>Edit template</p>
                 </div>
                 <div className='newtemplate_content_save col-2' align='right'>
                     <button className="save_button" onClick={saveTemp}><i className="fa-solid fa-floppy-disk fa-2x"></i></button>
@@ -202,7 +230,7 @@ function NewTemplate() {
                 <div className='newtemplate_content_form row'>
                     <div className='newtemplate_content_header row'>
                         <div className='newtemplate_content_name col-8'>
-                            <input className="form-control newtemplate_name_input" type="text" placeholder="Enter Workout Name" onChange={e=>updateName(e.target.value)} />
+                            <input className="form-control newtemplate_name_input" type="text" placeholder="Enter Workout Name" defaultValue={tempName} onChange={e => updateName(e.target.value)} />
                         </div>
                     </div>
                     <div className='newtemplate_exer_list row'>
@@ -213,7 +241,7 @@ function NewTemplate() {
                             <button className='newtemplate_add_button col-6' onClick={openExercise}>ADD EXERCISE</button>
                         </div>
                     </div>
-                    <div className="modal" id='exerciseModal' tabIndex="-1" aria-hidden={true}>
+                    <div className="modal" id='exerModal' tabIndex="-1" aria-hidden={true}>
                         <div className="modal-dialog">
                             <div className="modal-content">
                                 <div className="modal-header bg-success">
@@ -233,7 +261,7 @@ function NewTemplate() {
                                     <div className='select_exer_title' style={{ 'fontWeight': 'bold', 'fontSize': '15pt' }}>
                                         {filterArr.length} Total Exercises
                                     </div>
-                                    <select className="select select_exer form-select" id='exer-list' size={10} onChange={e => handleSel(e.target.value)} defaultValue={filterArr[0].name}>
+                                    <select className="select select_exer form-select" id='exer-edit-list' size={10} onChange={e => handleSel(e.target.value)} defaultValue={filterArr[0].name}>
                                         {optionsList()}
                                     </select>
                                 </div>
@@ -246,8 +274,28 @@ function NewTemplate() {
                     </div>
                 </div>
             </div>
+
+            <div className="modal" id='saveModal' tabIndex="-1" aria-hidden={true}>
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header bg-success">
+                            <h5 className="modal-title"><b>Save Template?</b></h5>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body">
+                            <div className='newtemplate_filter_text' style={{ 'marginBottom': '5px' }}>
+                                <b style={{ 'fontWeight': 'bold', 'fontSize': '15pt' }}>You may have made changes to template. Do you want to save them?</b>
+                            </div>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={noSaveModal}><b>No</b></button>
+                            <button type="button" className="btn btn-primary" onClick={saveTempModal}><b>Yes</b></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }
 
-export default NewTemplate; 
+export default EditTemplate;

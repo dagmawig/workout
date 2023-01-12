@@ -22,6 +22,11 @@ function ShowTemp() {
         window.$('#delTempModal').modal('hide');
     }
 
+    function editTemp() {
+        navigate('/edittemp', { replace: true, state: { user: true, index: state.index } });
+        
+    }
+
     function openDelModal() {
         window.$('#delTempModal').modal('show');
     }
@@ -58,7 +63,7 @@ function ShowTemp() {
                         <button className="back_button"><i className="fa-solid fa-arrow-left fa-2x"></i></button></Link>
                 </div>
                 {(state.user) ? (<><div className='showtemp_content_edit col-2 align-self-center' align='right'>
-                    <button className="edit_button" ><i className="fa-solid fa-pen-to-square fa-2x"></i></button>
+                    <button className="edit_button" onClick={editTemp} ><i className="fa-solid fa-pen-to-square fa-2x"></i></button>
                 </div>
                     <div className='showtemp_content_delete col-2 align-self-center' align='right'>
                         <button className="edit_button" onClick={openDelModal} ><i className="fa-solid fa-trash fa-2x"></i></button>
