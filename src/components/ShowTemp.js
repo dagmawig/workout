@@ -24,7 +24,11 @@ function ShowTemp() {
 
     function editTemp() {
         navigate('/edittemp', { replace: true, state: { user: true, index: state.index } });
-        
+
+    }
+
+    function toWorkout() {
+        navigate('/logworkout', { replace: true, state: { user: true, index: state.index } });
     }
 
     function openDelModal() {
@@ -48,7 +52,7 @@ function ShowTemp() {
                         {item.sets} X {item.name}
                     </div>
                     <div className='showtemp_exer_gif col-2' align='right'>
-                        <button className="gif_button" onClick={e=>showDetail(item)} ><i className="fa-solid fa-question fa"></i></button>
+                        <button className="gif_button" onClick={e => showDetail(item)} ><i className="fa-solid fa-question fa"></i></button>
                     </div>
                 </div>
             )
@@ -79,6 +83,9 @@ function ShowTemp() {
                     </div>
                     <div className='showtemp_content_exer col-12'>
                         {exerEle()}
+                    </div>
+                    <div className='newtemplate_content_add_button row'>
+                        <button className='newtemplate_add_button col-6' onClick={toWorkout}>START WORKOUT</button>
                     </div>
                 </div>
             </div>

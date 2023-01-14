@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import NewTemplate from './components/NewTemplate';
 import ShowTemp from './components/ShowTemp';
 import EditTemplate from './components/EditTemplate';
+import LogWorkout from './components/LogWorkout';
 
 function App() {
   return (
@@ -45,6 +46,13 @@ function App() {
           <>
           <Header/>
           <EditTemplate/>
+          <Footer/>
+          </>
+        }/>
+        <Route path="/logworkout" element={
+          <>
+          <Header/>
+          <LogWorkout/>
           <Footer/>
           </>
         }/>
