@@ -23,6 +23,10 @@ function LogWorkout() {
 
     }
 
+    function finishWorkout() {
+        
+    }
+
     function openSaveModal() {
 
     }
@@ -202,6 +206,9 @@ function LogWorkout() {
                     <div className='newtemplate_content_add row'>
                         <div className='newtemplate_content_add_button row'>
                             <button className='newtemplate_add_button col-6' onClick={openExercise}>ADD EXERCISE</button>
+                        </div>
+                        <div className='newtemplate_content_add_button row'>
+                            <button className='newtemplate_add_button col-6' style={{'fontSize': '16pt'}} onClick={finishWorkout}>FINISH WORKOUT</button>
                         </div>
                     </div>
                     <div className="modal" id='exerWModal' tabIndex="-1" aria-hidden={true}>
