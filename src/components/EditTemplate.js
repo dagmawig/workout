@@ -27,7 +27,6 @@ function EditTemplate() {
     }
 
     function handleSel(value) {
-        console.log(value)
         updateSelExer(value);
     }
 

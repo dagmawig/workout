@@ -17,6 +17,7 @@ function LogWorkout() {
     let template = stateSelector.templateArr[state.index];
     const [filterArr, updateFilter] = useState(exercisesLocal);
     const [exerciseList, updateExerList] = useState(template.exerList);
+    const [selectedExer, updateSelExer] = useState('3/4 sit-up');
 
     function saveWork() {
 
@@ -27,19 +28,31 @@ function LogWorkout() {
     }
 
     function openExercise() {
-
+        window.$('#exerWModal').modal('show');
     }
 
     function handleChange(value) {
-
+        document.getElementById('exer-log-list').selectedIndex = 0;
+        let tempArr = (value === 'empty') ? exercisesLocal : exercisesLocal.filter(ele => ele.bodyPart === value)
+        updateFilter(tempArr);
+        updateSelExer(tempArr[0].name);
     }
 
     function handleSel(value) {
-
+        updateSelExer(value);
     }
 
     function addExer() {
-
+        if (selectedExer === 'empty') alert('please select exercise');
+        else if (exerciseList.filter(ele => ele.name === selectedExer).length !== 0) alert(`${selectedExer} already exists in template. Pick a different exercise.`);
+        else {
+            let exer = exercisesLocal.filter(ele => ele.name === selectedExer)[0];
+            exer.sets = 4;
+            let tempList = JSON.parse(JSON.stringify(exerciseList));
+            tempList.push(exer);
+            updateExerList(tempList);
+            window.$('#exerWModal').modal('hide');
+        }
     }
 
     function removeExer(index) {
@@ -148,11 +161,19 @@ function LogWorkout() {
     }
 
     function optionsList() {
-
+        return filterArr.map((item, i) => {
+            return (
+                <option value={item.name} className='small' key={i + 'option'} style={{ 'fontWeight': 'bold' }}>{item.name}</option>
+            )
+        })
     }
 
     function filterList() {
-
+        return bodyParts.map((item, i) => {
+            return (
+                <option value={item} className='small' key={i + 'option'} style={{ 'fontWeight': 'bold' }}>{item}</option>
+            )
+        })
     }
 
     return (
@@ -183,7 +204,7 @@ function LogWorkout() {
                             <button className='newtemplate_add_button col-6' onClick={openExercise}>ADD EXERCISE</button>
                         </div>
                     </div>
-                    <div className="modal" id='exerModal' tabIndex="-1" aria-hidden={true}>
+                    <div className="modal" id='exerWModal' tabIndex="-1" aria-hidden={true}>
                         <div className="modal-dialog">
                             <div className="modal-content">
                                 <div className="modal-header bg-success">
@@ -203,7 +224,7 @@ function LogWorkout() {
                                     <div className='select_exer_title' style={{ 'fontWeight': 'bold', 'fontSize': '15pt' }}>
                                         {filterArr.length} Total Exercises
                                     </div>
-                                    <select className="select select_exer form-select" id='exer-edit-list' size={10} onChange={e => handleSel(e.target.value)} defaultValue={filterArr[0].name}>
+                                    <select className="select select_exer form-select" id='exer-log-list' size={10} onChange={e => handleSel(e.target.value)} defaultValue={filterArr[0].name}>
                                         {optionsList()}
                                     </select>
                                 </div>
