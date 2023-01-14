@@ -18,18 +18,26 @@ function LogWorkout() {
     const [filterArr, updateFilter] = useState(exercisesLocal);
     const [exerciseList, updateExerList] = useState(template.exerList);
     const [selectedExer, updateSelExer] = useState('3/4 sit-up');
+    const [seconds, setSeconds] = useState(0);
 
     function saveWork() {
 
     }
 
     function finishWorkout() {
-        
+
     }
 
     function openSaveModal() {
 
     }
+
+    let timeOut = setTimeout(() => {
+        setSeconds(seconds + 1);
+        const formattedTime = new Date(seconds * 1000).toISOString().substr(11, 8);
+        console.log(formattedTime)
+    }, 1000);
+
 
     function openExercise() {
         window.$('#exerWModal').modal('show');
@@ -187,7 +195,12 @@ function LogWorkout() {
                     <button className="x_button"><i className="fa-solid fa-xmark fa-2x" onClick={() => openSaveModal()}></i></button>
                 </div>
                 <div className='newtemplate_content_title col-8'>
-                    <p className='temp_header_text'>{template.name}</p>
+                    <div className='logworkout_content_title_top'>
+                        <p className='temp_header_text' style={{'textAlign': 'center', 'fontSize': '12pt'}}>{template.name}</p>
+                    </div>
+                    <div className='logworkout_content_title_top'>
+                        <p className='temp_header_text' style={{'textAlign': 'center'}}>{new Date(seconds * 1000).toISOString().substr(11, 8)}</p>
+                    </div>
                 </div>
                 <div className='newtemplate_content_save col-2' align='right'>
                     <button className="save_button" onClick={saveWork}><i className="fa-solid fa-floppy-disk fa-2x"></i></button>
@@ -208,7 +221,7 @@ function LogWorkout() {
                             <button className='newtemplate_add_button col-6' onClick={openExercise}>ADD EXERCISE</button>
                         </div>
                         <div className='newtemplate_content_add_button row'>
-                            <button className='newtemplate_add_button col-6' style={{'fontSize': '16pt'}} onClick={finishWorkout}>FINISH WORKOUT</button>
+                            <button className='newtemplate_add_button col-6' style={{ 'fontSize': '16pt' }} onClick={finishWorkout}>FINISH WORKOUT</button>
                         </div>
                     </div>
                     <div className="modal" id='exerWModal' tabIndex="-1" aria-hidden={true}>
