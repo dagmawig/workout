@@ -195,14 +195,14 @@ function LogWorkout() {
         <div className='newtemplate container'>
             <div className='newtemplate_header row'>
                 <div className='newtemplate_header_x col-2'>
-                    <button className="x_button" onClick={()=>{window.$('#cancelWModal').modal('show')}}><i className="fa-solid fa-xmark fa-2x" ></i></button>
+                    <button className="x_button" onClick={() => { window.$('#cancelWModal').modal('show') }}><i className="fa-solid fa-xmark fa-2x" ></i></button>
                 </div>
                 <div className='newtemplate_content_title col-8'>
                     <div className='logworkout_content_title_top'>
-                        <p className='temp_header_text' style={{'textAlign': 'center', 'fontSize': '12pt'}}>{template.name}</p>
+                        <p className='temp_header_text' style={{ 'textAlign': 'center', 'fontSize': '12pt' }}>{template.name}</p>
                     </div>
                     <div className='logworkout_content_title_top'>
-                        <p className='temp_header_text' style={{'textAlign': 'center'}}>{new Date(seconds * 1000).toISOString().substr(11, 8)}</p>
+                        <p className='temp_header_text' style={{ 'textAlign': 'center' }}>{new Date(seconds * 1000).toISOString().substr(11, 8)}</p>
                     </div>
                 </div>
                 <div className='newtemplate_content_save col-2' align='right'>
@@ -223,8 +223,11 @@ function LogWorkout() {
                         <div className='newtemplate_content_add_button row'>
                             <button className='newtemplate_add_button col-6' onClick={openExercise}>ADD EXERCISE</button>
                         </div>
-                        <div className='newtemplate_content_add_button row'>
+                        <div className='newtemplate_content_add_button row' style={{'marginTop': '10px', 'marginBottom': '10px'}}>
                             <button className='newtemplate_add_button col-6' style={{ 'fontSize': '16pt' }} onClick={finishWorkout}>FINISH WORKOUT</button>
+                        </div>
+                        <div className='newtemplate_content_add_button row'>
+                            <button className='newtemplate_add_button col-6' style={{'color': 'darkred'}} onClick={() => { window.$('#cancelWModal').modal('show') }}>CANCEL WORKOUT</button>
                         </div>
                     </div>
                     <div className="modal" id='exerWModal' tabIndex="-1" aria-hidden={true}>

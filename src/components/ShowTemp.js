@@ -70,7 +70,7 @@ function ShowTemp() {
                     <button className="edit_button" onClick={editTemp} ><i className="fa-solid fa-pen-to-square fa-2x"></i></button>
                 </div>
                     <div className='showtemp_content_delete col-2 align-self-center' align='right'>
-                        <button className="edit_button" onClick={openDelModal} ><i className="fa-solid fa-trash fa-2x"></i></button>
+                        <button className="edit_button" onClick={openDelModal} ><i className="fa-solid fa-trash fa-2x" style={{'color': 'darkred'}}></i></button>
                     </div></>) : null}
             </div>
             <div className='showtemp_content row'>
