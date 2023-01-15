@@ -107,12 +107,12 @@ function NewTemplate() {
                             </div>
                             <div className='newtemplate_lbs col-3'>
                                 <div className='newtemplate_lbs_text row'>
-                                    <p className='col-12 text-center'>LBS</p>
+                                    <p className='col-12 text-center'>{(item.metric==='wr')? 'LBS' : (item.metric==='dt'? 'MILES' : 'SECONDS')}</p>
                                 </div>
                             </div>
                             <div className='newtemplate_reps col-3'>
                                 <div className='newtemplate_reps_text row'>
-                                    <p className='col-12 text-center'>REPS</p>
+                                    <p className='col-12 text-center'>{item.metric==='wr'? 'REPS' : item.metric==='dt'? 'MIN' : ''}</p>
                                 </div>
                             </div>
                             <div className='newtemplate_reps_remove col-2'>
@@ -150,12 +150,12 @@ function NewTemplate() {
                     </div>
                     <div className='newtemplate_lbs col-3'>
                         <div className='newtemplate_lbs_val row'>
-                            <input className='lbs_input'></input>
+                            <input className='lbs_input' disabled style={{'opacity': '.5'}}></input>
                         </div>
                     </div>
                     <div className='newtemplate_reps col-3'>
                         <div className='newtemplate_reps_val row'>
-                            <input className='reps_input'></input>
+                           {exer.metric==='wr' || exer.metric==='dt'? <input className='reps_input' disabled style={{'opacity': '.5'}}></input> : null}
                         </div>
                     </div>
                     <div className='newtemplate_reps_remove col-2'>
