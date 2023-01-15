@@ -84,7 +84,7 @@ function LogWorkout() {
 
     function removeSet(index) {
         let tempList = JSON.parse(JSON.stringify(exerciseList));
-        tempList[index].sets--;
+        if (tempList[index].sets > 1) tempList[index].sets--;
         updateExerList(tempList);
     }
 
@@ -114,12 +114,12 @@ function LogWorkout() {
                             </div>
                             <div className='newtemplate_lbs col-3'>
                                 <div className='newtemplate_lbs_text row'>
-                                    <p className='col-12 text-center'>{(item.metric==='wr')? 'LBS' : (item.metric==='dt'? 'MILES' : 'SECONDS')}</p>
+                                    <p className='col-12 text-center'>{(item.metric === 'wr') ? 'LBS' : (item.metric === 'dt' ? 'MILES' : 'SECONDS')}</p>
                                 </div>
                             </div>
                             <div className='newtemplate_reps col-3'>
                                 <div className='newtemplate_reps_text row'>
-                                    <p className='col-12 text-center'>{item.metric==='wr'? 'REPS' : item.metric==='dt'? 'MIN' : ''}</p>
+                                    <p className='col-12 text-center'>{item.metric === 'wr' ? 'REPS' : item.metric === 'dt' ? 'MIN' : ''}</p>
                                 </div>
                             </div>
                             <div className='newtemplate_reps_remove col-2'>
@@ -132,7 +132,12 @@ function LogWorkout() {
                     </div>
                     <div className='newtemplate_reps_add_set row'>
                         <div className='newtemplate_rep_add_button row'>
-                            <button className='newtemplate_add_button col-6' value={i} onClick={e => addSet(e.target.value)} >ADD SET</button>
+                            <div className='newtemplate_prev col-4'>
+                            </div>
+                            {item.sets > 1 ? <button className='newtemplate_add_button col-3' align='center' value={i} onClick={() => removeSet(i)} >- SET</button> : null}
+                            <button className='newtemplate_add_button col-3' value={i} onClick={e => addSet(e.target.value)} >+ SET</button>
+                            <div className='newtemplate_prev col-2'>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -162,7 +167,7 @@ function LogWorkout() {
                     </div>
                     <div className='newtemplate_reps col-3'>
                         <div className='newtemplate_reps_val row'>
-                        {exer.metric==='wr' || exer.metric==='dt'? <input className='reps_input'></input> : null}
+                            {exer.metric === 'wr' || exer.metric === 'dt' ? <input className='reps_input'></input> : null}
                         </div>
                     </div>
                     <div className='newtemplate_reps_remove col-2'>
@@ -223,11 +228,11 @@ function LogWorkout() {
                         <div className='newtemplate_content_add_button row'>
                             <button className='newtemplate_add_button col-6' onClick={openExercise}>ADD EXERCISE</button>
                         </div>
-                        <div className='newtemplate_content_add_button row' style={{'marginTop': '10px', 'marginBottom': '10px'}}>
+                        <div className='newtemplate_content_add_button row' style={{ 'marginTop': '10px', 'marginBottom': '10px' }}>
                             <button className='newtemplate_add_button col-6' style={{ 'fontSize': '16pt' }} onClick={finishWorkout}>FINISH WORKOUT</button>
                         </div>
                         <div className='newtemplate_content_add_button row'>
-                            <button className='newtemplate_add_button col-6' style={{'color': 'darkred'}} onClick={() => { window.$('#cancelWModal').modal('show') }}>CANCEL WORKOUT</button>
+                            <button className='newtemplate_add_button col-6' style={{ 'color': 'darkred' }} onClick={() => { window.$('#cancelWModal').modal('show') }}>CANCEL WORKOUT</button>
                         </div>
                     </div>
                     <div className="modal" id='exerWModal' tabIndex="-1" aria-hidden={true}>
