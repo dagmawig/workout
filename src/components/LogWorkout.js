@@ -34,13 +34,16 @@ function LogWorkout() {
 
     let timeOut = setTimeout(() => {
         setSeconds(seconds + 1);
-        const formattedTime = new Date(seconds * 1000).toISOString().substr(11, 8);
-        console.log(formattedTime)
     }, 1000);
 
 
     function openExercise() {
         window.$('#exerWModal').modal('show');
+    }
+
+    function cancelWork() {
+        navigate('/workout', { replace: true });
+        window.$('#cancelWModal').modal('hide');
     }
 
     function handleChange(value) {
@@ -192,7 +195,7 @@ function LogWorkout() {
         <div className='newtemplate container'>
             <div className='newtemplate_header row'>
                 <div className='newtemplate_header_x col-2'>
-                    <button className="x_button"><i className="fa-solid fa-xmark fa-2x" onClick={() => openSaveModal()}></i></button>
+                    <button className="x_button" onClick={()=>{window.$('#cancelWModal').modal('show')}}><i className="fa-solid fa-xmark fa-2x" ></i></button>
                 </div>
                 <div className='newtemplate_content_title col-8'>
                     <div className='logworkout_content_title_top'>
@@ -255,7 +258,25 @@ function LogWorkout() {
                             </div>
                         </div>
                     </div>
-
+                </div>
+            </div>
+            <div className="modal" id='cancelWModal' tabIndex="-1" aria-hidden={true}>
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header bg-success">
+                            <h5 className="modal-title"><b>Cancel Workout?</b></h5>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body">
+                            <div className='newtemplate_filter_text' style={{ 'marginBottom': '5px' }}>
+                                <b style={{ 'fontWeight': 'bold', 'fontSize': '15pt' }}>Do you want to cancel workout?</b>
+                            </div>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal"><b>No</b></button>
+                            <button type="button" className="btn btn-primary" onClick={cancelWork}><b>Yes</b></button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
