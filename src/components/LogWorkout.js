@@ -88,6 +88,10 @@ function LogWorkout() {
         updateExerList(tempList);
     }
 
+    function logSet(index) {
+
+    }
+
     function exerListEle() {
         return exerciseList.map((item, i) => {
             return (
@@ -107,7 +111,7 @@ function LogWorkout() {
                                     <p className='col-12 text-center'>SET</p>
                                 </div>
                             </div>
-                            <div className='newtemplate_prev col-2'>
+                            <div className='newtemplate_prev col-4'>
                                 <div className='newtemplate_prev_text row'>
                                     <p className='col-12 text-center'>PREV</p>
                                 </div>
@@ -122,11 +126,11 @@ function LogWorkout() {
                                     <p className='col-12 text-center'>{item.metric === 'wr' ? 'REPS' : item.metric === 'dt' ? 'MIN' : ''}</p>
                                 </div>
                             </div>
-                            <div className='newtemplate_reps_remove col-2'>
+                            {/* <div className='newtemplate_reps_remove col-2'>
                                 <div className='newtemplate_reps_space row'>
                                     <p className='col-12 text-center'></p>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                         {setList(item, i)}
                     </div>
@@ -155,7 +159,7 @@ function LogWorkout() {
                             <p className='col-12 text-center'>{item + 1}</p>
                         </div>
                     </div>
-                    <div className='newtemplate_prev col-2'>
+                    <div className='newtemplate_prev col-4'>
                         <div className='newtemplate_prev_val row'>
                             <p className='col-12 text-center'>-</p>
                         </div>
@@ -170,11 +174,11 @@ function LogWorkout() {
                             {exer.metric === 'wr' || exer.metric === 'dt' ? <input className='reps_input'></input> : null}
                         </div>
                     </div>
-                    <div className='newtemplate_reps_remove col-2'>
+                    {/* <div className='newtemplate_reps_remove col-2'>
                         <div className='newtemplate_reps_button row'>
-                            {(item !== 0) ? <button className="reps_remove_button fa-solid fa-minus" value={index} onClick={e => removeSet(e.target.value)}></button> : <></>}
+                            <button className="reps_remove_button fa-solid fa-check" value={index} onClick={e => logSet(e.target.value)}></button>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             )
         })

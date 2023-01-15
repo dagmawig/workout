@@ -124,7 +124,7 @@ function EditTemplate() {
                                     <p className='col-12 text-center'>SET</p>
                                 </div>
                             </div>
-                            <div className='newtemplate_prev col-2'>
+                            <div className='newtemplate_prev col-4'>
                                 <div className='newtemplate_prev_text row'>
                                     <p className='col-12 text-center'>PREV</p>
                                 </div>
@@ -139,11 +139,11 @@ function EditTemplate() {
                                     <p className='col-12 text-center'>{item.metric === 'wr' ? 'REPS' : item.metric === 'dt' ? 'MIN' : ''}</p>
                                 </div>
                             </div>
-                            <div className='newtemplate_reps_remove col-2'>
+                            {/* <div className='newtemplate_reps_remove col-2'>
                                 <div className='newtemplate_reps_space row'>
                                     <p className='col-12 text-center'></p>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                         {setList(item, i)}
                     </div>
@@ -172,7 +172,7 @@ function EditTemplate() {
                             <p className='col-12 text-center'>{item + 1}</p>
                         </div>
                     </div>
-                    <div className='newtemplate_prev col-2'>
+                    <div className='newtemplate_prev col-4'>
                         <div className='newtemplate_prev_val row'>
                             <p className='col-12 text-center'>-</p>
                         </div>
@@ -187,11 +187,11 @@ function EditTemplate() {
                             {exer.metric === 'wr' || exer.metric === 'dt' ? <input className='reps_input' disabled style={{ 'opacity': '.5' }}></input> : null}
                         </div>
                     </div>
-                    <div className='newtemplate_reps_remove col-2'>
+                    {/* <div className='newtemplate_reps_remove col-2'>
                         <div className='newtemplate_reps_button row'>
-                            {/* {(item !== 0) ? <button className="reps_remove_button fa-solid fa-minus" value={index} onClick={e => removeSet(e.target.value)}></button> : <></>} */}
+                            {(item !== 0) ? <button className="reps_remove_button fa-solid fa-minus" value={index} onClick={e => removeSet(e.target.value)}></button> : <></>}
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             )
         })
