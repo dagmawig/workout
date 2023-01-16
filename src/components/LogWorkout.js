@@ -39,12 +39,8 @@ function LogWorkout() {
 
     }
 
-    function finishWorkout() {
-
-    }
-
     function openSaveModal() {
-
+        window.$('#saveWModal').modal('show');
     }
 
     setTimeout(() => {
@@ -241,7 +237,7 @@ function LogWorkout() {
                     </div>
                 </div>
                 <div className='newtemplate_content_save col-2' align='right'>
-                    <button className="save_button" onClick={saveWork}><i className="fa-solid fa-floppy-disk fa-2x"></i></button>
+                    <button className="save_button" onClick={openSaveModal}><i className="fa-solid fa-floppy-disk fa-2x"></i></button>
                 </div>
             </div>
             <div className='newtemplate_content row'>
@@ -259,7 +255,7 @@ function LogWorkout() {
                             <button className='newtemplate_add_button col-6' onClick={openExercise}>ADD EXERCISE</button>
                         </div>
                         <div className='newtemplate_content_add_button row' style={{ 'marginTop': '10px', 'marginBottom': '10px' }}>
-                            <button className='newtemplate_add_button col-6' style={{ 'fontSize': '16pt' }} onClick={finishWorkout}>FINISH WORKOUT</button>
+                            <button className='newtemplate_add_button col-6' style={{ 'fontSize': '16pt' }} onClick={openSaveModal}>FINISH WORKOUT</button>
                         </div>
                         <div className='newtemplate_content_add_button row'>
                             <button className='newtemplate_add_button col-6' style={{ 'color': 'darkred' }} onClick={() => { window.$('#cancelWModal').modal('show') }}>CANCEL WORKOUT</button>
@@ -313,6 +309,25 @@ function LogWorkout() {
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal"><b>No</b></button>
                             <button type="button" className="btn btn-primary" onClick={cancelWork}><b>Yes</b></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="modal" id='saveWModal' tabIndex="-1" aria-hidden={true}>
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header bg-success">
+                            <h5 className="modal-title"><b>Finish Workout?</b></h5>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body">
+                            <div className='newtemplate_filter_text' style={{ 'marginBottom': '5px' }}>
+                                <b style={{ 'fontWeight': 'bold', 'fontSize': '15pt' }}>Do you want to finish workout?</b>
+                            </div>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal"><b>No</b></button>
+                            <button type="button" className="btn btn-primary" onClick={saveWork}><b>Yes</b></button>
                         </div>
                     </div>
                 </div>
