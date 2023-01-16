@@ -15,11 +15,26 @@ function LogWorkout() {
     const navigate = useNavigate();
 
     let template = stateSelector.templateArr[state.index];
+    let exerciseArr = template.exerList;
+    let inputArr = [];
+    exerciseArr.map((exer, i) => {
+        let arr;
+        let totSets = exer.sets;
+        if (exer.metric === 'wr' || exer.metric === 'dt') arr = new Array(2).fill().map(() => new Array(totSets))
+        else arr = new Array(1).fill().map(() => new Array(totSets));
+        inputArr.push(arr);
+        return null;
+    });
+
     const [filterArr, updateFilter] = useState(exercisesLocal);
     const [exerciseList, updateExerList] = useState(template.exerList);
     const [selectedExer, updateSelExer] = useState('3/4 sit-up');
     const [seconds, setSeconds] = useState(0);
+    const [inputState, updateInputState] = useState(inputArr);
 
+    function updateInput(i, j, k, val) {
+        inputState[i][j][k] = (val === '') ? undefined : val;
+    }
     function saveWork() {
 
     }
@@ -32,7 +47,7 @@ function LogWorkout() {
 
     }
 
-    let timeOut = setTimeout(() => {
+    setTimeout(() => {
         setSeconds(seconds + 1);
     }, 1000);
 
@@ -66,6 +81,10 @@ function LogWorkout() {
             let tempList = JSON.parse(JSON.stringify(exerciseList));
             tempList.push(exer);
             updateExerList(tempList);
+            let tempArr;
+            if (exer.metric === 'wr' || exer.metric === 'dt') tempArr = new Array(2).fill().map(() => new Array(4))
+            else tempArr = new Array(1).fill().map(() => new Array(4));
+            inputState.push(tempArr);
             window.$('#exerWModal').modal('hide');
         }
     }
@@ -74,22 +93,29 @@ function LogWorkout() {
         let tempList = JSON.parse(JSON.stringify(exerciseList));
         tempList.splice(index, 1);
         updateExerList(tempList);
+        inputState.pop();
     }
 
     function addSet(index) {
         let tempList = JSON.parse(JSON.stringify(exerciseList));
         tempList[index].sets++;
         updateExerList(tempList);
+        let tempArr = inputState[index];
+        tempArr.map(ar => {
+            ar.push(undefined);
+            return null;
+        })
     }
 
     function removeSet(index) {
         let tempList = JSON.parse(JSON.stringify(exerciseList));
         if (tempList[index].sets > 1) tempList[index].sets--;
         updateExerList(tempList);
-    }
-
-    function logSet(index) {
-
+        let tempArr = inputState[index];
+        tempArr.map(ar => {
+            ar.pop();
+            return null;
+        })
     }
 
     function exerListEle() {
@@ -166,12 +192,12 @@ function LogWorkout() {
                     </div>
                     <div className='newtemplate_lbs col-3'>
                         <div className='newtemplate_lbs_val row'>
-                            <input className='lbs_input'></input>
+                            <input className='lbs_input' type={'number'} onChange={(e) => updateInput(index, 0, item, e.target.value)}></input>
                         </div>
                     </div>
                     <div className='newtemplate_reps col-3'>
                         <div className='newtemplate_reps_val row'>
-                            {exer.metric === 'wr' || exer.metric === 'dt' ? <input className='reps_input'></input> : null}
+                            {exer.metric === 'wr' || exer.metric === 'dt' ? <input className='reps_input' type={'number'} onChange={(e) => updateInput(index, 1, item, e.target.value)}></input> : null}
                         </div>
                     </div>
                     {/* <div className='newtemplate_reps_remove col-2'>

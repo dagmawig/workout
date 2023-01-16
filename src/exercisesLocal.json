@@ -12477,7 +12477,7 @@
         "name": "straddle maltese",
         "target": "abs",
         "localUrl": "1247.gif",
-        "metric": "t"
+        "metric": "a"
     },
     {
         "bodyPart": "waist",
@@ -12487,7 +12487,7 @@
         "name": "straddle planche",
         "target": "abs",
         "localUrl": "1248.gif",
-        "metric": "t"
+        "metric": "a"
     },
     {
         "bodyPart": "upper legs",
