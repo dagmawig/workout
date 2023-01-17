@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './LogWorkout.css';
 import { useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateTemp } from './workoutSlice';
+import { updateTemp, updateWorkoutObj } from './workoutSlice';
 import { useNavigate } from 'react-router-dom';
 var bodyParts = require('../exerBody.json');
 var exercisesLocal = require('../exercisesLocal.json');
@@ -15,6 +15,7 @@ function LogWorkout() {
     const navigate = useNavigate();
 
     let template = stateSelector.templateArr[state.index];
+    let userWorkObj = stateSelector.workoutObj;
     let exerciseArr = template.exerList;
     let inputArr = [];
     exerciseArr.map((exer, i) => {
@@ -35,8 +36,45 @@ function LogWorkout() {
     function updateInput(i, j, k, val) {
         inputState[i][j][k] = (val === '') ? undefined : val;
     }
-    function saveWork() {
 
+    function checkInput (arr) {
+        for (let exer of arr) {
+            for (let metric of exer) {
+                for (let set of metric) {
+                    if(set===undefined) return false
+                }
+            }
+        }
+
+        return true;
+    }
+
+    function saveWork() {
+        if(!checkInput(inputState)) alert('Some exercise sets are not complete. Either complete the sets or remove incomplete sets.')
+        else {
+            let timeStamp = new Date().toISOString();
+            let workObj = {};
+            workObj.tempName = template.name;
+            let workoutList = [];
+            for (let i=0; i<inputState.length; i++) {
+                let inputStateExer = inputState[i];
+                let exer = exerciseArr[i]
+                let exercise = {};
+                exercise.exerName = exer.name;
+                exercise.metric = exer.metric;
+                exercise.metric1 = inputStateExer[0];
+                if(exer.metric==='wr' || exer.metric==='dt') exercise.metric2 = inputStateExer[1];
+                workoutList.push(exercise);
+            }
+
+            workObj.workoutList = workoutList;
+            let tempUserObj = JSON.parse(JSON.stringify(userWorkObj))
+            tempUserObj[timeStamp] = workObj;
+
+            dispatch(updateWorkoutObj(tempUserObj));
+            navigate('/workout', { replace: true });
+            window.$('#saveWModal').modal('hide');
+        }
     }
 
     function openSaveModal() {
@@ -72,7 +110,7 @@ function LogWorkout() {
         if (selectedExer === 'empty') alert('please select exercise');
         else if (exerciseList.filter(ele => ele.name === selectedExer).length !== 0) alert(`${selectedExer} already exists in template. Pick a different exercise.`);
         else {
-            let exer = exercisesLocal.filter(ele => ele.name === selectedExer)[0];
+            let exer = JSON.parse(JSON.stringify(exercisesLocal.filter(ele => ele.name === selectedExer)[0]));
             exer.sets = 4;
             let tempList = JSON.parse(JSON.stringify(exerciseList));
             tempList.push(exer);

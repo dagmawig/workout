@@ -1,8 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
+var exercisesLocal = require('../exercisesLocal.json');
 
 const initialState = {
     templateArr: [],
-    fixTempArr: []
+    fixTempArr: [],
+    exerciseArr: exercisesLocal,
+    workoutObj: {},
 };
 
 export const workoutSlice = createSlice({
@@ -11,10 +14,13 @@ export const workoutSlice = createSlice({
     reducers: {
         updateTemp: (state, action)=> {
             state.templateArr = action.payload;
+        },
+        updateWorkoutObj: (state, action) => {
+            state.workoutObj = action.payload;
         }
     }
 });
 
-export const { updateTemp} = workoutSlice.actions;
+export const { updateTemp, updateWorkoutObj } = workoutSlice.actions;
 
 export default workoutSlice.reducer;

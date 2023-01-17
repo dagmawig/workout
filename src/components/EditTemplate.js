@@ -78,7 +78,7 @@ function EditTemplate() {
         if (selectedExer === 'empty') alert('please select exercise');
         else if (exerciseList.filter(ele => ele.name === selectedExer).length !== 0) alert(`${selectedExer} already exists in template. Pick a different exercise.`);
         else {
-            let exer = exercisesLocal.filter(ele => ele.name === selectedExer)[0];
+            let exer = JSON.parse(JSON.stringify(exercisesLocal.filter(ele => ele.name === selectedExer)[0]));
             exer.sets = 4;
             let tempList = JSON.parse(JSON.stringify(exerciseList));
             tempList.push(exer);
