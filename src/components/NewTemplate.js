@@ -66,6 +66,7 @@ function NewTemplate() {
         else if (exerciseList.length === 0) alert('add at least one exercise')
         else {
             let workoutTemp = {
+                tempID: new Date().toISOString(),
                 name: templateName,
                 exerList: JSON.parse(JSON.stringify(exerciseList))
             }
