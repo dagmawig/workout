@@ -71,6 +71,10 @@ function LogWorkout() {
             let tempUserObj = JSON.parse(JSON.stringify(userWorkObj))
             tempUserObj[timeStamp] = workObj;
 
+            let newTemplate = JSON.parse(JSON.stringify(stateSelector.templateArr));
+            newTemplate[state.index].workoutTimeArr.push(new Date().toISOString());
+            
+            dispatch(updateTemp(newTemplate))
             dispatch(updateWorkoutObj(tempUserObj));
             navigate('/workout', { replace: true });
             window.$('#saveWModal').modal('hide');

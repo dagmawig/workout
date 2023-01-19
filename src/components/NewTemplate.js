@@ -67,6 +67,7 @@ function NewTemplate() {
         else {
             let workoutTemp = {
                 tempID: new Date().toISOString(),
+                workoutTimeArr: [],
                 name: templateName,
                 exerList: JSON.parse(JSON.stringify(exerciseList))
             }
