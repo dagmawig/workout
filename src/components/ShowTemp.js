@@ -24,7 +24,14 @@ function ShowTemp() {
 
     function editTemp() {
         navigate('/edittemp', { replace: true, state: { user: true, index: state.index } });
+    }
 
+    function calcTime(template) {
+        let arr = template.workoutTimeArr;
+        if(arr.length===0) return 'Never';
+        let lastTime = new Date(arr[arr.length-1]).getTime();
+        let hourDiff = Math.floor((new Date().getTime() - lastTime)/(1000*3600));
+        return (hourDiff<24)? `${hourDiff} hours ago`: `${Math.floor(hourDiff/24)} day(s) ago`;
     }
 
     function toWorkout() {
@@ -79,7 +86,7 @@ function ShowTemp() {
                         <p className='row showtemp_header_text text-right'>{template.name}</p>
                     </div>
                     <div className='showtemp_content_time col-12'>
-                        <p className='row showtemp_header_last text-left'>Last performed: 2 days ago</p>
+                        <p className='row showtemp_header_last text-left'>Last performed: {calcTime(template)}</p>
                     </div>
                     <div className='showtemp_content_exer col-12'>
                         {exerEle()}

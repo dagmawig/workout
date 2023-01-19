@@ -12,6 +12,14 @@ function Workout() {
         navigate('/showtemp', { replace: true, state: { user: true, index: i } })
     }
 
+    function calcTime(template) {
+        let arr = template.workoutTimeArr;
+        if(arr.length===0) return 'Never';
+        let lastTime = new Date(arr[arr.length-1]).getTime();
+        let hourDiff = Math.floor((new Date().getTime() - lastTime)/(1000*3600));
+        return (hourDiff<24)? `${hourDiff} hours ago`: `${Math.floor(hourDiff/24)} day(s) ago`;
+    }
+
     function templateEle() {
         return stateSelector.templateArr.map((item, i) => {
             return (
@@ -21,7 +29,7 @@ function Workout() {
                             <p className="row" style={{'height': '26px', 'fontWeight': 'bold', 'fontSize': '16pt'}}>{item.name}</p>
                         </div>
                         <div className='template_content_time row'>
-                            Last performed: 3 days ago
+                            Last performed: {calcTime(item)}
                         </div>
                         <div className='template_content_exer row'>
                             {tempExerEle(item)}
