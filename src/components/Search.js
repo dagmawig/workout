@@ -6,7 +6,6 @@ var bodyParts = require('../exerBody.json');
 var exercisesLocal = require('../exercisesLocal.json');
 
 function Search() {
-    console.log(exercisesLocal[991])
     const [filter, updateFilter] = useState(null);
     const [disable, updateDisable] = useState(true);
     const [exerFilter, updateExer] = useState(exercisesLocal);
@@ -28,7 +27,7 @@ function Search() {
                     <div className='col-7 search_text'>
                         <div className='row text'>
                             <div className='row first'>
-                            <div className='col-12 name'><b>Workout</b></div>
+                            <div className='col-12 name'><b>Workout {`${i+1}/${list.length}`}</b></div>
                             <div className='col-12 name_value'>{item.name}</div>
                             </div>
                             <div className='row second'>

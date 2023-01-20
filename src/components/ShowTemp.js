@@ -34,8 +34,8 @@ function ShowTemp() {
         return (hourDiff<24)? `${hourDiff} hours ago`: `${Math.floor(hourDiff/24)} day(s) ago`;
     }
 
-    function toWorkout() {
-        navigate('/logworkout', { replace: true, state: { user: true, index: state.index } });
+    function toWorkout(user) {
+        navigate('/logworkout', { replace: true, state: { user: user, index: state.index } });
     }
 
     function openDelModal() {
@@ -92,7 +92,7 @@ function ShowTemp() {
                         {exerEle()}
                     </div>
                     <div className='newtemplate_content_add_button row'>
-                        <button className='newtemplate_add_button col-6' onClick={toWorkout}>START WORKOUT</button>
+                        <button className='newtemplate_add_button col-6' onClick={()=>toWorkout(state.user)}>START WORKOUT</button>
                     </div>
                 </div>
             </div>

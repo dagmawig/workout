@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './LogWorkout.css';
 import { useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateTemp, updateWorkoutObj } from './workoutSlice';
+import { updateTemp, updateFixTemp, updateWorkoutObj } from './workoutSlice';
 import { useNavigate } from 'react-router-dom';
 var bodyParts = require('../exerBody.json');
 var exercisesLocal = require('../exercisesLocal.json');
@@ -14,7 +14,7 @@ function LogWorkout() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    let template = stateSelector.templateArr[state.index];
+    let template = (state.user) ? stateSelector.templateArr[state.index] : stateSelector.fixTempArr[state.index];
     let userWorkObj = stateSelector.workoutObj;
     let exerciseArr = template.exerList;
     let inputArr = [];
@@ -37,11 +37,11 @@ function LogWorkout() {
         inputState[i][j][k] = (val === '') ? undefined : val;
     }
 
-    function checkInput (arr) {
+    function checkInput(arr) {
         for (let exer of arr) {
             for (let metric of exer) {
                 for (let set of metric) {
-                    if(set===undefined) return false
+                    if (set === undefined) return false
                 }
             }
         }
@@ -50,20 +50,20 @@ function LogWorkout() {
     }
 
     function saveWork() {
-        if(!checkInput(inputState)) alert('Some exercise sets are not complete. Either complete the sets or remove incomplete sets.')
+        if (!checkInput(inputState)) alert('Some exercise sets are not complete. Either complete the sets or remove incomplete sets.')
         else {
             let timeStamp = new Date().toISOString();
             let workObj = {};
             workObj.tempName = template.name;
             let workoutList = [];
-            for (let i=0; i<inputState.length; i++) {
+            for (let i = 0; i < inputState.length; i++) {
                 let inputStateExer = inputState[i];
                 let exer = exerciseArr[i]
                 let exercise = {};
                 exercise.exerName = exer.name;
                 exercise.metric = exer.metric;
                 exercise.metric1 = inputStateExer[0];
-                if(exer.metric==='wr' || exer.metric==='dt') exercise.metric2 = inputStateExer[1];
+                if (exer.metric === 'wr' || exer.metric === 'dt') exercise.metric2 = inputStateExer[1];
                 workoutList.push(exercise);
             }
 
@@ -71,10 +71,12 @@ function LogWorkout() {
             let tempUserObj = JSON.parse(JSON.stringify(userWorkObj))
             tempUserObj[timeStamp] = workObj;
 
-            let newTemplate = JSON.parse(JSON.stringify(stateSelector.templateArr));
+            let newTemplate = JSON.parse(JSON.stringify(state.user ? stateSelector.templateArr : stateSelector.fixTempArr));
             newTemplate[state.index].workoutTimeArr.push(new Date().toISOString());
+
+            if (state.user) dispatch(updateTemp(newTemplate));
+            else dispatch(updateFixTemp(newTemplate));
             
-            dispatch(updateTemp(newTemplate))
             dispatch(updateWorkoutObj(tempUserObj));
             navigate('/workout', { replace: true });
             window.$('#saveWModal').modal('hide');
