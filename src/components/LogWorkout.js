@@ -133,7 +133,7 @@ function LogWorkout() {
         let tempList = JSON.parse(JSON.stringify(exerciseList));
         tempList.splice(index, 1);
         updateExerList(tempList);
-        inputState.pop();
+        inputState.splice(index, 1);
     }
 
     function addSet(index) {

@@ -3,9 +3,9 @@
     margin: 0 auto;
     padding: 3px;
     font-family: 'Courier New', Courier, monospace;
- }
- 
- .history::before {
+}
+
+.history::before {
     content: '';
     position: absolute;
     top: 0;
@@ -14,12 +14,12 @@
     bottom: 0;
     background-image: linear-gradient(to bottom, rgba(213, 243, 210, 0.52), rgba(13, 86, 18, 0.73)), url("../images/dumbbell.png");
     opacity: .4;
-    background-repeat:repeat;
-    background-size:50px;
+    background-repeat: repeat;
+    background-size: 50px;
     z-index: -1;
- }
+}
 
- .history_header {
+.history_header {
     position: sticky;
     height: 50px;
     display: flex;
@@ -34,9 +34,9 @@
     font-size: 12pt !important;
     font-weight: bold;
     color: black;
- }
+}
 
- .history_content {
+.history_content {
     display: flex;
     flex-direction: row;
     width: 100%;
@@ -46,38 +46,84 @@
     justify-content: center;
     max-height: calc(100vh - 180px);
     overflow-y: scroll;
- }
+}
 
- .history_content_item {
+.history_content_item {
     border: black solid 1px;
     border-radius: 5px;
     background-color: rgb(125, 149, 90);
     width: 100%;
     padding: 10px;
     margin: 2px;
- }
+}
 
- .history_item_header {
+.history_item_header {
     display: flex;
     flex-direction: row;
     width: 100%;
     justify-content: space-between;
     align-items: center;
-    margin:0;
+    margin: 0;
     margin-bottom: 5px;
     padding: 0;
     border-bottom: 1px solid;
- }
- .history_item_list {
+}
+
+.history_item_list {
     display: flex;
     flex-direction: row;
     width: 100%;
     justify-content: space-between;
     align-items: center;
-    margin:0;
+    margin: 0;
     padding: 0;
- }
+}
 
- .history_item_name, .history_item_date {
+.history_item_name,
+.history_item_date {
     font-weight: bold;
- }
+}
+
+.history_exer_name {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+    font-size: 16pt;
+}
+
+.accordion-item {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.my_button, button {
+    border-radius: 10px;
+    background-color: rgb(111, 159, 198);
+    border: solid black 2px;
+}
+
+.history_set_header, .history_set_content {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    font-size: 16pt;
+}
+
+.history_set_header {
+    font-weight: bold;
+    border-bottom: solid black 1px;
+}
+
+.history_set, .history_value {
+    align-content: center;
+}
