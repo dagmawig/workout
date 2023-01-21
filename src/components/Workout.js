@@ -47,7 +47,8 @@ function Workout() {
     function tempExerEle(template, userTemp) {
         return template.exerList.map((item, i) => {
             return (
-                <p className="row text-left" key={`${template.name}+${i}+${(userTemp)? 'user' : 'fixed'}`}>{item.sets} X {item.name}</p>
+                <div className="row text-left" style={{'width': '100%', 'padding': 0}} key={`${template.name}+${i}+${(userTemp)? 'user' : 'fixed'}`}>
+                    <div className='showtemp_exer_name col-12' align='left'>{item.sets} X {item.name}</div></div>
             )
         })
     }

@@ -49,10 +49,11 @@
 
  .workout_templates, .workout_samples {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: flex-start;
     justify-content: center;
     width:100%;
+    height: auto;
  }
 
  .template_header {
@@ -94,6 +95,8 @@
 
  .template_content_exer {
     font-weight: bold;
+    width: 100%;
+    margin: 0;
  }
 
  .template_add, .template_edit {
