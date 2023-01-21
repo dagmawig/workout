@@ -8,6 +8,7 @@ import NewTemplate from './components/NewTemplate';
 import ShowTemp from './components/ShowTemp';
 import EditTemplate from './components/EditTemplate';
 import LogWorkout from './components/LogWorkout';
+import History from './components/History';
 
 function App() {
   return (
@@ -53,6 +54,13 @@ function App() {
           <>
           <Header/>
           <LogWorkout/>
+          <Footer/>
+          </>
+        }/>
+        <Route path="/history" element={
+          <>
+          <Header/>
+          <History/>
           <Footer/>
           </>
         }/>
