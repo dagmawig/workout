@@ -7,47 +7,31 @@ function History() {
     const stateSelector = useSelector(state => state.workout);
     // let userWorkObj = stateSelector.workoutObj;
     let userWorkObj = {
-        "2023-01-21T19:04:02.868Z": {
-            "tempName": "Strong 5X5 - Workout B",
-            "workoutList": [
-                {
-                    "exerName": "barbell full squat",
-                    "metric": "wr",
-                    "metric1": [
-                        "1"
-                    ],
-                    "metric2": [
-                        "11"
-                    ]
-                }
-            ]
-        },
-        "2023-01-21T19:04:02.869Z": {
-            "tempName": "Strong 5X5 - Workout B",
-            "workoutList": [
-                {
-                    "exerName": "barbell full squat",
-                    "metric": "wr",
-                    "metric1": [
-                        "1"
-                    ],
-                    "metric2": [
-                        "11"
-                    ]
-                },
-                {
-                    "exerName": "barbell full squat",
-                    "metric": "wr",
-                    "metric1": [
-                        "1"
-                    ],
-                    "metric2": [
-                        "11"
-                    ]
-                }
-            ]
-        }
-    };
+    "2023-01-21T19:44:17.452Z": {
+        "tempName": "Dag",
+        "workoutList": [
+            {
+                "exerName": "straddle maltese",
+                "metric": "a",
+                "metric1": [
+                    "1",
+                    "3",
+                    "4"
+                ]
+            },
+            {
+                "exerName": "sledge hammer",
+                "metric": "wr",
+                "metric1": [
+                    "2"
+                ],
+                "metric2": [
+                    "3"
+                ]
+            }
+        ]
+    }
+}
     console.log(userWorkObj)
     function historyItem(workoutObj) {
        return Object.keys(workoutObj).sort((a,b)=>new Date(b)-new Date(a)).map(key => {
@@ -78,11 +62,11 @@ function History() {
             return (
                 <div className="accordion-item" key={`${key}${i}`}>
                     <h2 className="accordion-header" id={`heading-${key}${i}`}>
-                        <button className="accordion-button btn" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse-${key}${i}`} aria-expanded="true" aria-controls={`collapse-${key}${i}`} style={{'fontWeight': 'bold', 'outline': 'none'}}>
+                        <button className="accordion-button btn collapsed" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse-${key}${i}`} aria-expanded="true" aria-controls={`collapse-${key}${i}`} style={{'fontWeight': 'bold', 'outline': 'none'}}>
                            {exer.metric1.length} X {exer.exerName}
                         </button>
                     </h2>
-                    <div id={`collapse-${key}${i}`} className="accordion-collapse collapse show" aria-labelledby={`heading-${key}${i}`} data-bs-parent={`#accordionExample-${key}`}>
+                    <div id={`collapse-${key}${i}`} className="accordion-collapse collapse" aria-labelledby={`heading-${key}${i}`} data-bs-parent={`#accordionExample-${key}`}>
                         <div className="accordion-body">
                             <div className='history_set_header row'>
                                 <div className='history_set col-4' align='center'>

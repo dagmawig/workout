@@ -66,7 +66,7 @@
     margin: 0;
     margin-bottom: 5px;
     padding: 0;
-    border-bottom: 1px solid;
+    font-size: 15pt;
 }
 
 .history_item_list {
@@ -93,7 +93,7 @@
     margin: 0;
     padding: 0;
     font-weight: bold;
-    font-size: 16pt;
+    font-size: 13pt;
 }
 
 .accordion-item {
@@ -115,11 +115,14 @@
 
 .history_set_header {
     font-weight: bold;
-    border-bottom: solid black 1px;
 }
 
 .history_set, .history_value {
     align-content: center;
+}
+
+.history_set {
+    text-decoration: underline;
 }
 
 .history_item_name {
