@@ -5,7 +5,50 @@ import { useSelector, useDispatch } from 'react-redux';
 
 function History() {
     const stateSelector = useSelector(state => state.workout);
-    let userWorkObj = stateSelector.workoutObj;
+    // let userWorkObj = stateSelector.workoutObj;
+    let userWorkObj = {
+        "2023-01-21T19:04:02.868Z": {
+            "tempName": "Strong 5X5 - Workout B",
+            "workoutList": [
+                {
+                    "exerName": "barbell full squat",
+                    "metric": "wr",
+                    "metric1": [
+                        "1"
+                    ],
+                    "metric2": [
+                        "11"
+                    ]
+                }
+            ]
+        },
+        "2023-01-21T19:04:02.869Z": {
+            "tempName": "Strong 5X5 - Workout B",
+            "workoutList": [
+                {
+                    "exerName": "barbell full squat",
+                    "metric": "wr",
+                    "metric1": [
+                        "1"
+                    ],
+                    "metric2": [
+                        "11"
+                    ]
+                },
+                {
+                    "exerName": "barbell full squat",
+                    "metric": "wr",
+                    "metric1": [
+                        "1"
+                    ],
+                    "metric2": [
+                        "11"
+                    ]
+                }
+            ]
+        }
+    };
+    console.log(userWorkObj)
     function historyItem(workoutObj) {
        return Object.keys(workoutObj).sort((a,b)=>new Date(b)-new Date(a)).map(key => {
             return (
@@ -35,8 +78,8 @@ function History() {
             return (
                 <div className="accordion-item" key={`${key}${i}`}>
                     <h2 className="accordion-header" id={`heading-${key}${i}`}>
-                        <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse-${key}${i}`} aria-expanded="true" aria-controls={`collapse-${key}${i}`}>
-                            {exer.exerName}
+                        <button className="accordion-button btn" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse-${key}${i}`} aria-expanded="true" aria-controls={`collapse-${key}${i}`} style={{'fontWeight': 'bold', 'outline': 'none'}}>
+                           {exer.metric1.length} X {exer.exerName}
                         </button>
                     </h2>
                     <div id={`collapse-${key}${i}`} className="accordion-collapse collapse show" aria-labelledby={`heading-${key}${i}`} data-bs-parent={`#accordionExample-${key}`}>
@@ -65,7 +108,7 @@ function History() {
             return (
                 <div className='history_set_content row' key={`${exerName}${i}`}>
                     <div className='history_value col-4' align='center'>
-                        {i}
+                        {i+1}
                     </div>
                     <div className='history_value col-4' align='center'>
                         {val}

@@ -102,12 +102,6 @@
     padding: 0;
 }
 
-.my_button, button {
-    border-radius: 10px;
-    background-color: rgb(111, 159, 198);
-    border: solid black 2px;
-}
-
 .history_set_header, .history_set_content {
     display: flex;
     flex-direction: row;
@@ -116,7 +110,7 @@
     align-items: center;
     margin: 0;
     padding: 0;
-    font-size: 16pt;
+    font-size: 12pt;
 }
 
 .history_set_header {
@@ -127,3 +121,19 @@
 .history_set, .history_value {
     align-content: center;
 }
+
+.history_item_name {
+    font-weight: bold;
+}
+
+.accordion-button:not(.collapsed), .accordion-button.collapsed {
+    background-color: rgb(127, 172, 59);
+}
+
+.accordion-body {
+    background-color: rgb(190, 209, 163);
+}
+.btn:focus,.btn:active {
+    outline: none !important;
+    box-shadow: none;
+ }
