@@ -1,12 +1,14 @@
 .footer {
-    position: sticky;
+    position: absolute;
     width: 100%;
     bottom: 0;
-    display: flex;
-    align-items: center;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
     height: 50px;
     z-index: 20;
-    background-color:black;
+    background-color: black;
 }
 
 .footer_row {
@@ -16,10 +18,11 @@
     margin: 0px;
     padding: 0px;
     align-items: center;
-    justify-content: space-between; 
+    justify-content: space-between;
 }
 
-.footer_search, .footer_profile {
+.footer_search,
+.footer_profile {
     width: 50%;
     height: 100%;
     display: flex;
