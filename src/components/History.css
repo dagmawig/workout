@@ -31,7 +31,7 @@
     justify-content: center;
     border: rgb(13, 99, 39) solid 1px;
     border-radius: 15px;
-    font-size: 12pt !important;
+    font-size: 16pt !important;
     font-weight: bold;
     color: black;
 }
@@ -93,7 +93,11 @@
     margin: 0;
     padding: 0;
     font-weight: bold;
-    font-size: 13pt;
+    font-size: 10pt;
+}
+
+.accordion {
+    padding: 0;
 }
 
 .accordion-item {

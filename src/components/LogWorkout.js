@@ -50,7 +50,7 @@ function LogWorkout() {
     }
 
     function saveWork() {
-        if (!checkInput(inputState)) alert('Some exercise sets are not complete. Either complete the sets or remove incomplete sets.')
+        if (!checkInput(inputState)) alert('Some exercise sets are not complete. Either complete the sets or remove incomplete sets. If doing weightless exercise, put 0 in the LBS box.')
         else {
             let timeStamp = new Date().toISOString();
             let workObj = {};

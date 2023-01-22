@@ -5,43 +5,43 @@ import { useSelector, useDispatch } from 'react-redux';
 
 function History() {
     const stateSelector = useSelector(state => state.workout);
-    // let userWorkObj = stateSelector.workoutObj;
-    let userWorkObj = {
-    "2023-01-21T19:44:17.452Z": {
-        "tempName": "Dag",
-        "workoutList": [
-            {
-                "exerName": "straddle maltese",
-                "metric": "a",
-                "metric1": [
-                    "1",
-                    "3",
-                    "4"
-                ]
-            },
-            {
-                "exerName": "sledge hammer",
-                "metric": "wr",
-                "metric1": [
-                    "2"
-                ],
-                "metric2": [
-                    "3"
-                ]
-            }
-        ]
-    }
-}
-    console.log(userWorkObj)
+    let userWorkObj = stateSelector.workoutObj;
+//     let userWorkObj = {
+//     "2023-01-21T19:44:17.452Z": {
+//         "tempName": "Dag",
+//         "workoutList": [
+//             {
+//                 "exerName": "straddle maltese",
+//                 "metric": "a",
+//                 "metric1": [
+//                     "1",
+//                     "3",
+//                     "4"
+//                 ]
+//             },
+//             {
+//                 "exerName": "sledge hammer",
+//                 "metric": "wr",
+//                 "metric1": [
+//                     "2"
+//                 ],
+//                 "metric2": [
+//                     "3"
+//                 ]
+//             }
+//         ]
+//     }
+// }
+
     function historyItem(workoutObj) {
        return Object.keys(workoutObj).sort((a,b)=>new Date(b)-new Date(a)).map(key => {
             return (
                 <div className='row history_content_item' key={key}>
                     <div className='row history_item_header'>
-                        <div className='history_item_name col-8' align='left'>
+                        <div className='history_item_name col-7' align='left'>
                             {workoutObj[key].tempName}
                         </div>
-                        <div className='history_item_date col-4' align='right'>
+                        <div className='history_item_date col-5' align='right'>
                             {key.substring(0, 10)}
                         </div>
                     </div>
