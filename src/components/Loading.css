@@ -1,0 +1,21 @@
+.loading {
+    position: fixed;
+    left: 0;
+    top: 70px;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    background-color: transparent;
+    z-index: 1052;
+}
+.loading_row {
+    background-color: lightgray;
+    opacity: .5;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    display:flex;
+    margin: 0;
+    align-items: center;
+    justify-content: center;
+}

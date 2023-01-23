@@ -2,7 +2,6 @@ import React from 'react';
 import './Workout.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-var exercisesLocal = require('../exercisesLocal.json');
 
 function Workout() {
 
@@ -69,7 +68,7 @@ function Workout() {
                             </div>
                         </div>
                     </div>
-                    {templateEle(stateSelector.templateArr, true)}
+                    {templateEle(stateSelector.userData.templateArr, true)}
                 </div>
                 <div className='workout_samples row'>
                     <div className='template_header col-12>'>
@@ -79,7 +78,7 @@ function Workout() {
                             </div>
                         </div>
                     </div>
-                    {templateEle(stateSelector.fixTempArr, false)}
+                    {templateEle(stateSelector.userData.fixTempArr, false)}
                 </div>
             </div>
         </div>

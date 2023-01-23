@@ -62,7 +62,7 @@ function NewTemplate() {
 
     function saveTemp() {
         if (!templateName.split(' ').join('')) alert('enter wolrkout template name');
-        else if (stateSelector.templateArr.filter(ele => ele.name === templateName).length !== 0) alert('workout template name already exist. use a different template name.');
+        else if (stateSelector.userData.templateArr.filter(ele => ele.name === templateName).length !== 0) alert('workout template name already exist. use a different template name.');
         else if (exerciseList.length === 0) alert('add at least one exercise')
         else {
             let workoutTemp = {
@@ -71,7 +71,7 @@ function NewTemplate() {
                 name: templateName,
                 exerList: JSON.parse(JSON.stringify(exerciseList))
             }
-            let newTempArr = JSON.parse(JSON.stringify(stateSelector.templateArr));
+            let newTempArr = JSON.parse(JSON.stringify(stateSelector.userData.templateArr));
             newTempArr.push(workoutTemp);
 
             dispatch(updateTemp(newTempArr));

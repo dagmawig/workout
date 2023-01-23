@@ -13,7 +13,7 @@ function EditTemplate() {
     const navigate = useNavigate();
     const { state } = useLocation();
 
-    let template = stateSelector.templateArr[state.index];
+    let template = stateSelector.userData.templateArr[state.index];
     const [tempName, updateName] = useState(template.name);
     const [exerciseList, updateExerList] = useState(template.exerList);
     const [filterArr, updateFilter] = useState(exercisesLocal);
@@ -32,14 +32,14 @@ function EditTemplate() {
 
     function saveTemp() {
         if (!tempName.split(' ').join('')) alert('enter wolrkout template name');
-        else if (stateSelector.templateArr.filter((ele, i) => ele.name === tempName && i !== state.index).length !== 0) alert('workout template name already exist. use a different template name.');
+        else if (stateSelector.userData.templateArr.filter((ele, i) => ele.name === tempName && i !== state.index).length !== 0) alert('workout template name already exist. use a different template name.');
         else if (exerciseList.length === 0) alert('add at least one exercise')
         else {
             let workoutTemp = {
                 name: tempName,
                 exerList: JSON.parse(JSON.stringify(exerciseList))
             }
-            let newTempArr = JSON.parse(JSON.stringify(stateSelector.templateArr));
+            let newTempArr = JSON.parse(JSON.stringify(stateSelector.userData.templateArr));
             newTempArr[state.index] = workoutTemp;
 
             dispatch(updateTemp(newTempArr));
@@ -49,14 +49,14 @@ function EditTemplate() {
 
     function saveTempModal() {
         if (!tempName.split(' ').join('')) alert('enter wolrkout template name');
-        else if (stateSelector.templateArr.filter((ele, i) => ele.name === tempName && i !== state.index).length !== 0) alert('workout template name already exist. use a different template name.');
+        else if (stateSelector.userData.templateArr.filter((ele, i) => ele.name === tempName && i !== state.index).length !== 0) alert('workout template name already exist. use a different template name.');
         else if (exerciseList.length === 0) alert('add at least one exercise')
         else {
             let workoutTemp = {
                 name: tempName,
                 exerList: JSON.parse(JSON.stringify(exerciseList))
             }
-            let newTempArr = JSON.parse(JSON.stringify(stateSelector.templateArr));
+            let newTempArr = JSON.parse(JSON.stringify(stateSelector.userData.templateArr));
             newTempArr[state.index] = workoutTemp;
 
             dispatch(updateTemp(newTempArr));

@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './History.css';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 
 function History() {
     const stateSelector = useSelector(state => state.workout);
-    let userWorkObj = stateSelector.workoutObj;
+    let userWorkObj = stateSelector.userData.workoutObj;
 //     let userWorkObj = {
 //     "2023-01-21T19:44:17.452Z": {
 //         "tempName": "Dag",

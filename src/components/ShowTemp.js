@@ -12,10 +12,10 @@ function ShowTemp() {
     const navigate = useNavigate();
     const [exercise, updateExer] = useState('');
 
-    let template = (state.user) ? stateSelector.templateArr[state.index] : stateSelector.fixTempArr[state.index];
+    let template = (state.user) ? stateSelector.userData.templateArr[state.index] : stateSelector.userData.fixTempArr[state.index];
 
     function deleteTemp() {
-        let tempArr = [...stateSelector.templateArr];
+        let tempArr = [...stateSelector.userData.templateArr];
         tempArr.splice(state.index, 1);
         dispatch(updateTemp(tempArr));
         navigate('/workout', { replace: true })

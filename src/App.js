@@ -9,6 +9,7 @@ import ShowTemp from './components/ShowTemp';
 import EditTemplate from './components/EditTemplate';
 import LogWorkout from './components/LogWorkout';
 import History from './components/History';
+import Loading from './components/Loading';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/" element={
           <>
           <Header/>
+          <Loading />
           <Search/>
           <Footer/>
           </>
@@ -25,6 +27,7 @@ function App() {
           <Route path="/workout" element={
           <>
           <Header/>
+          <Loading />
           <Workout/>
           <Footer/>
           </>
@@ -32,6 +35,7 @@ function App() {
         <Route path="/template" element={
           <>
           <Header/>
+          <Loading/>
           <NewTemplate/>
           <Footer/>
           </>
@@ -39,6 +43,7 @@ function App() {
         <Route path="/showtemp" element={
           <>
           <Header/>
+          <Loading />
           <ShowTemp/>
           <Footer/>
           </>
@@ -46,6 +51,7 @@ function App() {
         <Route path="/edittemp" element={
           <>
           <Header/>
+          <Loading />
           <EditTemplate/>
           <Footer/>
           </>
@@ -53,6 +59,7 @@ function App() {
         <Route path="/logworkout" element={
           <>
           <Header/>
+          <Loading />
           <LogWorkout/>
           <Footer/>
           </>
@@ -60,6 +67,7 @@ function App() {
         <Route path="/history" element={
           <>
           <Header/>
+          <Loading />
           <History/>
           <Footer/>
           </>

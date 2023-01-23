@@ -14,8 +14,8 @@ function LogWorkout() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    let template = (state.user) ? stateSelector.templateArr[state.index] : stateSelector.fixTempArr[state.index];
-    let userWorkObj = stateSelector.workoutObj;
+    let template = (state.user) ? stateSelector.userData.templateArr[state.index] : stateSelector.userData.fixTempArr[state.index];
+    let userWorkObj = stateSelector.userData.workoutObj;
     let exerciseArr = template.exerList;
     let inputArr = [];
     exerciseArr.map((exer, i) => {
@@ -31,7 +31,7 @@ function LogWorkout() {
     const [exerciseList, updateExerList] = useState(template.exerList);
     const [selectedExer, updateSelExer] = useState('3/4 sit-up');
     const [seconds, setSeconds] = useState(0);
-    const [inputState, updateInputState] = useState(inputArr);
+    const [inputState] = useState(inputArr);
 
     function updateInput(i, j, k, val) {
         inputState[i][j][k] = (val === '') ? undefined : val;
@@ -71,7 +71,7 @@ function LogWorkout() {
             let tempUserObj = JSON.parse(JSON.stringify(userWorkObj))
             tempUserObj[timeStamp] = workObj;
 
-            let newTemplate = JSON.parse(JSON.stringify(state.user ? stateSelector.templateArr : stateSelector.fixTempArr));
+            let newTemplate = JSON.parse(JSON.stringify(state.user ? stateSelector.userData.templateArr : stateSelector.userData.fixTempArr));
             newTemplate[state.index].workoutTimeArr.push(new Date().toISOString());
 
             if (state.user) dispatch(updateTemp(newTemplate));
