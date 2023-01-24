@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import './EditTemplate.css';
 import { useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateTemp } from './workoutSlice';
+import { updateTemp, updateLoading } from './workoutSlice';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
 var bodyParts = require('../exerBody.json');
 var exercisesLocal = require('../exercisesLocal.json');
 
@@ -30,6 +32,13 @@ function EditTemplate() {
         updateSelExer(value);
     }
 
+    async function saveTemplate(newTempArr) {
+        let updateURI = process.env.REACT_APP_API_URI + 'updateTemp';
+        let res = await axios.post(updateURI, { userID: localStorage.getItem("workout_userID"), templateArr: newTempArr }).catch(err => console.log(err));
+
+        return res;
+    }
+
     function saveTemp() {
         if (!tempName.split(' ').join('')) alert('enter wolrkout template name');
         else if (stateSelector.userData.templateArr.filter((ele, i) => ele.name === tempName && i !== state.index).length !== 0) alert('workout template name already exist. use a different template name.');
@@ -37,13 +46,28 @@ function EditTemplate() {
         else {
             let workoutTemp = {
                 name: tempName,
-                exerList: JSON.parse(JSON.stringify(exerciseList))
+                exerList: JSON.parse(JSON.stringify(exerciseList)),
+                workoutTimeArr: [...stateSelector.userData.templateArr[state.index].workoutTimeArr],
+                tempID: stateSelector.userData.templateArr[state.index].tempID
             }
             let newTempArr = JSON.parse(JSON.stringify(stateSelector.userData.templateArr));
             newTempArr[state.index] = workoutTemp;
 
-            dispatch(updateTemp(newTempArr));
-            navigate('/workout', { replace: true })
+
+
+            dispatch(updateLoading(true));
+            saveTemplate(newTempArr).then(res => {
+                let data = res.data;
+                if (data.success) {
+                    dispatch(updateTemp(data.data.templateArr));
+                    navigate('/workout', { replace: true })
+                    alert(`Template ${tempName} updated successfully!`)
+                    dispatch(updateLoading(false));
+                } else {
+                    dispatch(updateLoading(false));
+                    alert(`${data.err}`)
+                }
+            })
         }
     }
 
@@ -54,14 +78,29 @@ function EditTemplate() {
         else {
             let workoutTemp = {
                 name: tempName,
-                exerList: JSON.parse(JSON.stringify(exerciseList))
+                exerList: JSON.parse(JSON.stringify(exerciseList)),
+                workoutTimeArr: [...stateSelector.userData.templateArr[state.index].workoutTimeArr],
+                tempID: stateSelector.userData.templateArr[state.index].tempID
             }
             let newTempArr = JSON.parse(JSON.stringify(stateSelector.userData.templateArr));
             newTempArr[state.index] = workoutTemp;
 
-            dispatch(updateTemp(newTempArr));
-            window.$('#saveModal').modal('hide');
-            navigate('/workout', { replace: true })
+
+            dispatch(updateLoading(true));
+            saveTemplate(newTempArr).then(res => {
+                let data = res.data;
+                if (data.success) {
+                    dispatch(updateTemp(data.data.templateArr));
+                    window.$('#saveModal').modal('hide');
+                    navigate('/workout', { replace: true });
+                    alert(`Template ${tempName} updated successfully!`)
+                    dispatch(updateLoading(false));
+                } else {
+                    dispatch(updateLoading(false));
+                    alert(`${data.err}`)
+                }
+            })
+            //dispatch(updateTemp(newTempArr));
         }
     }
 

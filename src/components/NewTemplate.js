@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import './NewTemplate.css';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateTemp } from './workoutSlice';
+import { updateTemp, updateLoading } from './workoutSlice';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
 var exercisesLocal = require('../exercisesLocal.json');
 var bodyParts = require('../exerBody.json');
 
@@ -11,7 +13,6 @@ function NewTemplate() {
     const navigate = useNavigate();
     const stateSelector = useSelector(state => state.workout);
     const dispatch = useDispatch();
-
 
     const [filterArr, updateFilter] = useState(exercisesLocal);
     const [exerciseList, updateExerList] = useState([]);
@@ -60,6 +61,12 @@ function NewTemplate() {
         updateExerList(tempList);
     }
 
+    async function saveTemplate(newTempArr) {
+        let updateURI = process.env.REACT_APP_API_URI + 'updateTemp';
+        let res = await axios.post(updateURI, { userID: localStorage.getItem("workout_userID"), templateArr: newTempArr }).catch(err => console.log(err));
+        return res;
+    }
+
     function saveTemp() {
         if (!templateName.split(' ').join('')) alert('enter wolrkout template name');
         else if (stateSelector.userData.templateArr.filter(ele => ele.name === templateName).length !== 0) alert('workout template name already exist. use a different template name.');
@@ -74,8 +81,20 @@ function NewTemplate() {
             let newTempArr = JSON.parse(JSON.stringify(stateSelector.userData.templateArr));
             newTempArr.push(workoutTemp);
 
-            dispatch(updateTemp(newTempArr));
-            navigate('/workout', { replace: true })
+
+            dispatch(updateLoading(true));
+            saveTemplate(newTempArr).then(res => {
+                let data = res.data;
+                if (data.success) {
+                    dispatch(updateTemp(data.data.templateArr));
+                    navigate('/workout', { replace: true });
+                    alert(`Template ${templateName} saved successfully!`)
+                    dispatch(updateLoading(false));
+                } else {
+                    dispatch(updateLoading(false));
+                    alert(`${data.err}`)
+                }
+            })
         }
     }
 

@@ -37,6 +37,9 @@
         font-size: 30pt;
         font-weight: bold;
       }
+      div.root {
+        display: none;
+      }
     </style>
 </head>
 
@@ -45,7 +48,7 @@
   <div id="loading" class="load">
     Loading...
   </div>
-  <div id="root"></div>
+  <div id="root" class="root"></div>
   <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
@@ -67,6 +70,7 @@
   <script>
     window.addEventListener('load', (event) => {
       $('#loading').hide()
+      $('#root').show()
     })
   </script>
 </body>
