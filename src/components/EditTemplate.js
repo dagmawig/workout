@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './EditTemplate.css';
 import { useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateTemp, updateLoading } from './workoutSlice';
+import { updateTemp, updateLoading, updateUserData } from './workoutSlice';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -15,9 +15,8 @@ function EditTemplate() {
     const navigate = useNavigate();
     const { state } = useLocation();
 
-    let template = stateSelector.userData.templateArr[state.index];
-    const [tempName, updateName] = useState(template.name);
-    const [exerciseList, updateExerList] = useState(template.exerList);
+    const [tempName, updateName] = useState('');
+    const [exerciseList, updateExerList] = useState([]);
     const [filterArr, updateFilter] = useState(exercisesLocal);
     const [selectedExer, updateSelExer] = useState('3/4 sit-up');
 
@@ -144,8 +143,8 @@ function EditTemplate() {
         updateExerList(tempList);
     }
 
-    function exerListEle() {
-        return exerciseList.map((item, i) => {
+    function exerListEle(list) {
+        return list.map((item, i) => {
             return (
                 <div className='newtemplate_exer_ele row' key={i + 'exerListEle'}>
                     <div className='newtemplate_exer_ele_header row'>
@@ -256,6 +255,30 @@ function EditTemplate() {
         })
     }
 
+    useEffect(() => {
+        async function loadData() {
+            let loadURI = process.env.REACT_APP_API_URI + 'loadData';
+            let res = await axios.post(loadURI, { userID: localStorage.getItem("workout_userID") });
+
+            return res;
+        }
+
+        dispatch(updateLoading(true));
+        loadData()
+            .then(res => {
+                let data = res.data;
+                if (data.success) {
+                    dispatch(updateUserData(data.data));
+                    updateName(data.data.templateArr[state.index].name);
+                    updateExerList(data.data.templateArr[state.index].exerList);
+                    dispatch(updateLoading(false));
+                } else {
+                    dispatch(updateLoading(false));
+                    alert(`${data.err}`)
+                }
+            })
+    }, [])
+
     return (
         <div className='newtemplate container'>
             <div className='newtemplate_header row'>
@@ -277,7 +300,7 @@ function EditTemplate() {
                         </div>
                     </div>
                     <div className='newtemplate_exer_list row'>
-                        {exerListEle()}
+                        {exerListEle(exerciseList)}
                     </div>
                     <div className='newtemplate_content_add row'>
                         <div className='newtemplate_content_add_button row'>

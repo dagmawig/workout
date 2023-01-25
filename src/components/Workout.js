@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './Workout.css';
 import { Link, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateLoading, updateUserData } from './workoutSlice';
+import axios from 'axios';
 
 function Workout() {
 
     const stateSelector = useSelector(state => state.workout);
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     function toTemp(i) {
@@ -17,19 +20,19 @@ function Workout() {
 
     function calcTime(template) {
         let arr = template.workoutTimeArr;
-        if(arr.length===0) return 'Never';
-        let lastTime = new Date(arr[arr.length-1]).getTime();
-        let hourDiff = Math.floor((new Date().getTime() - lastTime)/(1000*3600));
-        return (hourDiff<24)? `${hourDiff} hours ago`: `${Math.floor(hourDiff/24)} day(s) ago`;
+        if (arr.length === 0) return 'Never';
+        let lastTime = new Date(arr[arr.length - 1]).getTime();
+        let hourDiff = Math.floor((new Date().getTime() - lastTime) / (1000 * 3600));
+        return (hourDiff < 24) ? `${hourDiff} hours ago` : `${Math.floor(hourDiff / 24)} day(s) ago`;
     }
 
     function templateEle(tempArr, userTemp) {
         return tempArr.map((item, i) => {
             return (
-                <button className='template_button col-12' key={`${item.name}+${i}+${(userTemp)? 'user' : 'fixed'}`} value='user' onClick={(userTemp)? (e => toTemp(i)) : (e => toFixTemp(i))}>
+                <button className='template_button col-12' key={`${item.name}+${i}+${(userTemp) ? 'user' : 'fixed'}`} value='user' onClick={(userTemp) ? (e => toTemp(i)) : (e => toFixTemp(i))}>
                     <div className='template_content col-12'>
                         <div className='template_content_header row'>
-                            <p className="row" style={{'height': '26px', 'fontWeight': 'bold', 'fontSize': '16pt'}}>{item.name}</p>
+                            <p className="row" style={{ 'height': '26px', 'fontWeight': 'bold', 'fontSize': '16pt' }}>{item.name}</p>
                         </div>
                         <div className='template_content_time row'>
                             Last performed: {calcTime(item)}
@@ -46,11 +49,33 @@ function Workout() {
     function tempExerEle(template, userTemp) {
         return template.exerList.map((item, i) => {
             return (
-                <div className="row text-left" style={{'width': '100%', 'padding': 0}} key={`${template.name}+${i}+${(userTemp)? 'user' : 'fixed'}`}>
+                <div className="row text-left" style={{ 'width': '100%', 'padding': 0 }} key={`${template.name}+${i}+${(userTemp) ? 'user' : 'fixed'}`}>
                     <div className='showtemp_exer_name col-12' align='left'>{item.sets} X {item.name}</div></div>
             )
         })
     }
+
+    useEffect(() => {
+        async function loadData() {
+            let loadURI = process.env.REACT_APP_API_URI + 'loadData';
+            let res = await axios.post(loadURI, { userID: localStorage.getItem("workout_userID") });
+
+            return res;
+        }
+
+        dispatch(updateLoading(true));
+        loadData()
+            .then(res => {
+                let data = res.data;
+                if (data.success) {
+                    dispatch(updateUserData(data.data));
+                    dispatch(updateLoading(false));
+                } else {
+                    dispatch(updateLoading(false));
+                    alert(`${data.err}`)
+                }
+            })
+    }, [])
 
     return (
         <div className='workout container'>

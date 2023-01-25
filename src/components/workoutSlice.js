@@ -164,12 +164,15 @@ export const workoutSlice = createSlice({
         updateWorkoutObj: (state, action) => {
             state.userData.workoutObj = action.payload;
         },
+        updateUserData: (state, action) => {
+            state.userData = action.payload;
+        },
         updateLoading: (state, action) => {
             state.loading = action.payload;
         }
     }
 });
 
-export const { updateTemp, updateFixTemp, updateWorkoutObj, updateLoading } = workoutSlice.actions;
+export const { updateTemp, updateFixTemp, updateWorkoutObj, updateLoading, updateUserData } = workoutSlice.actions;
 
 export default workoutSlice.reducer;
