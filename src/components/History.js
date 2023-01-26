@@ -1,40 +1,42 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './History.css';
-import { useSelector } from 'react-redux';
-
+import { useSelector, useDispatch } from 'react-redux';
+import { updateLoading, updateUserData } from './workoutSlice';
+import axios from 'axios';
 
 function History() {
     const stateSelector = useSelector(state => state.workout);
+    const dispatch = useDispatch();
     let userWorkObj = stateSelector.userData.workoutObj;
-//     let userWorkObj = {
-//     "2023-01-21T19:44:17.452Z": {
-//         "tempName": "Dag",
-//         "workoutList": [
-//             {
-//                 "exerName": "straddle maltese",
-//                 "metric": "a",
-//                 "metric1": [
-//                     "1",
-//                     "3",
-//                     "4"
-//                 ]
-//             },
-//             {
-//                 "exerName": "sledge hammer",
-//                 "metric": "wr",
-//                 "metric1": [
-//                     "2"
-//                 ],
-//                 "metric2": [
-//                     "3"
-//                 ]
-//             }
-//         ]
-//     }
-// }
+    //     let userWorkObj = {
+    //     "2023-01-21T19:44:17.452Z": {
+    //         "tempName": "Dag",
+    //         "workoutList": [
+    //             {
+    //                 "exerName": "straddle maltese",
+    //                 "metric": "a",
+    //                 "metric1": [
+    //                     "1",
+    //                     "3",
+    //                     "4"
+    //                 ]
+    //             },
+    //             {
+    //                 "exerName": "sledge hammer",
+    //                 "metric": "wr",
+    //                 "metric1": [
+    //                     "2"
+    //                 ],
+    //                 "metric2": [
+    //                     "3"
+    //                 ]
+    //             }
+    //         ]
+    //     }
+    // }
 
     function historyItem(workoutObj) {
-       return Object.keys(workoutObj).sort((a,b)=>new Date(b)-new Date(a)).map(key => {
+        return Object.keys(workoutObj).sort((a, b) => new Date(b) - new Date(a)).map(key => {
             return (
                 <div className='row history_content_item' key={key}>
                     <div className='row history_item_header'>
@@ -55,15 +57,14 @@ function History() {
 
         })
     }
-    //historyItem(userWorkObj);
 
     function exerList(list, key) {
         return list.map((exer, i) => {
             return (
                 <div className="accordion-item" key={`${key}${i}`}>
                     <h2 className="accordion-header" id={`heading-${key}${i}`}>
-                        <button className="accordion-button btn collapsed" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse-${key}${i}`} aria-expanded="true" aria-controls={`collapse-${key}${i}`} style={{'fontWeight': 'bold', 'outline': 'none'}}>
-                           {exer.metric1.length} X {exer.exerName}
+                        <button className="accordion-button btn collapsed" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse-${key}${i}`} aria-expanded="true" aria-controls={`collapse-${key}${i}`} style={{ 'fontWeight': 'bold', 'outline': 'none' }}>
+                            {exer.metric1.length} X {exer.exerName}
                         </button>
                     </h2>
                     <div id={`collapse-${key}${i}`} className="accordion-collapse collapse" aria-labelledby={`heading-${key}${i}`} data-bs-parent={`#accordionExample-${key}`}>
@@ -92,7 +93,7 @@ function History() {
             return (
                 <div className='history_set_content row' key={`${exerName}${i}`}>
                     <div className='history_value col-4' align='center'>
-                        {i+1}
+                        {i + 1}
                     </div>
                     <div className='history_value col-4' align='center'>
                         {val}
@@ -104,6 +105,29 @@ function History() {
             )
         })
     }
+
+    useEffect(() => {
+        async function loadData() {
+            let loadURI = process.env.REACT_APP_API_URI + 'loadData';
+            let res = await axios.post(loadURI, { userID: localStorage.getItem("workout_userID") });
+
+            return res;
+        }
+
+        dispatch(updateLoading(true));
+        loadData()
+            .then(res => {
+                let data = res.data;
+                if (data.success) {
+                    dispatch(updateUserData(data.data));
+                    dispatch(updateLoading(false));
+                } else {
+                    dispatch(updateLoading(false));
+                    alert(`${data.err}`)
+                }
+            })
+    }, [])
+
     return (
         <div className="history container">
             <div className='row history_header bg-success'>
@@ -111,53 +135,6 @@ function History() {
             </div>
             <div className='row history_content'>
                 {historyItem(userWorkObj)}
-                {/* <div className='row history_content_item'>
-                    <div className='row history_item_header'>
-                        <div className='history_item_name col-8' align='left'>
-                            Dagggggg
-                        </div>
-                        <div className='history_item_date col-4' align='right'>
-                            10/31/23
-                        </div>
-                    </div>
-                    <div className='history_item_list row'>
-                        <div className="accordion" id="accordionExample">
-                            <div className="accordion-item">
-                                <h2 className="accordion-header" id="headingOne">
-                                    <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                        1 X barbell deadlift
-                                    </button>
-                                </h2>
-                                <div id="collapseOne" className="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                                    <div className="accordion-body">
-                                        <div className='history_set_header row'>
-                                            <div className='history_set col-4' align='center'>
-                                                SET
-                                            </div>
-                                            <div className='history_set col-4' align='center'>
-                                                LBS
-                                            </div>
-                                            <div className='history_set col-4' align='center'>
-                                                REPS
-                                            </div>
-                                        </div>
-                                        <div className='history_set_content row'>
-                                            <div className='history_value col-4' align='center'>
-                                                1
-                                            </div>
-                                            <div className='history_value col-4' align='center'>
-                                                50
-                                            </div>
-                                            <div className='history_value col-4' align='center'>
-                                                10
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> */}
             </div>
         </div>
     )

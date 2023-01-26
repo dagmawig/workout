@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './LogWorkout.css';
 import { useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateTemp, updateFixTemp, updateWorkoutObj } from './workoutSlice';
+import { updateFixTemp, updateWorkoutObj, updateLoading, updateUserData } from './workoutSlice';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
 var bodyParts = require('../exerBody.json');
 var exercisesLocal = require('../exercisesLocal.json');
 
@@ -14,24 +16,17 @@ function LogWorkout() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    let template = (state.user) ? stateSelector.userData.templateArr[state.index] : stateSelector.userData.fixTempArr[state.index];
+    // let template = (state.user) ? stateSelector.userData.templateArr[state.index] : stateSelector.userData.fixTempArr[state.index];
     let userWorkObj = stateSelector.userData.workoutObj;
-    let exerciseArr = template.exerList;
-    let inputArr = [];
-    exerciseArr.map((exer, i) => {
-        let arr;
-        let totSets = exer.sets;
-        if (exer.metric === 'wr' || exer.metric === 'dt') arr = new Array(2).fill().map(() => new Array(totSets))
-        else arr = new Array(1).fill().map(() => new Array(totSets));
-        inputArr.push(arr);
-        return null;
-    });
+    // let exerciseArr = template.exerList;
+
 
     const [filterArr, updateFilter] = useState(exercisesLocal);
-    const [exerciseList, updateExerList] = useState(template.exerList);
+    const [exerciseList, updateExerList] = useState([]);
     const [selectedExer, updateSelExer] = useState('3/4 sit-up');
     const [seconds, setSeconds] = useState(0);
-    const [inputState] = useState(inputArr);
+    const [inputState, updateInputState] = useState([]);
+    const [currentTemp, updateTemp] = useState(null);
 
     function updateInput(i, j, k, val) {
         inputState[i][j][k] = (val === '') ? undefined : val;
@@ -49,16 +44,23 @@ function LogWorkout() {
         return true;
     }
 
+    async function saveWorkout(workoutObj, user, updatedTempArr) {
+        let updateURI = process.env.REACT_APP_API_URI + 'updateWorkoutObj';
+        let res = await axios.post(updateURI, { userID: localStorage.getItem("workout_userID"), workoutObj: workoutObj, user: user, updatedTempArr: updatedTempArr, }).catch(err => console.log(err));
+
+        return res;
+    }
+
     function saveWork() {
         if (!checkInput(inputState)) alert('Some exercise sets are not complete. Either complete the sets or remove incomplete sets. If doing weightless exercise, put 0 in the LBS box.')
         else {
             let timeStamp = new Date().toISOString();
             let workObj = {};
-            workObj.tempName = template.name;
+            workObj.tempName = currentTemp.name;
             let workoutList = [];
             for (let i = 0; i < inputState.length; i++) {
                 let inputStateExer = inputState[i];
-                let exer = exerciseArr[i]
+                let exer = currentTemp.exerList[i]
                 let exercise = {};
                 exercise.exerName = exer.name;
                 exercise.metric = exer.metric;
@@ -71,15 +73,23 @@ function LogWorkout() {
             let tempUserObj = JSON.parse(JSON.stringify(userWorkObj))
             tempUserObj[timeStamp] = workObj;
 
-            let newTemplate = JSON.parse(JSON.stringify(state.user ? stateSelector.userData.templateArr : stateSelector.userData.fixTempArr));
-            newTemplate[state.index].workoutTimeArr.push(new Date().toISOString());
+            let newTemplateArr = JSON.parse(JSON.stringify(state.user ? stateSelector.userData.templateArr : stateSelector.userData.fixTempArr));
+            newTemplateArr[state.index].workoutTimeArr.push(new Date().toISOString());
 
-            if (state.user) dispatch(updateTemp(newTemplate));
-            else dispatch(updateFixTemp(newTemplate));
-            
-            dispatch(updateWorkoutObj(tempUserObj));
-            navigate('/workout', { replace: true });
-            window.$('#saveWModal').modal('hide');
+            dispatch(updateLoading(false));
+            saveWorkout(tempUserObj, state.user, newTemplateArr).then(res=> {
+                let data = res.data;
+                if (data.success) {
+                    dispatch(updateUserData(data.data));
+                    navigate('/workout', { replace: true })
+                    alert(`Workout under template "${newTemplateArr[state.index].name}" saved successfully!`);
+                    window.$('#saveWModal').modal('hide');
+                    dispatch(updateLoading(false));
+                } else {
+                    dispatch(updateLoading(false));
+                    alert(`${data.err}`)
+                }
+            })
         }
     }
 
@@ -266,6 +276,41 @@ function LogWorkout() {
         })
     }
 
+    useEffect(() => {
+        async function loadData() {
+            let loadURI = process.env.REACT_APP_API_URI + 'loadData';
+            let res = await axios.post(loadURI, { userID: localStorage.getItem("workout_userID") });
+
+            return res;
+        }
+
+        dispatch(updateLoading(true));
+        loadData()
+            .then(res => {
+                let data = res.data;
+                if (data.success) {
+                    dispatch(updateUserData(data.data));
+                    let template = (state.user)? data.data.templateArr[state.index]: data.data.fixTempArr[state.index];
+                    updateExerList(template.exerList);
+                    let inputArr = [];
+                    template.exerList.map((exer, i) => {
+                        let arr;
+                        let totSets = exer.sets;
+                        if (exer.metric === 'wr' || exer.metric === 'dt') arr = new Array(2).fill().map(() => new Array(totSets))
+                        else arr = new Array(1).fill().map(() => new Array(totSets));
+                        inputArr.push(arr);
+                        return null;
+                    });
+                    updateInputState(inputArr);
+                    updateTemp(template);
+                    dispatch(updateLoading(false));
+                } else {
+                    dispatch(updateLoading(false));
+                    alert(`${data.err}`)
+                }
+            })
+    }, [])
+
     return (
         <div className='newtemplate container'>
             <div className='newtemplate_header row'>
@@ -274,7 +319,7 @@ function LogWorkout() {
                 </div>
                 <div className='newtemplate_content_title col-8'>
                     <div className='logworkout_content_title_top'>
-                        <p className='temp_header_text' style={{ 'textAlign': 'center', 'fontSize': '12pt' }}>{template.name}</p>
+                        <p className='temp_header_text' style={{ 'textAlign': 'center', 'fontSize': '12pt' }}>{(currentTemp===null)? 'none': currentTemp.name}</p>
                     </div>
                     <div className='logworkout_content_title_top'>
                         <p className='temp_header_text' style={{ 'textAlign': 'center' }}>{new Date(seconds * 1000).toISOString().substr(11, 8)}</p>
