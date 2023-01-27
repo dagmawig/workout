@@ -30,6 +30,7 @@
     align-items: center;
     justify-content: center;
     border: rgb(13, 99, 39) solid 1px;
+    background-color: #9e5f2f;
     border-radius: 15px;
     font-size: 16pt !important;
     font-weight: bold;
@@ -51,7 +52,7 @@
 .history_content_item {
     border: black solid 1px;
     border-radius: 5px;
-    background-color: rgb(125, 149, 90);
+    background-color: rgb(179, 138, 105, 0.8);
     width: 100%;
     padding: 10px;
     margin: 2px;
@@ -134,11 +135,11 @@
 }
 
 .accordion-button:not(.collapsed), .accordion-button.collapsed {
-    background-color: rgb(127, 172, 59);
+    background-color: rgb(179, 119, 71);
 }
 
 .accordion-body {
-    background-color: rgb(190, 209, 163);
+    background-color: rgb(179, 165, 153);
 }
 .btn:focus,.btn:active {
     outline: none !important;

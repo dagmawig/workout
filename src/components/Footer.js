@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 function Footer() {
     return (
-        <div className='footer container bg-success'>
+        <div className='footer container' style={{backgroundColor: '#873e23'}}>
             <div className='footer_row row'>
                 <div className='footer_search col-4'>
                     <Link to="/">

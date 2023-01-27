@@ -79,7 +79,7 @@ function Search() {
 
     return (
         <div className="search container">
-            <div className='row search_select bg-success'>
+            <div className='row search_select'>
                 <div className='row filter'>
                     <div className='col-4'>
                         <b>Filter By:</b>

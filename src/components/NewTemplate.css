@@ -30,7 +30,7 @@
    align-items: center;
    justify-content: space-between;
    border: rgb(13, 99, 39) solid 1px;
-   background-color: rgb(91, 160, 91);
+   background-color: #9e5f2f;
    border-radius: 15px;
    color: black;
 }
@@ -71,7 +71,7 @@
    margin: 5px;
    padding: 0;
    border: black solid 1px;
-   background-color: rgb(125, 149, 90);
+   background-color: rgb(179, 119, 71, 0.8);
    border-radius: 10px;
 }
 
@@ -91,7 +91,7 @@
 }
 
 .newtemplate_name_input {
-   background-color: lightgreen;
+   background-color: rgb(179, 165, 153);
    font-weight: bold;
 }
 
@@ -120,7 +120,7 @@
 .reps_remove_button {
    width: auto;
    height: 100%;
-   background-color: rgb(91, 160, 91);
+   background-color: #9e5f2f;
    ;
    outline: none;
    border-radius: 10px;
@@ -213,20 +213,23 @@
 }
 
 .modal-content {
-   background-color: lightgreen;
+   background-color: rgb(179, 119, 71);
 }
 
 .select_exer {
    width: 98%;
    overflow: scroll;
-   background-color: rgb(125, 149, 90);
+   background-color: rgb(179, 165, 153);
 }
 
 .select_exer_title {
    margin-top: 10px;
 }
 
+.modal-header {
+   background-color: #9e5f2f;
+}
 input {
-   background-color: lightgreen;
+   background-color: rgb(179, 165, 153);
    border: black solid 1pt;
 }

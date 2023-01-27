@@ -130,7 +130,7 @@ function History() {
 
     return (
         <div className="history container">
-            <div className='row history_header bg-success'>
+            <div className='row history_header'>
                 History
             </div>
             <div className='row history_content'>

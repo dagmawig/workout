@@ -29,6 +29,7 @@
    align-items: center;
    justify-content: center;
    border: rgb(13, 99, 39) solid 1px;
+   background-color: #9e5f2f;
    border-radius: 15px;
    font-size: 11pt !important;
    color: black;
@@ -63,13 +64,13 @@
    padding: 5px;
    align-items: center;
    color: white;
-   background-color: rgba(145, 223, 185, 0.8);
+   background-color: rgb(179, 165, 153, 0.8);
    border: black solid 1px;
    border-radius: 15px;
    
 }
 .first, .second, .third, .fourth {
-   background-color: rgba(13, 94, 53, 0.8);
+   background-color: rgb(179, 119, 71, 0.8);
    margin: auto;
    margin-top: 2px;
    border-radius: 5px;
@@ -88,4 +89,5 @@ img {
    max-width: 95%;
    max-height: 95%;
    border-radius: 5px;
+   filter: drop-shadow(10px 10px 10px brown) invert(0%);
 }

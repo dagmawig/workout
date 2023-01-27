@@ -351,7 +351,7 @@ function EditTemplate() {
                     <div className="modal" id='exerModal' tabIndex="-1" aria-hidden={true}>
                         <div className="modal-dialog">
                             <div className="modal-content">
-                                <div className="modal-header bg-success">
+                                <div className="modal-header">
                                     <h5 className="modal-title"><b>Add Exercise</b></h5>
                                     <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
@@ -360,7 +360,7 @@ function EditTemplate() {
                                         <b style={{ 'fontWeight': 'bold', 'fontSize': '15pt' }}>Filter by:</b>
                                     </div>
                                     <div className='newtemplate_filter_select'>
-                                        <select className='select form-select select_filter' aria-label='Default select' id='filter' style={{ 'fontWeight': 'bold', 'backgroundColor': 'rgb(125, 149, 90)' }} onChange={e => handleChange(e.target.value)}>
+                                        <select className='select form-select select_filter' aria-label='Default select' id='filter' style={{ 'fontWeight': 'bold', 'backgroundColor': 'rgb(179, 165, 153)' }} onChange={e => handleChange(e.target.value)}>
                                             <option defaultValue={true} className='small' value='empty' style={{ 'fontWeight': 'bold' }}>Select (All)</option>
                                             {filterList()}
                                         </select>
@@ -374,7 +374,7 @@ function EditTemplate() {
                                 </div>
                                 <div className="modal-footer">
                                     <button type="button" className="btn btn-secondary" data-bs-dismiss="modal"><b>Close</b></button>
-                                    <button type="button" className="btn btn-primary" onClick={addExer}><b>Add</b></button>
+                                    <button type="button" className="btn" onClick={addExer} style={{backgroundColor: '#9e5f2f'}}><b>Add</b></button>
                                 </div>
                             </div>
                         </div>
@@ -385,7 +385,7 @@ function EditTemplate() {
             <div className="modal" id='saveModal' tabIndex="-1" aria-hidden={true}>
                 <div className="modal-dialog">
                     <div className="modal-content">
-                        <div className="modal-header bg-success">
+                        <div className="modal-header">
                             <h5 className="modal-title"><b>Save Template?</b></h5>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
@@ -396,7 +396,7 @@ function EditTemplate() {
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={noSaveModal}><b>No</b></button>
-                            <button type="button" className="btn btn-primary" onClick={saveTempModal}><b>Yes</b></button>
+                            <button type="button" className="btn" onClick={saveTempModal} style={{backgroundColor: '#9e5f2f'}}><b>Yes</b></button>
                         </div>
                     </div>
                 </div>

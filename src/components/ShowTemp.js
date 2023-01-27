@@ -142,7 +142,7 @@ function ShowTemp() {
             <div className="modal" id='delTempModal' tabIndex="-1" aria-hidden={true}>
                 <div className="modal-dialog">
                     <div className="modal-content">
-                        <div className="modal-header bg-success">
+                        <div className="modal-header">
                             <h5 className="modal-title" style={{ 'fontWeight': 'bold' }}>Delete Template</h5>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
@@ -161,7 +161,7 @@ function ShowTemp() {
             <div className="modal" id='exerDetModal' tabIndex="-1" aria-hidden={true}>
                 <div className="modal-dialog">
                     <div className="modal-content">
-                        <div className="modal-header bg-success">
+                        <div className="modal-header">
                             <h5 className="modal-title" style={{ 'fontWeight': 'bold' }}>Exercise Detail</h5>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>

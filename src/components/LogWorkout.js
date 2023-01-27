@@ -432,7 +432,7 @@ function LogWorkout() {
                     <div className="modal" id='exerWModal' tabIndex="-1" aria-hidden={true}>
                         <div className="modal-dialog">
                             <div className="modal-content">
-                                <div className="modal-header bg-success">
+                                <div className="modal-header">
                                     <h5 className="modal-title"><b>Add Exercise</b></h5>
                                     <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
@@ -441,7 +441,7 @@ function LogWorkout() {
                                         <b style={{ 'fontWeight': 'bold', 'fontSize': '15pt' }}>Filter by:</b>
                                     </div>
                                     <div className='newtemplate_filter_select'>
-                                        <select className='select form-select select_filter' aria-label='Default select' id='filter' style={{ 'fontWeight': 'bold', 'backgroundColor': 'rgb(125, 149, 90)' }} onChange={e => handleChange(e.target.value)}>
+                                        <select className='select form-select select_filter' aria-label='Default select' id='filter' style={{ 'fontWeight': 'bold', 'backgroundColor': 'rgb(179, 165, 153)' }} onChange={e => handleChange(e.target.value)}>
                                             <option defaultValue={true} className='small' value='empty' style={{ 'fontWeight': 'bold' }}>Select (All)</option>
                                             {filterList()}
                                         </select>
@@ -455,7 +455,7 @@ function LogWorkout() {
                                 </div>
                                 <div className="modal-footer">
                                     <button type="button" className="btn btn-secondary" data-bs-dismiss="modal"><b>Close</b></button>
-                                    <button type="button" className="btn btn-primary" onClick={addExer}><b>Add</b></button>
+                                    <button type="button" className="btn" onClick={addExer} style={{backgroundColor: '#9e5f2f'}}><b>Add</b></button>
                                 </div>
                             </div>
                         </div>
@@ -465,7 +465,7 @@ function LogWorkout() {
             <div className="modal" id='cancelWModal' tabIndex="-1" aria-hidden={true}>
                 <div className="modal-dialog">
                     <div className="modal-content">
-                        <div className="modal-header bg-success">
+                        <div className="modal-header">
                             <h5 className="modal-title"><b>Cancel Workout?</b></h5>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
@@ -476,7 +476,7 @@ function LogWorkout() {
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal"><b>No</b></button>
-                            <button type="button" className="btn btn-primary" onClick={cancelWork}><b>Yes</b></button>
+                            <button type="button" className="btn" onClick={cancelWork} style={{backgroundColor: '#9e5f2f'}}><b>Yes</b></button>
                         </div>
                     </div>
                 </div>
@@ -484,7 +484,7 @@ function LogWorkout() {
             <div className="modal" id='saveWModal' tabIndex="-1" aria-hidden={true}>
                 <div className="modal-dialog">
                     <div className="modal-content">
-                        <div className="modal-header bg-success">
+                        <div className="modal-header">
                             <h5 className="modal-title"><b>Finish Workout?</b></h5>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
@@ -495,7 +495,7 @@ function LogWorkout() {
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal"><b>No</b></button>
-                            <button type="button" className="btn btn-primary" onClick={saveWork}><b>Yes</b></button>
+                            <button type="button" className="btn" onClick={saveWork} style={{backgroundColor: '#9e5f2f'}}><b>Yes</b></button>
                         </div>
                     </div>
                 </div>
