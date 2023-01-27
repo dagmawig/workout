@@ -23,7 +23,7 @@ function Workout() {
         if (arr.length === 0) return 'Never';
         let lastTime = new Date(arr[arr.length - 1]).getTime();
         let hourDiff = Math.floor((new Date().getTime() - lastTime) / (1000 * 3600));
-        return (hourDiff < 24) ? `${hourDiff} hours ago` : `${Math.floor(hourDiff / 24)} day(s) ago`;
+        return (hourDiff < 24) ? `${hourDiff} hour(s) ago` : `${Math.floor(hourDiff / 24)} day(s) ago`;
     }
 
     function templateEle(tempArr, userTemp) {
