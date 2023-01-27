@@ -61,7 +61,7 @@ function LogWorkout() {
             let workoutList = [];
             for (let i = 0; i < inputState.length; i++) {
                 let inputStateExer = inputState[i];
-                let exer = currentTemp.exerList[i]
+                let exer = exerciseList[i]
                 let exercise = {};
                 exercise.exerName = exer.name;
                 exercise.metric = exer.metric;
@@ -219,22 +219,22 @@ function LogWorkout() {
                         <div className='newtemplate_exer_set_header row'>
                             <div className='newtemplate_set col-2'>
                                 <div className='newtemplate_set_text row'>
-                                    <p className='col-12 text-center'>SET</p>
+                                    <p className='col-12 text-center'><b>SET</b></p>
                                 </div>
                             </div>
                             <div className='newtemplate_prev col-4'>
                                 <div className='newtemplate_prev_text row'>
-                                    <p className='col-12 text-center'>PREV</p>
+                                    <p className='col-12 text-center'><b>PREV</b></p>
                                 </div>
                             </div>
                             <div className='newtemplate_lbs col-3'>
                                 <div className='newtemplate_lbs_text row'>
-                                    <p className='col-12 text-center'>{(item.metric === 'wr') ? 'LBS' : (item.metric === 'dt' ? 'MILES' : 'SECONDS')}</p>
+                                    <p className='col-12 text-center'><b>{(item.metric === 'wr') ? 'LBS' : (item.metric === 'dt' ? 'MILES' : 'SECONDS')}</b></p>
                                 </div>
                             </div>
                             <div className='newtemplate_reps col-3'>
                                 <div className='newtemplate_reps_text row'>
-                                    <p className='col-12 text-center'>{item.metric === 'wr' ? 'REPS' : item.metric === 'dt' ? 'MIN' : ''}</p>
+                                    <p className='col-12 text-center'><b>{item.metric === 'wr' ? 'REPS' : item.metric === 'dt' ? 'MIN' : ''}</b></p>
                                 </div>
                             </div>
                             {/* <div className='newtemplate_reps_remove col-2'>
@@ -260,6 +260,24 @@ function LogWorkout() {
         })
     }
 
+    function getPrev(exer) {
+        if(exer.name in stateSelector.userData.record) {
+            let exerRecord = stateSelector.userData.record[exer.name];
+            let ans = '';
+            ans += exerRecord.prev1;
+            if(exerRecord.metric==='wr') {
+                ans += ` LBS`;
+            }
+            else if(exerRecord.metric==='dt') {
+                ans += ` MI`;
+            }
+            else ans += ' SEC';
+
+            return ans;
+        }
+        else return '-';
+    }
+
     function setList(exer, index) {
         let tempArr = [...Array(exer.sets).keys()];
         return tempArr.map(item => {
@@ -272,7 +290,7 @@ function LogWorkout() {
                     </div>
                     <div className='newtemplate_prev col-4'>
                         <div className='newtemplate_prev_val row'>
-                            <p className='col-12 text-center'>-</p>
+                            <p className='col-12 text-center'>{(item===0)? getPrev(exer): '-'}</p>
                         </div>
                     </div>
                     <div className='newtemplate_lbs col-3'>
