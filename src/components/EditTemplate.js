@@ -143,6 +143,31 @@ function EditTemplate() {
         updateExerList(tempList);
     }
 
+    function getRec(exer) {
+        if (exer.name in stateSelector.userData.record) {
+            let exerRecord = stateSelector.userData.record[exer.name];
+            let ans = '';
+            let ans2 = '';
+            ans += exerRecord.prev1;
+            ans2 += exerRecord.pr1;
+            if (exerRecord.metric === 'wr') {
+                ans += ` LBS|${exerRecord.prev2} REPS`;
+                ans2 += ` LBS|${exerRecord.pr2} REPS`;
+            }
+            else if (exerRecord.metric === 'dt') {
+                ans += ` MI | ${exerRecord.prev2} MIN`;
+                ans2 += ` MI | ${exerRecord.pr2} MIN`;
+            }
+            else {
+                ans += ' SEC';
+                ans2 += ' SEC';
+            }
+
+            return [ans, ans2];
+        }
+        else return ['-', '-'];
+    }
+
     function exerListEle(list) {
         return list.map((item, i) => {
             return (
@@ -162,11 +187,11 @@ function EditTemplate() {
                                     <p className='col-12 text-center'>SET</p>
                                 </div>
                             </div>
-                            <div className='newtemplate_prev col-4'>
+                            {/* <div className='newtemplate_prev col-4'>
                                 <div className='newtemplate_prev_text row'>
                                     <p className='col-12 text-center'>PREV</p>
                                 </div>
-                            </div>
+                            </div> */}
                             <div className='newtemplate_lbs col-3'>
                                 <div className='newtemplate_lbs_text row'>
                                     <p className='col-12 text-center'>{(item.metric === 'wr') ? 'LBS' : (item.metric === 'dt' ? 'MILES' : 'SECONDS')}</p>
@@ -184,6 +209,22 @@ function EditTemplate() {
                             </div> */}
                         </div>
                         {setList(item, i)}
+                        <div className='newtemplate_exer_prev row'>
+                            <div className='newtemplate_exer_prev_tit col-3' align='right'>
+                                <b>PREV:</b>
+                            </div>
+                            <div className='newtemplate_exer_prev_tit col-9' align='left'>
+                                <b>{` ${getRec(item)[0]}`}</b>
+                            </div>
+                        </div>
+                        <div className='newtemplate_exer_pr row'>
+                            <div className='newtemplate_exer_pr_tit col-3' align='right'>
+                                <b>PR:</b>
+                            </div>
+                            <div className='newtemplate_exer_pr_tit col-9' align='left'>
+                                <b>{` ${getRec(item)[1]}`}</b>
+                            </div>
+                        </div>
                     </div>
                     <div className='newtemplate_reps_add_set row'>
                         <div className='newtemplate_rep_add_button row'>
@@ -210,11 +251,11 @@ function EditTemplate() {
                             <p className='col-12 text-center'>{item + 1}</p>
                         </div>
                     </div>
-                    <div className='newtemplate_prev col-4'>
+                    {/* <div className='newtemplate_prev col-4'>
                         <div className='newtemplate_prev_val row'>
                             <p className='col-12 text-center'>-</p>
                         </div>
-                    </div>
+                    </div> */}
                     <div className='newtemplate_lbs col-3'>
                         <div className='newtemplate_lbs_val row'>
                             <input className='lbs_input' disabled style={{ 'opacity': '.5' }}></input>

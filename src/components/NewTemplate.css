@@ -177,6 +177,16 @@
    width: 100%;
 }
 
+.newtemplate_exer_pr, .newtemplate_exer_prev {
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   justify-content: space-around;
+   margin: 0;
+   padding: 2px;
+   width: 100%;
+}
+
 .newtemplate_reps_add_set,
 .newtemplate_rep_add_button {
    display: flex;
