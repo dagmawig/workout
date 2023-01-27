@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './LogWorkout.css';
 import { useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateFixTemp, updateWorkoutObj, updateLoading, updateUserData } from './workoutSlice';
+import { updateLoading, updateUserData, updateRecord } from './workoutSlice';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -44,9 +44,9 @@ function LogWorkout() {
         return true;
     }
 
-    async function saveWorkout(workoutObj, user, updatedTempArr) {
+    async function saveWorkout(workoutObj, user, updatedTempArr, record) {
         let updateURI = process.env.REACT_APP_API_URI + 'updateWorkoutObj';
-        let res = await axios.post(updateURI, { userID: localStorage.getItem("workout_userID"), workoutObj: workoutObj, user: user, updatedTempArr: updatedTempArr, }).catch(err => console.log(err));
+        let res = await axios.post(updateURI, { userID: localStorage.getItem("workout_userID"), workoutObj: workoutObj, user: user, updatedTempArr: updatedTempArr, record: record }).catch(err => console.log(err));
 
         return res;
     }
@@ -54,6 +54,7 @@ function LogWorkout() {
     function saveWork() {
         if (!checkInput(inputState)) alert('Some exercise sets are not complete. Either complete the sets or remove incomplete sets. If doing weightless exercise, put 0 in the LBS box.')
         else {
+            let record = JSON.parse(JSON.stringify(stateSelector.userData.record));
             let timeStamp = new Date().toISOString();
             let workObj = {};
             workObj.tempName = currentTemp.name;
@@ -67,6 +68,40 @@ function LogWorkout() {
                 exercise.metric1 = inputStateExer[0];
                 if (exer.metric === 'wr' || exer.metric === 'dt') exercise.metric2 = inputStateExer[1];
                 workoutList.push(exercise);
+
+                let maxVal = Math.max(...inputStateExer[0]);
+                let maxIndex = inputStateExer[0].indexOf(maxVal.toString());
+
+                if (exer.name in record) {
+                    let exerRecord = record[exer.name];
+                    exerRecord.metric = exer.metric;
+
+                    exerRecord.prev1 = inputStateExer[0][inputStateExer[0].length - 1];
+                    if (exer.metric === 'wr' || exer.metric === 'dt') {
+                        exerRecord.prev2 = inputStateExer[1][inputStateExer[0].length - 1];
+                    }
+
+                    if (maxVal > exerRecord.pr1) {
+                        exerRecord.pr1 = maxVal;
+                        if (exer.metric === 'wr' || exer.metric === 'dt') {
+                            exerRecord.pr2 = inputStateExer[1][maxIndex];
+                        }
+                    }
+                }
+                else {
+                    let exerRecord = {};
+                    exerRecord.metric = exer.metric;
+
+                    exerRecord.prev1 = inputStateExer[0][inputStateExer[0].length - 1];
+                    exerRecord.pr1 = maxVal;
+                    if (exer.metric === 'wr' || exer.metric === 'dt') {
+                        exerRecord.prev2 = inputStateExer[1][inputStateExer[0].length - 1];
+                        exerRecord.pr2 = inputStateExer[1][maxIndex];
+                    }
+
+                    record[exer.name] = exerRecord;
+                }
+
             }
 
             workObj.workoutList = workoutList;
@@ -77,7 +112,7 @@ function LogWorkout() {
             newTemplateArr[state.index].workoutTimeArr.push(new Date().toISOString());
 
             dispatch(updateLoading(false));
-            saveWorkout(tempUserObj, state.user, newTemplateArr).then(res=> {
+            saveWorkout(tempUserObj, state.user, newTemplateArr, record).then(res => {
                 let data = res.data;
                 if (data.success) {
                     dispatch(updateUserData(data.data));
@@ -290,7 +325,7 @@ function LogWorkout() {
                 let data = res.data;
                 if (data.success) {
                     dispatch(updateUserData(data.data));
-                    let template = (state.user)? data.data.templateArr[state.index]: data.data.fixTempArr[state.index];
+                    let template = (state.user) ? data.data.templateArr[state.index] : data.data.fixTempArr[state.index];
                     updateExerList(template.exerList);
                     let inputArr = [];
                     template.exerList.map((exer, i) => {
@@ -319,7 +354,7 @@ function LogWorkout() {
                 </div>
                 <div className='newtemplate_content_title col-8'>
                     <div className='logworkout_content_title_top'>
-                        <p className='temp_header_text' style={{ 'textAlign': 'center', 'fontSize': '12pt' }}>{(currentTemp===null)? 'none': currentTemp.name}</p>
+                        <p className='temp_header_text' style={{ 'textAlign': 'center', 'fontSize': '12pt' }}>{(currentTemp === null) ? 'none' : currentTemp.name}</p>
                     </div>
                     <div className='logworkout_content_title_top'>
                         <p className='temp_header_text' style={{ 'textAlign': 'center' }}>{new Date(seconds * 1000).toISOString().substr(11, 8)}</p>

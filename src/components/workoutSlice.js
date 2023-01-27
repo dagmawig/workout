@@ -146,7 +146,8 @@ const initialState = {
                 ]
             }
         ],
-        workoutObj: {}
+        workoutObj: {},
+        record: {}
     },
     loading: false
 };
@@ -169,10 +170,13 @@ export const workoutSlice = createSlice({
         },
         updateLoading: (state, action) => {
             state.loading = action.payload;
-        }
+        },
+        updateRecord: (state, action) => {
+            state.userData.record = action.payload;
+        },
     }
 });
 
-export const { updateTemp, updateFixTemp, updateWorkoutObj, updateLoading, updateUserData } = workoutSlice.actions;
+export const { updateTemp, updateFixTemp, updateWorkoutObj, updateLoading, updateUserData, updateRecord } = workoutSlice.actions;
 
 export default workoutSlice.reducer;
