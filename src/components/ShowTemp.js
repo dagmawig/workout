@@ -41,6 +41,20 @@ function ShowTemp() {
         })
     }
 
+    function toWorkoutSess() {
+        if (localStorage.getItem("workout_userID")) {
+            navigate('/template', { replace: true })
+        }
+        else {
+            window.$('#loginModal').modal('show');
+        }
+    }
+
+    function toLogin() {
+        window.$('#loginModal').modal('hide');
+        navigate('/login', { replace: true });
+    }
+
     function editTemp() {
         localStorage.setItem("workout_index", state.index);
         navigate('/edittemp', { replace: true, state: { user: true, index: state.index } });
@@ -55,7 +69,12 @@ function ShowTemp() {
     }
 
     function toWorkout(user) {
-        navigate('/logworkout', { replace: true, state: { user: user, index: state.index } });
+        if (localStorage.getItem("workout_userID")) {
+            navigate('/logworkout', { replace: true, state: { user: user, index: state.index } });
+        }
+        else {
+            window.$('#loginModal').modal('show');
+        }
     }
 
     function openDelModal() {
@@ -194,6 +213,25 @@ function ShowTemp() {
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal"><b>Close</b></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="modal" id='loginModal' tabIndex="-1" aria-hidden={true}>
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" style={{ 'fontWeight': 'bold' }}>Log In/Sign Up</h5>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body">
+                            <div className='row login_modal_text'>
+                                You need to log in to create a template. Login?
+                            </div>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal"><b>No</b></button>
+                            <button type="button" className="btn" onClick={toLogin} style={{backgroundColor: '#9e5f2f'}}><b>Yes</b></button>
                         </div>
                     </div>
                 </div>

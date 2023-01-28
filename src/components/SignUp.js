@@ -41,12 +41,12 @@ function SignUp() {
                     <br />
 
                     <div className="form-group">
-                        <label for="email"><b>Email</b></label>
+                        <label htmlFor="email"><b>Email</b></label>
                         <input type="email" className="form-control" placeholder="email" size="22" onChange={(e) => getEmail(e.target.value)} style={{backgroundColor: 'rgb(179, 165, 153)'}}></input>
                     </div>
                     <br />
                     <div className="form-group">
-                        <label for="password"><b>Password</b></label>
+                        <label htmlFor="password"><b>Password</b></label>
                         <input type="password" className="form-control " placeholder="password" size="22" onChange={(e) => getPassword(e.target.value)} style={{backgroundColor: 'rgb(179, 165, 153)'}}></input>
                     </div>
                     <br/>

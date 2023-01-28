@@ -18,6 +18,21 @@ function Workout() {
         navigate('/showtemp', { replace: true, state: { user: false, index: i } })
     }
 
+    function toNewTemp() {
+        if (localStorage.getItem("workout_userID")) {
+            navigate('/template', { replace: true })
+        }
+        else {
+            window.$('#loginModal').modal('show');
+        }
+    }
+
+    function toLogin() {
+        window.$('#loginModal').modal('hide');
+        navigate('/login', { replace: true });
+
+    }
+
     function calcTime(template) {
         let arr = template.workoutTimeArr;
         if (arr.length === 0) return 'Never';
@@ -87,9 +102,9 @@ function Workout() {
                                 <p className="row text-left">MY TEMPLATES</p>
                             </div>
                             <div className='template_add d-flex col-2'>
-                                <Link to="/template">
-                                    <button className="plus_button"><i className="fa fa-plus  fa-2x"></i></button>
-                                </Link>
+                                {/* <Link to="/template"> */}
+                                    <button className="plus_button"><i className="fa fa-plus  fa-2x" onClick={toNewTemp}></i></button>
+                                {/* </Link> */}
                             </div>
                         </div>
                     </div>
@@ -104,6 +119,25 @@ function Workout() {
                         </div>
                     </div>
                     {templateEle(stateSelector.userData.fixTempArr, false)}
+                </div>
+            </div>
+            <div className="modal" id='loginModal' tabIndex="-1" aria-hidden={true}>
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" style={{ 'fontWeight': 'bold' }}>Log In/Sign Up</h5>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body">
+                            <div className='row login_modal_text'>
+                                You need to log in to create a template. Login?
+                            </div>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal"><b>No</b></button>
+                            <button type="button" className="btn" onClick={toLogin} style={{backgroundColor: '#9e5f2f'}}><b>Yes</b></button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

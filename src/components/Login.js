@@ -20,12 +20,12 @@ function Login() {
                     <h4>Welcome To Workout App</h4>
                     <br />
                     <div className="form-group">
-                        <label for="email"><b>Email</b></label>
+                        <label htmlFor="email"><b>Email</b></label>
                         <input type="email" className="form-control sign" placeholder="email" size="22" onChange={(e) => getEmail(e.target.value)} style={{backgroundColor: 'rgb(179, 165, 153)'}}></input>
                     </div>
                     <br />
                     <div className="form-group">
-                        <label for="password"><b>Password</b></label>
+                        <label htmlFor="password"><b>Password</b></label>
                         <input type="password" className="form-control sign" placeholder="password" size="22" onChange={(e) => getPassword(e.target.value)} style={{backgroundColor: 'rgb(179, 165, 153)'}}></input>
                     </div>
 
