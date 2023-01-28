@@ -5,13 +5,13 @@
     align-items: flex-start;
     max-width: 100%;
     margin: 0;
-    margin-top: 100px;
     padding: 0;
     justify-content: center;
 }
 
 .sign_up_form {
     width: 95%;
+    margin-top: 100px;
     padding: 20px;
     border: rgb(179, 119, 71) solid 2px;
     border-radius: 10px;

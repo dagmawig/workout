@@ -5,7 +5,6 @@
     align-items: flex-start;
     max-width: 100%;
     margin: 0;
-    margin-top: 100px;
     padding: 0;
     justify-content: center;
 }
@@ -13,6 +12,7 @@
 .reset_form {
     width: 95%;
     padding: 20px;
+    margin-top: 100px;
     border: rgb(179, 119, 71) solid 2px;
     border-radius: 10px;
     background-color: rgb(179, 138, 105, 0.8);

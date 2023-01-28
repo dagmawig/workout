@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+    userID: '',
     userData: {
         templateArr: [],
         fixTempArr: [
@@ -174,9 +175,12 @@ export const workoutSlice = createSlice({
         updateRecord: (state, action) => {
             state.userData.record = action.payload;
         },
+        updateUserID: (state, action) => {
+            state.userID = action.payload;
+        },
     }
 });
 
-export const { updateTemp, updateFixTemp, updateWorkoutObj, updateLoading, updateUserData, updateRecord } = workoutSlice.actions;
+export const { updateTemp, updateFixTemp, updateWorkoutObj, updateLoading, updateUserData, updateRecord, updateUserID } = workoutSlice.actions;
 
 export default workoutSlice.reducer;

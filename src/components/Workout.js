@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import './Workout.css';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateLoading, updateUserData } from './workoutSlice';
 import axios from 'axios';
@@ -91,6 +91,8 @@ function Workout() {
                 }
             })
     }, [])
+
+    if(document.readyState==='complete') dispatch(updateLoading(false));
 
     return (
         <div className='workout container'>

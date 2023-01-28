@@ -1,37 +1,53 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './SignUp.css';
 import { Link } from 'react-router-dom';
+import { auth } from './FirebaseConfig';
+import { sendSignInLinkToEmail, createUserWithEmailAndPassword, signOut } from "firebase/auth";
+import { useNavigate } from 'react-router-dom';
+import { updateLoading } from './workoutSlice';
+import { useDispatch } from 'react-redux';
 
 function SignUp() {
 
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [email, getEmail] = useState('');
     const [password, getPassword] = useState('');
     const [valid, isValid] = useState(null);
 
     // function handling user sign up
     const signUp = (e) => {
-        // e.preventDefault();
+        e.preventDefault();
 
-        // if (valid) return;
+        if (valid) return;
 
-        // auth.createUserWithEmailAndPassword(email, password)
-        //     .then(() => {
-        //         let user = auth.currentUser;
-        //         user.sendEmailVerification()
-        //             .then(function () {
-        //                 auth.signOut();
-        //                 alert(`Verification link sent to ${email}. \n Please click on the link to verify your email and log into your acount.`);
-        //                 isValid(true);
-        //                 document.getElementById("signup").click();
-        //             }).catch(function (e) {
-        //                 alert(e);
-        //             });
-        //     })
-        //     .catch((error) => alert(error.message));
+        createUserWithEmailAndPassword(auth, email, password)
+            .then((userCred) => {
 
+                let user = userCred.user;
+
+                sendSignInLinkToEmail(auth, email)
+                    .then(function () {
+                        signOut(auth).then(()=>{
+                            alert(`Verification link sent to ${email}. \n Please click on the link to verify your email and log into your acount.`);
+                        }).catch(err=>console.log(err))
+                        
+                        isValid(true);
+                        document.getElementById("signup").click();
+                    }).catch(function (e) {
+                        alert(e);
+                    });
+            })
+            .catch((error) => alert(error.message));
     }
 
+    function goHome() {
+        navigate('/', { replace: true });
+    }
 
+    useEffect(() => {
+        dispatch(updateLoading(false));
+    }, []);
 
     return (
         <div className="sign_up row">
@@ -56,14 +72,18 @@ function SignUp() {
                         </Link>
                     </button>
                     <br /><br />
+                        <button type="submit" className="reset_pass btn" style={{ backgroundColor: 'rgb(179, 119, 71)' }} onClick={goHome}>
+                            Explore App Without Login <i className="fa-solid fa-mobile"></i>
+                        </button>
+                    <br /><br />
                     <div>
-                        <Link to="/">
-                            <a>Existing user? Sign in here.</a>
+                        <Link to="/login">
+                            Existing user? Sign in here.
                         </Link>
                     </div>
                     <div>
                         <Link to="/reset">
-                            <a>Forgot password? Reset password here.</a>
+                            Forgot password? Reset password here.
                         </Link>
                     </div>
                 </form>
