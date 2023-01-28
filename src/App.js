@@ -10,6 +10,9 @@ import EditTemplate from './components/EditTemplate';
 import LogWorkout from './components/LogWorkout';
 import History from './components/History';
 import Loading from './components/Loading';
+import Login from './components/Login';
+import SignUp from './components/SignUp';
+import Reset from './components/PassReset';
 
 function App() {
   return (
@@ -70,6 +73,24 @@ function App() {
           <Loading />
           <History/>
           <Footer/>
+          </>
+        }/>
+        <Route path="/login" element={
+          <>
+          <Loading />
+          <Login/>
+          </>
+        }/>
+        <Route path="/signup" element={
+          <>
+          <Loading />
+          <SignUp/>
+          </>
+        }/>
+        <Route path="/reset" element={
+          <>
+          <Loading />
+          <Reset/>
           </>
         }/>
         </Routes>
