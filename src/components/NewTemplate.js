@@ -146,11 +146,6 @@ function NewTemplate() {
                                     <p className='col-12 text-center'>SET</p>
                                 </div>
                             </div>
-                            {/* <div className='newtemplate_prev col-4'>
-                                <div className='newtemplate_prev_text row'>
-                                    <p className='col-12 text-center'>PREV</p>
-                                </div>
-                            </div> */}
                             <div className='newtemplate_lbs col-3'>
                                 <div className='newtemplate_lbs_text row'>
                                     <p className='col-12 text-center'>{(item.metric === 'wr') ? 'LBS' : (item.metric === 'dt' ? 'MILES' : 'SECONDS')}</p>
@@ -161,11 +156,6 @@ function NewTemplate() {
                                     <p className='col-12 text-center'>{item.metric === 'wr' ? 'REPS' : item.metric === 'dt' ? 'MIN' : ''}</p>
                                 </div>
                             </div>
-                            {/* <div className='newtemplate_reps_remove col-2'>
-                                <div className='newtemplate_reps_space row'>
-                                    <p className='col-12 text-center'></p>
-                                </div>
-                            </div> */}
                         </div>
                         {setList(item, i)}
                         <div className='newtemplate_exer_prev row'>
@@ -210,11 +200,6 @@ function NewTemplate() {
                             <p className='col-12 text-center'>{item + 1}</p>
                         </div>
                     </div>
-                    {/* <div className='newtemplate_prev col-4'>
-                        <div className='newtemplate_prev_val row'>
-                            <p className='col-12 text-center'>-</p>
-                        </div>
-                    </div> */}
                     <div className='newtemplate_lbs col-3'>
                         <div className='newtemplate_lbs_val row'>
                             <input className='lbs_input' disabled style={{ 'opacity': '.5' }}></input>
@@ -225,11 +210,6 @@ function NewTemplate() {
                             {exer.metric === 'wr' || exer.metric === 'dt' ? <input className='reps_input' disabled style={{ 'opacity': '.5' }}></input> : null}
                         </div>
                     </div>
-                    {/* <div className='newtemplate_reps_remove col-2'>
-                        <div className='newtemplate_reps_button row'>
-                            {(item !== 0) ? <button className="reps_remove_button fa-solid fa-minus" value={index} onClick={e => removeSet(e.target.value)}></button> : <></>}
-                        </div>
-                    </div> */}
                 </div>
             )
         })

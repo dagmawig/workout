@@ -102,9 +102,7 @@ function Workout() {
                                 <p className="row text-left">MY TEMPLATES</p>
                             </div>
                             <div className='template_add d-flex col-2'>
-                                {/* <Link to="/template"> */}
                                     <button className="plus_button"><i className="fa fa-plus  fa-2x" onClick={toNewTemp}></i></button>
-                                {/* </Link> */}
                             </div>
                         </div>
                     </div>

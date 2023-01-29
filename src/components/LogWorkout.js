@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './LogWorkout.css';
 import { useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateLoading, updateUserData, updateRecord } from './workoutSlice';
+import { updateLoading, updateUserData} from './workoutSlice';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -18,8 +18,6 @@ function LogWorkout() {
 
     // let template = (state.user) ? stateSelector.userData.templateArr[state.index] : stateSelector.userData.fixTempArr[state.index];
     let userWorkObj = stateSelector.userData.workoutObj;
-    // let exerciseArr = template.exerList;
-
 
     const [filterArr, updateFilter] = useState(exercisesLocal);
     const [exerciseList, updateExerList] = useState([]);
@@ -248,11 +246,6 @@ function LogWorkout() {
                                     <p className='col-12 text-center'><b>SET</b></p>
                                 </div>
                             </div>
-                            {/* <div className='newtemplate_prev col-4'>
-                                <div className='newtemplate_prev_text row'>
-                                    <p className='col-12 text-center'><b>PREV</b></p>
-                                </div>
-                            </div> */}
                             <div className='newtemplate_lbs col-3'>
                                 <div className='newtemplate_lbs_text row'>
                                     <p className='col-12 text-center'><b>{(item.metric === 'wr') ? 'LBS' : (item.metric === 'dt' ? 'MILES' : 'SECONDS')}</b></p>
@@ -263,11 +256,6 @@ function LogWorkout() {
                                     <p className='col-12 text-center'><b>{item.metric === 'wr' ? 'REPS' : item.metric === 'dt' ? 'MIN' : ''}</b></p>
                                 </div>
                             </div>
-                            {/* <div className='newtemplate_reps_remove col-2'>
-                                <div className='newtemplate_reps_space row'>
-                                    <p className='col-12 text-center'></p>
-                                </div>
-                            </div> */}
                         </div>
                         {setList(item, i)}
                         <div className='newtemplate_exer_prev row'>
@@ -314,11 +302,6 @@ function LogWorkout() {
                             <p className='col-12 text-center'>{item + 1}</p>
                         </div>
                     </div>
-                    {/* <div className='newtemplate_prev col-4'>
-                        <div className='newtemplate_prev_val row'>
-                            <p className='col-12 text-center'>{(item===0)? getPrev(exer): '-'}</p>
-                        </div>
-                    </div> */}
                     <div className='newtemplate_lbs col-3'>
                         <div className='newtemplate_lbs_val row'>
                             <input className='lbs_input' type={'number'} onChange={(e) => updateInput(index, 0, item, e.target.value)}></input>
@@ -329,11 +312,6 @@ function LogWorkout() {
                             {exer.metric === 'wr' || exer.metric === 'dt' ? <input className='reps_input' type={'number'} onChange={(e) => updateInput(index, 1, item, e.target.value)}></input> : null}
                         </div>
                     </div>
-                    {/* <div className='newtemplate_reps_remove col-2'>
-                        <div className='newtemplate_reps_button row'>
-                            <button className="reps_remove_button fa-solid fa-check" value={index} onClick={e => logSet(e.target.value)}></button>
-                        </div>
-                    </div> */}
                 </div>
             )
         })
@@ -410,11 +388,6 @@ function LogWorkout() {
             </div>
             <div className='newtemplate_content row'>
                 <div className='newtemplate_content_form row'>
-                    {/* <div className='newtemplate_content_header row'>
-                        <div className='newtemplate_content_name col-8'>
-                            <input className="form-control newtemplate_name_input" type="text" placeholder="Enter Workout Name" defaultValue={tempName} onChange={e => updateName(e.target.value)} />
-                        </div>
-                    </div> */}
                     <div className='newtemplate_exer_list row'>
                         {exerListEle()}
                     </div>

@@ -2,18 +2,14 @@ import React, { useState, useEffect } from 'react';
 import './SignUp.css';
 import { Link } from 'react-router-dom';
 import { auth } from './FirebaseConfig';
-import { sendSignInLinkToEmail, createUserWithEmailAndPassword, signOut } from "firebase/auth";
 import { useNavigate } from 'react-router-dom';
-import { updateLoading } from './workoutSlice';
-import { useDispatch } from 'react-redux';
 
 function SignUp() {
 
-    const dispatch = useDispatch();
     const navigate = useNavigate();
     const [email, getEmail] = useState('');
     const [password, getPassword] = useState('');
-    const [valid, isValid] = useState(null);
+    const [valid] = useState(null);
 
     // function handling user sign up
     const signUp = (e) => {
@@ -32,7 +28,6 @@ function SignUp() {
                             navigate('/login', { replace: true });
                         }).catch(err=>console.log(err))
                         
-                        //document.getElementById("signup").click();
                     }).catch(function (e) {
                         alert(e);
                     });

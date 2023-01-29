@@ -3,8 +3,7 @@ import './Login.css';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom'
 import { auth } from './FirebaseConfig';
-import { updateLoading, updateUserID } from './workoutSlice';
-import { signInWithEmailAndPassword, sendSignInLinkToEmail, signOut } from "firebase/auth";
+import { updateUserID } from './workoutSlice';
 import { useNavigate } from 'react-router-dom';
 
 function Login() {

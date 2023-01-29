@@ -8,32 +8,7 @@ function History() {
     const stateSelector = useSelector(state => state.workout);
     const dispatch = useDispatch();
     let userWorkObj = stateSelector.userData.workoutObj;
-    //     let userWorkObj = {
-    //     "2023-01-21T19:44:17.452Z": {
-    //         "tempName": "Dag",
-    //         "workoutList": [
-    //             {
-    //                 "exerName": "straddle maltese",
-    //                 "metric": "a",
-    //                 "metric1": [
-    //                     "1",
-    //                     "3",
-    //                     "4"
-    //                 ]
-    //             },
-    //             {
-    //                 "exerName": "sledge hammer",
-    //                 "metric": "wr",
-    //                 "metric1": [
-    //                     "2"
-    //                 ],
-    //                 "metric2": [
-    //                     "3"
-    //                 ]
-    //             }
-    //         ]
-    //     }
-    // }
+ 
 
     function historyItem(workoutObj) {
         return Object.keys(workoutObj).sort((a, b) => new Date(b) - new Date(a)).map(key => {

@@ -2,7 +2,6 @@ import React from 'react';
 import './Header.css';
 import { useNavigate } from 'react-router-dom';
 import { auth } from './FirebaseConfig';
-import { signOut } from "firebase/auth";
 
 
 function Header() {

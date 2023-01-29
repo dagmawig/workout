@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import './PassReset.css';
 import { Link } from 'react-router-dom';
 import { auth } from './FirebaseConfig';
-import { sendPasswordResetEmail } from "firebase/auth";
 import { useNavigate } from 'react-router-dom';
 import { updateLoading } from './workoutSlice';
 import { useDispatch } from 'react-redux';

@@ -19,22 +19,6 @@
    z-index: -1;
 }
 
-/* .workout_title {
-    position: sticky;
-    height: 50px;
-    display: flex;
-    flex-direction: column;
-    width: 50%;
-    margin: 0;
-    padding: 1px;
-    align-items: center;
-    justify-content: center;
-    border: rgb(13, 99, 39) solid 1px;
-    border-radius: 15px;
-    font-size: 11pt !important;
-    color: black;
- } */
-
 .workout_content {
    display: flex;
    flex-direction: row;
