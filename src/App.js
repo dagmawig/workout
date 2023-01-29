@@ -15,18 +15,34 @@ import SignUp from './components/SignUp';
 import Reset from './components/PassReset';
 
 function App() {
+
+  let homePage;
+
+  if (localStorage.getItem("workout_userID")) {
+    homePage = (
+      <>
+        <Header />
+        <Loading />
+        <Search />
+        <Footer />
+      </>
+    )
+  }
+  else {
+    homePage = (
+      <>
+        <Loading />
+        <Login />
+      </>
+    )
+  }
+
+
   return (
-    <Router basename={process.env.PUBLIC_URL} >
+    <Router basename={process.env.PUBLIC_URL}>
       <div className="App">
         <Routes>
-          <Route path="/" element={
-            <>
-              <Header />
-              <Loading />
-              <Search />
-              <Footer />
-            </>
-          } />
+          <Route path="/" element={homePage} />
           <Route path="/workout" element={
             <>
               <Header />

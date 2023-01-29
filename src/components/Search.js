@@ -51,7 +51,7 @@ function Search() {
                         </div>
                     </div>
                     <div className='col-5 search_gif'>
-                        <img src={'/images/' + item.localUrl} style={{backgroundColor: 'white'}} alt="my-gif" />
+                        <img src={process.env.PUBLIC_URL + '/images/' + item.localUrl} style={{backgroundColor: 'white'}} alt="my-gif" />
                     </div>
                 </div>
             )

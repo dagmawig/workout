@@ -71,10 +71,10 @@ function Login() {
                         Sign In <i className="fa fa-sign-in"></i>
                     </button>
                     <br /><br />
-                        <button type="submit" className="reset_pass btn" style={{ backgroundColor: 'rgb(179, 119, 71)' }} onClick={goHome}>
+                        {/* <button type="submit" className="reset_pass btn" style={{ backgroundColor: 'rgb(179, 119, 71)' }} onClick={goHome}>
                             Explore App Without Login <i className="fa-solid fa-mobile"></i>
                         </button>
-                    <br /><br />
+                    <br /><br /> */}
                     <div>
                         <Link to="/signup">
                             New user? Create account here.

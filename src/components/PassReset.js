@@ -49,17 +49,17 @@ function Reset() {
                         Reset Password <i className="fa fa-key"></i>
                     </button>
                     <br /><br />
-                        <button type="submit" className="reset_pass btn" style={{ backgroundColor: 'rgb(179, 119, 71)' }} onClick={goHome}>
+                        {/* <button type="submit" className="reset_pass btn" style={{ backgroundColor: 'rgb(179, 119, 71)' }} onClick={goHome}>
                             Explore App Without Login <i className="fa-solid fa-mobile"></i>
                         </button>
-                    <br /><br />
+                    <br /><br /> */}
                     <div>
                         <Link to="/signup">
                             New user? Create account here.
                         </Link>
                     </div>
                     <div>
-                        <Link id="login_link" to="/login">
+                        <Link id="login_link" to="/">
                             Remember password? Sign in here.
                         </Link>
                     </div>

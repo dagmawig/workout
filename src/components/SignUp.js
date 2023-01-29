@@ -25,7 +25,7 @@ function SignUp() {
                     .then(function () {
                         auth.signOut().then(()=>{
                             alert(`Verification link sent to ${email}. \n Please click on the link to verify your email and log into your acount.`);
-                            navigate('/login', { replace: true });
+                            navigate('/', { replace: true });
                         }).catch(err=>console.log(err))
                         
                     }).catch(function (e) {
@@ -68,12 +68,12 @@ function SignUp() {
                         </Link>
                     </button>
                     <br /><br />
-                        <button type="submit" className="reset_pass btn" style={{ backgroundColor: 'rgb(179, 119, 71)' }} onClick={goHome}>
+                        {/* <button type="submit" className="reset_pass btn" style={{ backgroundColor: 'rgb(179, 119, 71)' }} onClick={goHome}>
                             Explore App Without Login <i className="fa-solid fa-mobile"></i>
                         </button>
-                    <br /><br />
+                    <br /><br /> */}
                     <div>
-                        <Link to="/login">
+                        <Link to="/">
                             Existing user? Sign in here.
                         </Link>
                     </div>

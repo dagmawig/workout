@@ -9,21 +9,11 @@ function Header() {
     const navigate = useNavigate();
 
     function logOff() {
-        if (localStorage.getItem("workout_userID")) {
-
             localStorage.setItem("workout_userID", '');
+            navigate('/', { replace: true });
             window.location.reload();
-
-            auth.signOut().then(()=>{
-                navigate('/', { replace: true });
-                alert('You are now logged off!');
-            }).catch(err=>console.log(err))
- 
-        }
-        else {
-            navigate('/login', { replace: true });
-        }
     }
+
     return (
         <div className="header container" style={{ backgroundColor: '#873e23' }}>
             <div className='header_row text-center row'>
