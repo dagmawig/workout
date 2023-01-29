@@ -19,7 +19,7 @@ function Reset() {
 
         e.preventDefault();
 
-        sendPasswordResetEmail(auth, email).then(() => {
+        auth.sendPasswordResetEmail(email).then(() => {
             alert(`Password reset link sent to ${email}.`);
             getEmail("");
             document.getElementById("login_link").click();

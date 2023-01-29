@@ -21,24 +21,23 @@ function SignUp() {
 
         if (valid) return;
 
-        createUserWithEmailAndPassword(auth, email, password)
-            .then((userCred) => {
+        auth.createUserWithEmailAndPassword(email, password)
+            .then(() => {
 
-                let user = userCred.user;
-
-                sendSignInLinkToEmail(auth, email)
+                let user = auth.currentUser;
+                user.sendEmailVerification()
                     .then(function () {
-                        signOut(auth).then(()=>{
+                        auth.signOut().then(()=>{
                             alert(`Verification link sent to ${email}. \n Please click on the link to verify your email and log into your acount.`);
+                            navigate('/login', { replace: true });
                         }).catch(err=>console.log(err))
                         
-                        isValid(true);
-                        document.getElementById("signup").click();
+                        //document.getElementById("signup").click();
                     }).catch(function (e) {
                         alert(e);
                     });
             })
-            .catch((error) => alert(error.message));
+            .catch((error) => alert(error));
     }
 
     function goHome() {
@@ -46,7 +45,9 @@ function SignUp() {
     }
 
     useEffect(() => {
-        dispatch(updateLoading(false));
+        if(localStorage.getItem("workout_userID")) {
+            navigate('/', {replace: true})
+        }
     }, []);
 
     return (

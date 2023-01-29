@@ -92,8 +92,6 @@ function Workout() {
             })
     }, [])
 
-    if(document.readyState==='complete') dispatch(updateLoading(false));
-
     return (
         <div className='workout container'>
             <div className='workout_content row'>

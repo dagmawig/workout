@@ -17,10 +17,10 @@ function Login() {
     function signIn(e) {
         e.preventDefault();
 
-        signInWithEmailAndPassword(auth, email, password)
-            .then((userCred) => {
+        auth.signInWithEmailAndPassword(email, password)
+            .then(() => {
 
-                let user = userCred.user;
+                let user = auth.currentUser;
 
                 if (user.emailVerified) {
 
@@ -31,11 +31,11 @@ function Login() {
                     window.location.reload();
                 }
                 else {
-                    sendSignInLinkToEmail(auth, email).then(() => {
+                    user.sendEmailVerification().then(() => {
                         alert(`Email not verified.\nVerification link sent to ${email}.\nPlease verify your email.`);
                     });
 
-                    signOut(auth).then(()=>{
+                    auth.signOut().then(()=>{
                     }).catch(err=>console.log(err))
                 }
             }).catch((error) => alert(error.message));
@@ -46,7 +46,9 @@ function Login() {
     }
 
     useEffect(() => {
-        if(document.readyState==='complete') dispatch(updateLoading(false));
+        if(localStorage.getItem("workout_userID")) {
+            navigate('/', {replace: true})
+        }
     }, []);
 
     return (

@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Search.css';
+import { useDispatch } from 'react-redux';
+import { updateLoading, updateUserData } from './workoutSlice';
+import axios from 'axios';
 var muscles = require('../exerMuscle.json');
 var exerciseNames = require('../exerciseNames.json');
 var bodyParts = require('../exerBody.json');
 var exercisesLocal = require('../exercisesLocal.json');
 
 function Search() {
+
+    const dispatch = useDispatch();
     const [filter, updateFilter] = useState(null);
     const [disable, updateDisable] = useState(true);
     const [exerFilter, updateExer] = useState(exercisesLocal);
@@ -76,6 +81,29 @@ function Search() {
         else if (filter === 'Workout Name') updateExer(exercisesLocal.filter(exer => exer.name === value))
         else updateExer([]);
     }
+
+    
+    useEffect(() => {
+        async function loadData() {
+            let loadURI = process.env.REACT_APP_API_URI + 'loadData';
+            let res = await axios.post(loadURI, { userID: localStorage.getItem("workout_userID") });
+
+            return res;
+        }
+
+        dispatch(updateLoading(true));
+        loadData()
+            .then(res => {
+                let data = res.data;
+                if (data.success) {
+                    dispatch(updateUserData(data.data));
+                    dispatch(updateLoading(false));
+                } else {
+                    dispatch(updateLoading(false));
+                    alert(`${data.err}`)
+                }
+            })
+    }, [])
 
     return (
         <div className="search container">

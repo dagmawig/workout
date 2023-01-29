@@ -15,7 +15,7 @@ function Header() {
             localStorage.setItem("workout_userID", '');
             window.location.reload();
 
-            signOut(auth).then(()=>{
+            auth.signOut().then(()=>{
                 navigate('/', { replace: true });
                 alert('You are now logged off!');
             }).catch(err=>console.log(err))
