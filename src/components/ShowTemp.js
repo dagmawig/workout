@@ -109,7 +109,7 @@ function ShowTemp() {
     useEffect(() => {
         async function loadData() {
             let loadURI = process.env.REACT_APP_API_URI + 'loadData';
-            let res = await axios.post(loadURI, { userID: localStorage.getItem("workout_userID") });
+            let res = await axios.post(loadURI, { userID: localStorage.getItem("workout_userID"), email: localStorage.getItem("workout_email")  });
 
             return res;
         }
@@ -207,7 +207,7 @@ function ShowTemp() {
                                     </div>
                                 </div>
                                 <div className='col-5 search_gif'>
-                                    <img src={'/images/' + exercise.localUrl} style={{ backgroundColor: 'white' }} alt="my-gif" />
+                                    <img src={process.env.PUBLIC_URL + '/images/' + exercise.localUrl} style={{ backgroundColor: 'white' }} alt="my-gif" />
                                 </div>
                             </div>
                         </div>

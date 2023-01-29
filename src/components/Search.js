@@ -86,7 +86,7 @@ function Search() {
     useEffect(() => {
         async function loadData() {
             let loadURI = process.env.REACT_APP_API_URI + 'loadData';
-            let res = await axios.post(loadURI, { userID: localStorage.getItem("workout_userID") });
+            let res = await axios.post(loadURI, { userID: localStorage.getItem("workout_userID"), email: localStorage.getItem("workout_email") });
 
             return res;
         }
