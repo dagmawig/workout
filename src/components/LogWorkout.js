@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './LogWorkout.css';
 import { useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateLoading, updateUserData} from './workoutSlice';
+import { updateLoading, updateUserData } from './workoutSlice';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -16,7 +16,7 @@ function LogWorkout() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    
+
     let userWorkObj = stateSelector.userData.workoutObj;
     let workout_user = localStorage.getItem("workout_user");
     let workout_index = parseInt(localStorage.getItem("workout_index"));
@@ -27,6 +27,7 @@ function LogWorkout() {
     const [seconds, setSeconds] = useState(0);
     const [inputState, updateInputState] = useState([]);
     const [currentTemp, updateTemp] = useState(null);
+    const [exercise, updateExer] = useState('');
 
     function updateInput(i, j, k, val) {
         inputState[i][j][k] = (val === '') ? undefined : val;
@@ -52,7 +53,7 @@ function LogWorkout() {
     }
 
     function saveWork() {
-        if(exerciseList.length===0) alert('Add at least one exercise.')
+        if (exerciseList.length === 0) alert('Add at least one exercise.')
         else if (!checkInput(inputState)) alert('Some exercise sets are not complete. Either complete the sets or remove incomplete sets. If doing weightless exercise, put 0 in the LBS box.')
         else {
             let record = JSON.parse(JSON.stringify(stateSelector.userData.record));
@@ -109,7 +110,7 @@ function LogWorkout() {
             let tempUserObj = JSON.parse(JSON.stringify(userWorkObj))
             tempUserObj[timeStamp] = workObj;
 
-            let newTemplateArr = JSON.parse(JSON.stringify((workout_user==='true') ? stateSelector.userData.templateArr : stateSelector.userData.fixTempArr));
+            let newTemplateArr = JSON.parse(JSON.stringify((workout_user === 'true') ? stateSelector.userData.templateArr : stateSelector.userData.fixTempArr));
             newTemplateArr[workout_index].workoutTimeArr.push(new Date().toISOString());
 
             dispatch(updateLoading(false));
@@ -135,7 +136,7 @@ function LogWorkout() {
     }
 
     setTimeout(() => {
-        setSeconds(Math.floor(Date.now()/1000)-parseInt(localStorage.getItem("workout_start")));
+        setSeconds(Math.floor(Date.now() / 1000) - parseInt(localStorage.getItem("workout_start")));
     }, 1000);
 
 
@@ -232,13 +233,18 @@ function LogWorkout() {
         else return ['-', '-'];
     }
 
+    function showDetail(exer) {
+        updateExer(exer);
+        window.$('#exerWDetModal').modal('show');
+    }
+
     function exerListEle() {
         return exerciseList.map((item, i) => {
             return (
                 <div className='newtemplate_exer_ele row' key={i + 'exerListEle'}>
                     <div className='newtemplate_exer_ele_header row'>
                         <div className='newtemplate_exer_name col-10'>
-                            <b>{item.name}</b>
+                            <b>{item.name}</b><button className="gif_button" onClick={e => showDetail(item)} ><i className="fa-solid fa-circle-info fa"></i></button>
                         </div>
                         <div className='newtemplate_exer_remove col-2' align='right'>
                             <button className="remove_button fa-solid fa-x" value={i} onClick={e => removeExer(e.target.value)}></button>
@@ -265,7 +271,7 @@ function LogWorkout() {
                         {setList(item, i)}
                         <div className='newtemplate_exer_prev row'>
                             <div className='newtemplate_exer_prev_tit col-3' align='right'>
-                               <b>PREV:</b>
+                                <b>PREV:</b>
                             </div>
                             <div className='newtemplate_exer_prev_tit col-9' align='left'>
                                 <b>{` ${getRec(item)[0]}`}</b>
@@ -273,7 +279,7 @@ function LogWorkout() {
                         </div>
                         <div className='newtemplate_exer_pr row'>
                             <div className='newtemplate_exer_pr_tit col-3' align='right'>
-                            <b>PR:</b>
+                                <b>PR:</b>
                             </div>
                             <div className='newtemplate_exer_pr_tit col-9' align='left'>
                                 <b>{` ${getRec(item)[1]}`}</b>
@@ -341,7 +347,7 @@ function LogWorkout() {
     useEffect(() => {
         async function loadData() {
             let loadURI = process.env.REACT_APP_API_URI + 'loadData';
-            let res = await axios.post(loadURI, { userID: localStorage.getItem("workout_userID"), email: localStorage.getItem("workout_email")  });
+            let res = await axios.post(loadURI, { userID: localStorage.getItem("workout_userID"), email: localStorage.getItem("workout_email") });
 
             return res;
         }
@@ -352,7 +358,7 @@ function LogWorkout() {
                 let data = res.data;
                 if (data.success) {
                     dispatch(updateUserData(data.data));
-                    let template = (workout_user==='true') ? data.data.templateArr[workout_index] : data.data.fixTempArr[workout_index];
+                    let template = (workout_user === 'true') ? data.data.templateArr[workout_index] : data.data.fixTempArr[workout_index];
                     updateExerList(template.exerList);
                     let inputArr = [];
                     template.exerList.map((exer, i) => {
@@ -433,7 +439,7 @@ function LogWorkout() {
                                 </div>
                                 <div className="modal-footer">
                                     <button type="button" className="btn btn-secondary" data-bs-dismiss="modal"><b>Close</b></button>
-                                    <button type="button" className="btn" onClick={addExer} style={{backgroundColor: '#9e5f2f'}}><b>Add</b></button>
+                                    <button type="button" className="btn" onClick={addExer} style={{ backgroundColor: '#9e5f2f' }}><b>Add</b></button>
                                 </div>
                             </div>
                         </div>
@@ -454,7 +460,7 @@ function LogWorkout() {
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal"><b>No</b></button>
-                            <button type="button" className="btn" onClick={cancelWork} style={{backgroundColor: '#9e5f2f'}}><b>Yes</b></button>
+                            <button type="button" className="btn" onClick={cancelWork} style={{ backgroundColor: '#9e5f2f' }}><b>Yes</b></button>
                         </div>
                     </div>
                 </div>
@@ -473,7 +479,47 @@ function LogWorkout() {
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal"><b>No</b></button>
-                            <button type="button" className="btn" onClick={saveWork} style={{backgroundColor: '#9e5f2f'}}><b>Yes</b></button>
+                            <button type="button" className="btn" onClick={saveWork} style={{ backgroundColor: '#9e5f2f' }}><b>Yes</b></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="modal" id='exerWDetModal' tabIndex="-1" aria-hidden={true}>
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" style={{ 'fontWeight': 'bold' }}>Exercise Detail</h5>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body">
+                            <div className='row exercise'>
+                                <div className='col-7 search_text'>
+                                    <div className='row text'>
+                                        <div className='row first'>
+                                            <div className='col-12 name'><b>Workout</b></div>
+                                            <div className='col-12 name_value'>{exercise.name}</div>
+                                        </div>
+                                        <div className='row second'>
+                                            <div className='col-12 body'><b>Body Part</b></div>
+                                            <div className='col-12 body_value'>{exercise.bodyPart}</div>
+                                        </div>
+                                        <div className='row third'>
+                                            <div className='col-12 equipment'><b>Equipment</b></div>
+                                            <div className='col-12 equip_value'>{exercise.equipment}</div>
+                                        </div>
+                                        <div className='row fourth'>
+                                            <div className='col-12 target'><b>Target</b></div>
+                                            <div className='col-12 target_value'>{exercise.target}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className='col-5 search_gif'>
+                                    <img src={process.env.PUBLIC_URL + '/images/' + exercise.localUrl} style={{ backgroundColor: 'white' }} alt="my-gif" />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal"><b>Close</b></button>
                         </div>
                     </div>
                 </div>

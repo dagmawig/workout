@@ -14,7 +14,7 @@ function ShowTemp() {
     const [exercise, updateExer] = useState('');
 
     let template = (localStorage.getItem("workout_user")==='true') ? stateSelector.userData.templateArr[localStorage.getItem("workout_index")] : stateSelector.userData.fixTempArr[localStorage.getItem("workout_index")];
-    console.log(template, typeof(localStorage.getItem("workout_user")))
+    
     async function saveTemplate(newTempArr) {
         let updateURI = process.env.REACT_APP_API_URI + 'updateTemp';
         let res = await axios.post(updateURI, { userID: localStorage.getItem("workout_userID"), templateArr: newTempArr }).catch(err => console.log(err));
@@ -110,7 +110,7 @@ function ShowTemp() {
                         {item.sets} X {item.name}
                     </div>
                     <div className='showtemp_exer_gif col-2' align='right'>
-                        <button className="gif_button" onClick={e => showDetail(item)} ><i className="fa-solid fa-question fa"></i></button>
+                        <button className="gif_button" onClick={e => showDetail(item)} ><i className="fa-solid fa-circle-info fa"></i></button>
                     </div>
                 </div>
             )
