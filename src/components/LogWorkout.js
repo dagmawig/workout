@@ -107,6 +107,7 @@ function LogWorkout() {
             }
 
             workObj.workoutList = workoutList;
+            workObj.duration = seconds;
             let tempUserObj = JSON.parse(JSON.stringify(userWorkObj))
             tempUserObj[timeStamp] = workObj;
 

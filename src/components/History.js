@@ -8,7 +8,7 @@ function History() {
     const stateSelector = useSelector(state => state.workout);
     const dispatch = useDispatch();
     let userWorkObj = stateSelector.userData.workoutObj;
- 
+
 
     function historyItem(workoutObj) {
         return Object.keys(workoutObj).sort((a, b) => new Date(b) - new Date(a)).map(key => {
@@ -19,7 +19,14 @@ function History() {
                             {workoutObj[key].tempName}
                         </div>
                         <div className='history_item_date col-5' align='right'>
-                            {key.substring(0, 10)}
+                            <div className='history_item_time row'>
+                                <div className='col-12'>
+                                    <i className="fa-solid fa-calendar-days fa-2xs" style={{ color: 'rgb(67, 12, 12)' }}>{`  ${key.substring(0, 10)}`}</i>
+                                </div>
+                                {(workoutObj[key].duration) ? <div className='duration col-12'>
+                                    <i className="fa-solid fa-hourglass-end fa-2xs" style={{ color: 'rgb(67, 12, 12)' }}> {`  ${new Date(workoutObj[key].duration * 1000).toISOString().substr(11, 8)}`}</i>
+                                </div> : null}
+                            </div>
                         </div>
                     </div>
                     <div className='history_item_list row'>
@@ -71,7 +78,7 @@ function History() {
                         {i + 1}
                     </div>
                     <div className='history_value col-4' align='center'>
-                        {`${val}${(exerName in stateSelector.userData.record && val==stateSelector.userData.record[exerName].pr1)?'*':''}`}
+                        {`${val}${(exerName in stateSelector.userData.record && val == stateSelector.userData.record[exerName].pr1) ? '*' : ''}`}
                     </div>
                     <div className='history_value col-4' align='center'>
                         {metric2 === undefined ? '' : metric2[i]}
@@ -84,7 +91,7 @@ function History() {
     useEffect(() => {
         async function loadData() {
             let loadURI = process.env.REACT_APP_API_URI + 'loadData';
-            let res = await axios.post(loadURI, { userID: localStorage.getItem("workout_userID"), email: localStorage.getItem("workout_email")  });
+            let res = await axios.post(loadURI, { userID: localStorage.getItem("workout_userID"), email: localStorage.getItem("workout_email") });
 
             return res;
         }
