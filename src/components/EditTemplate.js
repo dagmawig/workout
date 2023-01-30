@@ -20,6 +20,7 @@ function EditTemplate() {
     const [filterArr, updateFilter] = useState(exercisesLocal);
     const [selectedExer, updateSelExer] = useState('3/4 sit-up');
 
+    let workout_index = parseInt(localStorage.getItem("workout_index"));
     function handleChange(value) {
         document.getElementById('exer-edit-list').selectedIndex = 0;
         let tempArr = (value === 'empty') ? exercisesLocal : exercisesLocal.filter(ele => ele.bodyPart === value)
@@ -40,17 +41,17 @@ function EditTemplate() {
 
     function saveTemp() {
         if (!tempName.split(' ').join('')) alert('enter wolrkout template name');
-        else if (stateSelector.userData.templateArr.filter((ele, i) => ele.name === tempName && i !== state.index).length !== 0) alert('workout template name already exist. use a different template name.');
+        else if (stateSelector.userData.templateArr.filter((ele, i) => ele.name === tempName && i !== workout_index).length !== 0) alert('workout template name already exist. use a different template name.');
         else if (exerciseList.length === 0) alert('add at least one exercise')
         else {
             let workoutTemp = {
                 name: tempName,
                 exerList: JSON.parse(JSON.stringify(exerciseList)),
-                workoutTimeArr: [...stateSelector.userData.templateArr[state.index].workoutTimeArr],
-                tempID: stateSelector.userData.templateArr[state.index].tempID
+                workoutTimeArr: [...stateSelector.userData.templateArr[workout_index].workoutTimeArr],
+                tempID: stateSelector.userData.templateArr[workout_index].tempID
             }
             let newTempArr = JSON.parse(JSON.stringify(stateSelector.userData.templateArr));
-            newTempArr[state.index] = workoutTemp;
+            newTempArr[workout_index] = workoutTemp;
 
 
 
@@ -59,7 +60,8 @@ function EditTemplate() {
                 let data = res.data;
                 if (data.success) {
                     dispatch(updateTemp(data.data.templateArr));
-                    navigate('/workout', { replace: true })
+                    localStorage.setItem("workout_comp", "workout");
+                    window.location.reload();
                     alert(`Template ${tempName} updated successfully!`)
                     dispatch(updateLoading(false));
                 } else {
@@ -72,17 +74,17 @@ function EditTemplate() {
 
     function saveTempModal() {
         if (!tempName.split(' ').join('')) alert('enter wolrkout template name');
-        else if (stateSelector.userData.templateArr.filter((ele, i) => ele.name === tempName && i !== state.index).length !== 0) alert('workout template name already exist. use a different template name.');
+        else if (stateSelector.userData.templateArr.filter((ele, i) => ele.name === tempName && i !== workout_index).length !== 0) alert('workout template name already exist. use a different template name.');
         else if (exerciseList.length === 0) alert('add at least one exercise')
         else {
             let workoutTemp = {
                 name: tempName,
                 exerList: JSON.parse(JSON.stringify(exerciseList)),
-                workoutTimeArr: [...stateSelector.userData.templateArr[state.index].workoutTimeArr],
-                tempID: stateSelector.userData.templateArr[state.index].tempID
+                workoutTimeArr: [...stateSelector.userData.templateArr[workout_index].workoutTimeArr],
+                tempID: stateSelector.userData.templateArr[workout_index].tempID
             }
             let newTempArr = JSON.parse(JSON.stringify(stateSelector.userData.templateArr));
-            newTempArr[state.index] = workoutTemp;
+            newTempArr[workout_index] = workoutTemp;
 
 
             dispatch(updateLoading(true));
@@ -91,7 +93,8 @@ function EditTemplate() {
                 if (data.success) {
                     dispatch(updateTemp(data.data.templateArr));
                     window.$('#saveModal').modal('hide');
-                    navigate('/workout', { replace: true });
+                    localStorage.setItem("workout_comp", "workout");
+                    window.location.reload();
                     alert(`Template ${tempName} updated successfully!`)
                     dispatch(updateLoading(false));
                 } else {
@@ -105,7 +108,9 @@ function EditTemplate() {
 
     function noSaveModal() {
         window.$('#saveModal').modal('hide');
-        navigate('/workout', { replace: true })
+        // navigate('/workout', { replace: true })
+        localStorage.setItem("workout_comp", "workout");
+        window.location.reload();
     }
 
     function openSaveModal() {
@@ -290,8 +295,8 @@ function EditTemplate() {
                 let data = res.data;
                 if (data.success) {
                     dispatch(updateUserData(data.data));
-                    updateName(data.data.templateArr[state.index].name);
-                    updateExerList(data.data.templateArr[state.index].exerList);
+                    updateName(data.data.templateArr[workout_index].name);
+                    updateExerList(data.data.templateArr[workout_index].exerList);
                     dispatch(updateLoading(false));
                 } else {
                     dispatch(updateLoading(false));

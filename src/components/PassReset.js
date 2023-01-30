@@ -29,6 +29,16 @@ function Reset() {
         navigate('/', { replace: true });
     }
 
+    function toSignUp() {
+        localStorage.setItem("workout_comp", "signup");
+        window.location.reload();
+    }
+
+    function toLogin() {
+        localStorage.setItem("workout_comp", "login");
+        window.location.reload();
+    }
+
     useEffect(() => {
         dispatch(updateLoading(false))
     }, []);
@@ -49,19 +59,23 @@ function Reset() {
                         Reset Password <i className="fa fa-key"></i>
                     </button>
                     <br /><br />
-                        {/* <button type="submit" className="reset_pass btn" style={{ backgroundColor: 'rgb(179, 119, 71)' }} onClick={goHome}>
+                    {/* <button type="submit" className="reset_pass btn" style={{ backgroundColor: 'rgb(179, 119, 71)' }} onClick={goHome}>
                             Explore App Without Login <i className="fa-solid fa-mobile"></i>
                         </button>
                     <br /><br /> */}
                     <div>
-                        <Link to="/signup">
+                        {/* <Link to="/signup"> */}
+                        <a href='' onClick={toSignUp}>
                             New user? Create account here.
-                        </Link>
+                        </a>
+                        {/* </Link> */}
                     </div>
                     <div>
-                        <Link id="login_link" to="/">
+                        {/* <Link id="login_link" to="/"> */}
+                        <a href='' onClick={toLogin}>
                             Remember password? Sign in here.
-                        </Link>
+                        </a>
+                        {/* </Link> */}
                     </div>
                 </form>
             </div>

@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './NewTemplate.css';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateTemp, updateLoading } from './workoutSlice';
+import { updateTemp, updateLoading, updateUserData } from './workoutSlice';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -19,6 +19,7 @@ function NewTemplate() {
     const [selectedExer, updateSelExer] = useState('3/4 sit-up');
     const [templateName, updateName] = useState('');
 
+
     function handleChange(value) {
         document.getElementById('exer-list').selectedIndex = 0;
         let tempArr = (value === 'empty') ? exercisesLocal : exercisesLocal.filter(ele => ele.bodyPart === value)
@@ -28,6 +29,11 @@ function NewTemplate() {
 
     function handleSel(value) {
         updateSelExer(value);
+    }
+
+    function backWorkout() {
+        localStorage.setItem("workout_comp", "workout");
+        window.location.reload();
     }
 
     function addExer() {
@@ -78,16 +84,18 @@ function NewTemplate() {
                 name: templateName,
                 exerList: JSON.parse(JSON.stringify(exerciseList))
             }
+
             let newTempArr = JSON.parse(JSON.stringify(stateSelector.userData.templateArr));
             newTempArr.push(workoutTemp);
 
-
             dispatch(updateLoading(true));
+            console.log(newTempArr, stateSelector.userData.templateArr)
             saveTemplate(newTempArr).then(res => {
                 let data = res.data;
                 if (data.success) {
                     dispatch(updateTemp(data.data.templateArr));
-                    navigate('/workout', { replace: true });
+                    localStorage.setItem("workout_comp", 'workout');
+                    window.location.reload();
                     alert(`Template ${templateName} saved successfully!`)
                     dispatch(updateLoading(false));
                 } else {
@@ -231,12 +239,35 @@ function NewTemplate() {
         })
     }
 
+    useEffect(() => {
+        async function loadData() {
+            let loadURI = process.env.REACT_APP_API_URI + 'loadData';
+            let res = await axios.post(loadURI, { userID: localStorage.getItem("workout_userID"), email: localStorage.getItem("workout_email")  });
+
+            return res;
+        }
+
+        dispatch(updateLoading(true));
+        loadData()
+            .then(res => {
+                let data = res.data;
+                if (data.success) {
+                    dispatch(updateUserData(data.data));
+                    dispatch(updateLoading(false));
+                } else {
+                    dispatch(updateLoading(false));
+                    alert(`${data.err}`)
+                }
+            })
+    }, [])
+
     return (
         <div className='newtemplate container'>
             <div className='newtemplate_header row'>
                 <div className='newtemplate_header_x col-2'>
-                    <Link to='/workout'>
-                        <button className="x_button"><i className="fa-solid fa-xmark fa-2x"></i></button></Link>
+                    {/* <Link to='/workout'> */}
+                        <button className="x_button" onClick={backWorkout}><i className="fa-solid fa-xmark fa-2x"></i></button>
+                        {/* </Link> */}
                 </div>
                 <div className='newtemplate_content_title col-8'>
                     <p className='temp_header_text'>New workout template</p>

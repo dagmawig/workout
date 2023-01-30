@@ -13,7 +13,8 @@ function ShowTemp() {
     const navigate = useNavigate();
     const [exercise, updateExer] = useState('');
 
-    let template = (state.user) ? stateSelector.userData.templateArr[state.index] : stateSelector.userData.fixTempArr[state.index];
+    let template = (localStorage.getItem("workout_user")==='true') ? stateSelector.userData.templateArr[localStorage.getItem("workout_index")] : stateSelector.userData.fixTempArr[localStorage.getItem("workout_index")];
+    console.log(template, typeof(localStorage.getItem("workout_user")))
     async function saveTemplate(newTempArr) {
         let updateURI = process.env.REACT_APP_API_URI + 'updateTemp';
         let res = await axios.post(updateURI, { userID: localStorage.getItem("workout_userID"), templateArr: newTempArr }).catch(err => console.log(err));
@@ -23,16 +24,17 @@ function ShowTemp() {
     function deleteTemp() {
         let name = template.name;
         let tempArr = JSON.parse(JSON.stringify(stateSelector.userData.templateArr));
-        tempArr.splice(state.index, 1);
+        tempArr.splice(localStorage.getItem("workout_index"), 1);
 
         dispatch(updateLoading(true));
         saveTemplate(tempArr).then(res => {
             let data = res.data;
             if (data.success) {
-                navigate('/workout', { replace: true });
                 dispatch(updateTemp(data.data.templateArr));
                 window.$('#delTempModal').modal('hide');
-                alert(`Template ${name} deleted successfully!`)
+                localStorage.setItem("workout_comp", "workout");
+                window.location.reload();
+                alert(`Template ${name} deleted successfully!`);
                 dispatch(updateLoading(false));
             } else {
                 dispatch(updateLoading(false));
@@ -41,13 +43,18 @@ function ShowTemp() {
         })
     }
 
-    function toWorkoutSess() {
-        if (localStorage.getItem("workout_userID")) {
-            navigate('/template', { replace: true })
-        }
-        else {
-            window.$('#loginModal').modal('show');
-        }
+    // function toWorkoutSess() {
+    //     if (localStorage.getItem("workout_userID")) {
+    //         navigate('/template', { replace: true })
+    //     }
+    //     else {
+    //         window.$('#loginModal').modal('show');
+    //     }
+    // }
+
+    function toWork() {
+        localStorage.setItem("workout_comp", "workout");
+        window.location.reload();
     }
 
     function toLogin() {
@@ -56,8 +63,9 @@ function ShowTemp() {
     }
 
     function editTemp() {
-        localStorage.setItem("workout_index", state.index);
-        navigate('/edittemp', { replace: true, state: { user: true, index: state.index } });
+        localStorage.setItem("workout_comp", "edittemp");
+        window.location.reload();
+        // navigate('/edittemp', { replace: true, state: { user: true, index: localStorage.getItem("workout_index") } });
     }
 
     function calcTime(template) {
@@ -70,7 +78,10 @@ function ShowTemp() {
 
     function toWorkout(user) {
         if (localStorage.getItem("workout_userID")) {
-            navigate('/logworkout', { replace: true, state: { user: user, index: state.index } });
+            // navigate('/logworkout', { replace: true, state: { user: user, index: localStorage.getItem("workout_index") } });
+            localStorage.setItem("workout_comp", "logworkout");
+            localStorage.setItem("workout_start", Math.floor(Date.now()/1000))
+            window.location.reload();
         }
         else {
             window.$('#loginModal').modal('show');
@@ -130,12 +141,13 @@ function ShowTemp() {
 
     return (
         <div className='showtemp container'>
-            <div className='showtemp_header row' style={{ 'justifyContent': (state.user) ? 'space-between' : 'left' }}>
+            <div className='showtemp_header row' style={{ 'justifyContent': (localStorage.getItem("workout_user")==='true') ? 'space-between' : 'left' }}>
                 <div className='showtemp_header_back col-2'>
-                    <Link to='/workout'>
-                        <button className="back_button"><i className="fa-solid fa-arrow-left fa-2x"></i></button></Link>
+                    {/* <Link to='/workout'> */}
+                        <button className="back_button" onClick={toWork}><i className="fa-solid fa-arrow-left fa-2x"></i></button>
+                        {/* </Link> */}
                 </div>
-                {(state.user) ? (<><div className='showtemp_content_edit col-2 align-self-center' align='right'>
+                {(localStorage.getItem("workout_user")==='true') ? (<><div className='showtemp_content_edit col-2 align-self-center' align='right'>
                     <button className="edit_button" onClick={editTemp} ><i className="fa-solid fa-pen-to-square fa-2x"></i></button>
                 </div>
                     <div className='showtemp_content_delete col-2 align-self-center' align='right'>
@@ -154,7 +166,7 @@ function ShowTemp() {
                         {exerEle()}
                     </div>
                     <div className='newtemplate_content_add_button row'>
-                        <button className='newtemplate_add_button col-6' onClick={() => toWorkout(state.user)}>START WORKOUT</button>
+                        <button className='newtemplate_add_button col-6' onClick={() => toWorkout(localStorage.getItem("workout_user"))}>START WORKOUT</button>
                     </div>
                 </div>
             </div>

@@ -16,8 +16,10 @@ function LogWorkout() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    // let template = (state.user) ? stateSelector.userData.templateArr[state.index] : stateSelector.userData.fixTempArr[state.index];
+    
     let userWorkObj = stateSelector.userData.workoutObj;
+    let workout_user = localStorage.getItem("workout_user");
+    let workout_index = parseInt(localStorage.getItem("workout_index"));
 
     const [filterArr, updateFilter] = useState(exercisesLocal);
     const [exerciseList, updateExerList] = useState([]);
@@ -107,16 +109,17 @@ function LogWorkout() {
             let tempUserObj = JSON.parse(JSON.stringify(userWorkObj))
             tempUserObj[timeStamp] = workObj;
 
-            let newTemplateArr = JSON.parse(JSON.stringify(state.user ? stateSelector.userData.templateArr : stateSelector.userData.fixTempArr));
-            newTemplateArr[state.index].workoutTimeArr.push(new Date().toISOString());
+            let newTemplateArr = JSON.parse(JSON.stringify((workout_user==='true') ? stateSelector.userData.templateArr : stateSelector.userData.fixTempArr));
+            newTemplateArr[workout_index].workoutTimeArr.push(new Date().toISOString());
 
             dispatch(updateLoading(false));
-            saveWorkout(tempUserObj, state.user, newTemplateArr, record).then(res => {
+            saveWorkout(tempUserObj, workout_user, newTemplateArr, record).then(res => {
                 let data = res.data;
                 if (data.success) {
                     dispatch(updateUserData(data.data));
-                    navigate('/workout', { replace: true })
-                    alert(`Workout under template "${newTemplateArr[state.index].name}" saved successfully!`);
+                    localStorage.setItem("workout_comp", "workout");
+                    window.location.reload();
+                    alert(`Workout under template "${newTemplateArr[workout_index].name}" saved successfully!`);
                     window.$('#saveWModal').modal('hide');
                     dispatch(updateLoading(false));
                 } else {
@@ -132,7 +135,7 @@ function LogWorkout() {
     }
 
     setTimeout(() => {
-        setSeconds(seconds + 1);
+        setSeconds(Math.floor(Date.now()/1000)-parseInt(localStorage.getItem("workout_start")));
     }, 1000);
 
 
@@ -141,8 +144,10 @@ function LogWorkout() {
     }
 
     function cancelWork() {
-        navigate('/workout', { replace: true });
+        // navigate('/workout', { replace: true });
         window.$('#cancelWModal').modal('hide');
+        localStorage.setItem("workout_comp", "workout");
+        window.location.reload();
     }
 
     function handleChange(value) {
@@ -347,7 +352,7 @@ function LogWorkout() {
                 let data = res.data;
                 if (data.success) {
                     dispatch(updateUserData(data.data));
-                    let template = (state.user) ? data.data.templateArr[state.index] : data.data.fixTempArr[state.index];
+                    let template = (workout_user==='true') ? data.data.templateArr[workout_index] : data.data.fixTempArr[workout_index];
                     updateExerList(template.exerList);
                     let inputArr = [];
                     template.exerList.map((exer, i) => {

@@ -23,11 +23,11 @@ function SignUp() {
                 let user = auth.currentUser;
                 user.sendEmailVerification()
                     .then(function () {
-                        auth.signOut().then(()=>{
+                        auth.signOut().then(() => {
                             alert(`Verification link sent to ${email}. \n Please click on the link to verify your email and log into your acount.`);
                             navigate('/', { replace: true });
-                        }).catch(err=>console.log(err))
-                        
+                        }).catch(err => console.log(err))
+
                     }).catch(function (e) {
                         alert(e);
                     });
@@ -39,9 +39,19 @@ function SignUp() {
         navigate('/', { replace: true });
     }
 
+    function toReset() {
+        localStorage.setItem("workout_comp", "reset");
+        window.location.reload();
+    }
+
+    function toLogin() {
+        localStorage.setItem("workout_comp", "login");
+        window.location.reload();
+    }
+
     useEffect(() => {
-        if(localStorage.getItem("workout_userID")) {
-            navigate('/', {replace: true})
+        if (localStorage.getItem("workout_userID")) {
+            navigate('/', { replace: true })
         }
     }, []);
 
@@ -54,33 +64,37 @@ function SignUp() {
 
                     <div className="form-group">
                         <label htmlFor="email"><b>Email</b></label>
-                        <input type="email" className="form-control" placeholder="email" size="22" onChange={(e) => getEmail(e.target.value)} style={{backgroundColor: 'rgb(179, 165, 153)'}}></input>
+                        <input type="email" className="form-control" placeholder="email" size="22" onChange={(e) => getEmail(e.target.value)} style={{ backgroundColor: 'rgb(179, 165, 153)' }}></input>
                     </div>
                     <br />
                     <div className="form-group">
                         <label htmlFor="password"><b>Password</b></label>
-                        <input type="password" className="form-control " placeholder="password" size="22" onChange={(e) => getPassword(e.target.value)} style={{backgroundColor: 'rgb(179, 165, 153)'}}></input>
+                        <input type="password" className="form-control " placeholder="password" size="22" onChange={(e) => getPassword(e.target.value)} style={{ backgroundColor: 'rgb(179, 165, 153)' }}></input>
                     </div>
-                    <br/>
-                    <button type="submit" onClick={signUp} className="sign_up_button btn btn-warning" style={{backgroundColor: 'rgb(179, 119, 71)'}}>
+                    <br />
+                    <button type="submit" onClick={signUp} className="sign_up_button btn btn-warning" style={{ backgroundColor: 'rgb(179, 119, 71)' }}>
                         <Link to={(valid) ? "/" : "/signup"} className="signUp_link" id="signup">
                             Sign Up <i className="fa fa-user-plus"></i>
                         </Link>
                     </button>
                     <br /><br />
-                        {/* <button type="submit" className="reset_pass btn" style={{ backgroundColor: 'rgb(179, 119, 71)' }} onClick={goHome}>
+                    {/* <button type="submit" className="reset_pass btn" style={{ backgroundColor: 'rgb(179, 119, 71)' }} onClick={goHome}>
                             Explore App Without Login <i className="fa-solid fa-mobile"></i>
                         </button>
                     <br /><br /> */}
                     <div>
-                        <Link to="/">
+                        {/* <Link to="/"> */}
+                        <a href='' onClick={toLogin}>
                             Existing user? Sign in here.
-                        </Link>
+                        </a>
+                        {/* </Link> */}
                     </div>
                     <div>
-                        <Link to="/reset">
+                        {/* <Link to="/reset"> */}
+                        <a href='' onClick={toReset} >
                             Forgot password? Reset password here.
-                        </Link>
+                        </a>
+                        {/* </Link> */}
                     </div>
                 </form>
             </div>

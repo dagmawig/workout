@@ -7,7 +7,7 @@ import { updateUserID } from './workoutSlice';
 import { useNavigate } from 'react-router-dom';
 
 function Login() {
-    
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [email, getEmail] = useState('');
@@ -25,6 +25,8 @@ function Login() {
 
                     localStorage.setItem("workout_userID", user.uid);
                     localStorage.setItem("workout_email", email);
+                    localStorage.setItem("workout_comp", 'home');
+
                     dispatch(updateUserID(user.uid));
 
                     window.location.reload();
@@ -34,8 +36,8 @@ function Login() {
                         alert(`Email not verified.\nVerification link sent to ${email}.\nPlease verify your email.`);
                     });
 
-                    auth.signOut().then(()=>{
-                    }).catch(err=>console.log(err))
+                    auth.signOut().then(() => {
+                    }).catch(err => console.log(err))
                 }
             }).catch((error) => alert(error.message));
     }
@@ -44,9 +46,19 @@ function Login() {
         navigate('/', { replace: true });
     }
 
+    function toReset() {
+        localStorage.setItem("workout_comp", "reset");
+        window.location.reload();
+    }
+
+    function toSignUp() {
+        localStorage.setItem("workout_comp", "signup");
+        window.location.reload();
+    }
+
     useEffect(() => {
-        if(localStorage.getItem("workout_userID")) {
-            navigate('/', {replace: true})
+        if (localStorage.getItem("workout_userID")) {
+            navigate('/', { replace: true })
         }
     }, []);
 
@@ -71,19 +83,23 @@ function Login() {
                         Sign In <i className="fa fa-sign-in"></i>
                     </button>
                     <br /><br />
-                        {/* <button type="submit" className="reset_pass btn" style={{ backgroundColor: 'rgb(179, 119, 71)' }} onClick={goHome}>
+                    {/* <button type="submit" className="reset_pass btn" style={{ backgroundColor: 'rgb(179, 119, 71)' }} onClick={goHome}>
                             Explore App Without Login <i className="fa-solid fa-mobile"></i>
                         </button>
                     <br /><br /> */}
                     <div>
-                        <Link to="/signup">
-                            New user? Create account here.
-                        </Link>
+                        {/* <Link to="/signup"> */}
+                        <a href='' onClick={toSignUp}>
+                        New user? Create account here.
+                        </a>
+                        {/* </Link> */}
                     </div>
                     <div>
-                        <Link to="/reset">
+                        {/* <Link to="/reset"> */}
+                        <a href='' onClick={toReset}>
                             Forgot password? Reset password here.
-                        </Link>
+                        </a>
+                        {/* </Link> */}
                     </div>
                 </form>
             </div>

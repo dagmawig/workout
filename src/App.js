@@ -19,22 +19,66 @@ function App() {
   let homePage;
 
   if (localStorage.getItem("workout_userID")) {
-    homePage = (
+    homePage = (localStorage.getItem("workout_comp") === 'workout') ?
       <>
         <Header />
         <Loading />
-        <Search />
+        <Workout />
         <Footer />
-      </>
-    )
+      </> : (localStorage.getItem("workout_comp") === 'history') ?
+        <>
+          <Header />
+          <Loading />
+          <History />
+          <Footer />
+        </> : (localStorage.getItem("workout_comp") === 'template') ?
+          <>
+            <Header />
+            <Loading />
+            <NewTemplate />
+            <Footer />
+          </> : (localStorage.getItem("workout_comp") === 'showtemp') ?
+            <>
+              <Header />
+              <Loading />
+              <ShowTemp />
+              <Footer />
+            </> : (localStorage.getItem("workout_comp") === 'edittemp') ?
+              <>
+                <Header />
+                <Loading />
+                <EditTemplate />
+                <Footer />
+              </> : (localStorage.getItem("workout_comp") === 'logworkout') ?
+                <>
+                  <Header />
+                  <Loading />
+                  <LogWorkout />
+                  <Footer />
+                </> :
+                <>
+                  <Header />
+                  <Loading />
+                  <Search />
+                  <Footer />
+                </>
+
   }
   else {
-    homePage = (
+    homePage = (localStorage.getItem("workout_comp") === 'reset') ?
       <>
         <Loading />
-        <Login />
-      </>
-    )
+        <Reset />
+      </> : (localStorage.getItem("workout_comp") === 'signup') ?
+        <>
+          <Loading />
+          <SignUp />
+        </> :
+        <>
+          <Loading />
+          <Login />
+        </>
+
   }
 
 

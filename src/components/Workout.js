@@ -12,15 +12,24 @@ function Workout() {
     const navigate = useNavigate();
 
     function toTemp(i) {
-        navigate('/showtemp', { replace: true, state: { user: true, index: i } })
+        //navigate('/showtemp', { replace: true, state: { user: true, index: i } })
+        localStorage.setItem("workout_comp", 'showtemp');
+        localStorage.setItem("workout_user", true);
+        localStorage.setItem("workout_index", i);
+        window.location.reload();
     }
     function toFixTemp(i) {
-        navigate('/showtemp', { replace: true, state: { user: false, index: i } })
+        // navigate('/showtemp', { replace: true, state: { user: false, index: i } })
+        localStorage.setItem("workout_comp", 'showtemp');
+        localStorage.setItem("workout_user", false);
+        localStorage.setItem("workout_index", i);
+        window.location.reload();
     }
 
     function toNewTemp() {
         if (localStorage.getItem("workout_userID")) {
-            navigate('/template', { replace: true })
+            localStorage.setItem("workout_comp", 'template');
+            window.location.reload();
         }
         else {
             window.$('#loginModal').modal('show');
