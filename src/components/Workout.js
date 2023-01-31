@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import './Workout.css';
-import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateLoading, updateUserData } from './workoutSlice';
 import axios from 'axios';
@@ -9,17 +8,14 @@ function Workout() {
 
     const stateSelector = useSelector(state => state.workout);
     const dispatch = useDispatch();
-    const navigate = useNavigate();
 
     function toTemp(i) {
-        //navigate('/showtemp', { replace: true, state: { user: true, index: i } })
         localStorage.setItem("workout_comp", 'showtemp');
         localStorage.setItem("workout_user", true);
         localStorage.setItem("workout_index", i);
         window.location.reload();
     }
     function toFixTemp(i) {
-        // navigate('/showtemp', { replace: true, state: { user: false, index: i } })
         localStorage.setItem("workout_comp", 'showtemp');
         localStorage.setItem("workout_user", false);
         localStorage.setItem("workout_index", i);
@@ -38,8 +34,8 @@ function Workout() {
 
     function toLogin() {
         window.$('#loginModal').modal('hide');
-        navigate('/login', { replace: true });
-
+        localStorage.setItem("workout_comp", 'login');
+        window.location.reload();
     }
 
     function calcTime(template) {
@@ -82,7 +78,7 @@ function Workout() {
     useEffect(() => {
         async function loadData() {
             let loadURI = process.env.REACT_APP_API_URI + 'loadData';
-            let res = await axios.post(loadURI, { userID: localStorage.getItem("workout_userID"), email: localStorage.getItem("workout_email")  });
+            let res = await axios.post(loadURI, { userID: localStorage.getItem("workout_userID"), email: localStorage.getItem("workout_email") });
 
             return res;
         }
@@ -111,7 +107,7 @@ function Workout() {
                                 <p className="row text-left">MY TEMPLATES</p>
                             </div>
                             <div className='template_add d-flex col-2'>
-                                    <button className="plus_button"><i className="fa fa-plus  fa-2x" onClick={toNewTemp}></i></button>
+                                <button className="plus_button"><i className="fa fa-plus  fa-2x" onClick={toNewTemp}></i></button>
                             </div>
                         </div>
                     </div>
@@ -142,7 +138,7 @@ function Workout() {
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal"><b>No</b></button>
-                            <button type="button" className="btn" onClick={toLogin} style={{backgroundColor: '#9e5f2f'}}><b>Yes</b></button>
+                            <button type="button" className="btn" onClick={toLogin} style={{ backgroundColor: '#9e5f2f' }}><b>Yes</b></button>
                         </div>
                     </div>
                 </div>

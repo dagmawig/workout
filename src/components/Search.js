@@ -15,7 +15,7 @@ function Search() {
     const [disable, updateDisable] = useState(true);
     const [exerFilter, updateExer] = useState(exercisesLocal);
     const [hidden, updateHidden] = useState(true);
-    const[myRef] = useState(React.createRef());
+    const [myRef] = useState(React.createRef());
 
     function optionsList(list) {
         return list.map((item, i) => {
@@ -32,26 +32,26 @@ function Search() {
                     <div className='col-7 search_text'>
                         <div className='row text'>
                             <div className='row first'>
-                            <div className='col-12 name'><b>Workout {`${i+1}/${list.length}`}</b></div>
-                            <div className='col-12 name_value'>{item.name}</div>
+                                <div className='col-12 name'><b>Workout {`${i + 1}/${list.length}`}</b></div>
+                                <div className='col-12 name_value'>{item.name}</div>
                             </div>
                             <div className='row second'>
-                            <div className='col-12 body'><b>Body Part</b></div>
-                            <div className='col-12 body_value'>{item.bodyPart}</div>
+                                <div className='col-12 body'><b>Body Part</b></div>
+                                <div className='col-12 body_value'>{item.bodyPart}</div>
                             </div>
                             <div className='row third'>
-                            <div className='col-12 equipment'><b>Equipment</b></div>
-                            <div className='col-12 equip_value'>{item.equipment}</div>
+                                <div className='col-12 equipment'><b>Equipment</b></div>
+                                <div className='col-12 equip_value'>{item.equipment}</div>
                             </div>
                             <div className='row fourth'>
-                            <div className='col-12 target'><b>Target</b></div>
-                            <div className='col-12 target_value'>{item.target}</div>
+                                <div className='col-12 target'><b>Target</b></div>
+                                <div className='col-12 target_value'>{item.target}</div>
                             </div>
-                            
+
                         </div>
                     </div>
                     <div className='col-5 search_gif'>
-                        <img src={process.env.PUBLIC_URL + '/images/' + item.localUrl} style={{backgroundColor: 'white'}} alt="my-gif" />
+                        <img src={process.env.PUBLIC_URL + '/images/' + item.localUrl} style={{ backgroundColor: 'white' }} alt="my-gif" />
                     </div>
                 </div>
             )
@@ -75,14 +75,14 @@ function Search() {
 
     function handleChangeOpt(value) {
         myRef.current.scrollTo(0, 0);
-        
+
         if (filter === 'Body Part') updateExer(exercisesLocal.filter(exer => exer.bodyPart === value));
         else if (filter === 'Muscle Group') updateExer(exercisesLocal.filter(exer => exer.target === value))
         else if (filter === 'Workout Name') updateExer(exercisesLocal.filter(exer => exer.name === value))
         else updateExer([]);
     }
 
-    
+
     useEffect(() => {
         async function loadData() {
             let loadURI = process.env.REACT_APP_API_URI + 'loadData';

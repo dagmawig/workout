@@ -1,7 +1,6 @@
 import React from 'react';
 import './Header.css';
 import { useNavigate } from 'react-router-dom';
-import { auth } from './FirebaseConfig';
 
 
 function Header() {
@@ -9,9 +8,9 @@ function Header() {
     const navigate = useNavigate();
 
     function logOff() {
-            localStorage.setItem("workout_userID", '');
-            navigate('/', { replace: true });
-            window.location.reload();
+        localStorage.setItem("workout_userID", '');
+        navigate('/', { replace: true });
+        window.location.reload();
     }
 
     return (
@@ -21,7 +20,7 @@ function Header() {
                     WORKOUT
                 </div>
                 <div className='header_login col-6' align='right'>
-                        <button className="footer_button" onClick={logOff}><i className={`fa-solid ${localStorage.getItem("workout_userID")? 'fa-power-off': 'fa-user'} fa`}></i></button>
+                    <button className="footer_button" onClick={logOff}><i className={`fa-solid ${localStorage.getItem("workout_userID") ? 'fa-power-off' : 'fa-user'} fa`}></i></button>
                 </div>
             </div>
         </div>

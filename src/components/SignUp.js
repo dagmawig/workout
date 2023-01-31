@@ -35,10 +35,6 @@ function SignUp() {
             .catch((error) => alert(error));
     }
 
-    function goHome() {
-        navigate('/', { replace: true });
-    }
-
     function toReset() {
         localStorage.setItem("workout_comp", "reset");
         window.location.reload();
@@ -78,23 +74,15 @@ function SignUp() {
                         </Link>
                     </button>
                     <br /><br />
-                    {/* <button type="submit" className="reset_pass btn" style={{ backgroundColor: 'rgb(179, 119, 71)' }} onClick={goHome}>
-                            Explore App Without Login <i className="fa-solid fa-mobile"></i>
-                        </button>
-                    <br /><br /> */}
                     <div>
-                        {/* <Link to="/"> */}
                         <a href='' onClick={toLogin}>
                             Existing user? Sign in here.
                         </a>
-                        {/* </Link> */}
                     </div>
                     <div>
-                        {/* <Link to="/reset"> */}
                         <a href='' onClick={toReset} >
                             Forgot password? Reset password here.
                         </a>
-                        {/* </Link> */}
                     </div>
                 </form>
             </div>

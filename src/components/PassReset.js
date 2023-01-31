@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './PassReset.css';
-import { Link } from 'react-router-dom';
 import { auth } from './FirebaseConfig';
-import { useNavigate } from 'react-router-dom';
 import { updateLoading } from './workoutSlice';
 import { useDispatch } from 'react-redux';
 
@@ -10,7 +8,6 @@ import { useDispatch } from 'react-redux';
 function Reset() {
 
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const [email, getEmail] = useState('');
 
     // function handling user password reset
@@ -23,10 +20,6 @@ function Reset() {
             getEmail("");
             document.getElementById("login_link").click();
         }).catch(err => alert(err.message));
-    }
-
-    function goHome() {
-        navigate('/', { replace: true });
     }
 
     function toSignUp() {
@@ -59,23 +52,15 @@ function Reset() {
                         Reset Password <i className="fa fa-key"></i>
                     </button>
                     <br /><br />
-                    {/* <button type="submit" className="reset_pass btn" style={{ backgroundColor: 'rgb(179, 119, 71)' }} onClick={goHome}>
-                            Explore App Without Login <i className="fa-solid fa-mobile"></i>
-                        </button>
-                    <br /><br /> */}
                     <div>
-                        {/* <Link to="/signup"> */}
                         <a href='' onClick={toSignUp}>
                             New user? Create account here.
                         </a>
-                        {/* </Link> */}
                     </div>
                     <div>
-                        {/* <Link id="login_link" to="/"> */}
                         <a href='' onClick={toLogin}>
                             Remember password? Sign in here.
                         </a>
-                        {/* </Link> */}
                     </div>
                 </form>
             </div>

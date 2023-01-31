@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './EditTemplate.css';
-import { useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateTemp, updateLoading, updateUserData } from './workoutSlice';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 var bodyParts = require('../exerBody.json');
@@ -12,8 +10,6 @@ var exercisesLocal = require('../exercisesLocal.json');
 function EditTemplate() {
     const stateSelector = useSelector(state => state.workout);
     const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const { state } = useLocation();
 
     const [tempName, updateName] = useState('');
     const [exerciseList, updateExerList] = useState([]);
@@ -102,13 +98,11 @@ function EditTemplate() {
                     alert(`${data.err}`)
                 }
             })
-            //dispatch(updateTemp(newTempArr));
         }
     }
 
     function noSaveModal() {
         window.$('#saveModal').modal('hide');
-        // navigate('/workout', { replace: true })
         localStorage.setItem("workout_comp", "workout");
         window.location.reload();
     }
@@ -284,7 +278,7 @@ function EditTemplate() {
     useEffect(() => {
         async function loadData() {
             let loadURI = process.env.REACT_APP_API_URI + 'loadData';
-            let res = await axios.post(loadURI, { userID: localStorage.getItem("workout_userID"), email: localStorage.getItem("workout_email")  });
+            let res = await axios.post(loadURI, { userID: localStorage.getItem("workout_userID"), email: localStorage.getItem("workout_email") });
 
             return res;
         }
@@ -359,7 +353,7 @@ function EditTemplate() {
                                 </div>
                                 <div className="modal-footer">
                                     <button type="button" className="btn btn-secondary" data-bs-dismiss="modal"><b>Close</b></button>
-                                    <button type="button" className="btn" onClick={addExer} style={{backgroundColor: '#9e5f2f'}}><b>Add</b></button>
+                                    <button type="button" className="btn" onClick={addExer} style={{ backgroundColor: '#9e5f2f' }}><b>Add</b></button>
                                 </div>
                             </div>
                         </div>
@@ -381,7 +375,7 @@ function EditTemplate() {
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={noSaveModal}><b>No</b></button>
-                            <button type="button" className="btn" onClick={saveTempModal} style={{backgroundColor: '#9e5f2f'}}><b>Yes</b></button>
+                            <button type="button" className="btn" onClick={saveTempModal} style={{ backgroundColor: '#9e5f2f' }}><b>Yes</b></button>
                         </div>
                     </div>
                 </div>

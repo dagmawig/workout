@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import './ShowTemp.css';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateTemp, updateLoading, updateUserData } from './workoutSlice';
 import axios from 'axios';
@@ -8,9 +7,7 @@ import axios from 'axios';
 function ShowTemp() {
 
     const stateSelector = useSelector(state => state.workout);
-    const { state } = useLocation();
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const [exercise, updateExer] = useState('');
 
     let template = (localStorage.getItem("workout_user")==='true') ? stateSelector.userData.templateArr[localStorage.getItem("workout_index")] : stateSelector.userData.fixTempArr[localStorage.getItem("workout_index")];
@@ -43,15 +40,6 @@ function ShowTemp() {
         })
     }
 
-    // function toWorkoutSess() {
-    //     if (localStorage.getItem("workout_userID")) {
-    //         navigate('/template', { replace: true })
-    //     }
-    //     else {
-    //         window.$('#loginModal').modal('show');
-    //     }
-    // }
-
     function toWork() {
         localStorage.setItem("workout_comp", "workout");
         window.location.reload();
@@ -59,13 +47,13 @@ function ShowTemp() {
 
     function toLogin() {
         window.$('#loginModal').modal('hide');
-        navigate('/login', { replace: true });
+        localStorage.setItem("workout_comp", "login");
+        window.location.reload();
     }
 
     function editTemp() {
         localStorage.setItem("workout_comp", "edittemp");
         window.location.reload();
-        // navigate('/edittemp', { replace: true, state: { user: true, index: localStorage.getItem("workout_index") } });
     }
 
     function calcTime(template) {
@@ -78,7 +66,6 @@ function ShowTemp() {
 
     function toWorkout(user) {
         if (localStorage.getItem("workout_userID")) {
-            // navigate('/logworkout', { replace: true, state: { user: user, index: localStorage.getItem("workout_index") } });
             localStorage.setItem("workout_comp", "logworkout");
             localStorage.setItem("workout_start", Math.floor(Date.now()/1000))
             window.location.reload();

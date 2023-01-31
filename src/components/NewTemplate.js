@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import './NewTemplate.css';
-import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateTemp, updateLoading, updateUserData } from './workoutSlice';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 var exercisesLocal = require('../exercisesLocal.json');
 var bodyParts = require('../exerBody.json');
 
 function NewTemplate() {
-    const navigate = useNavigate();
     const stateSelector = useSelector(state => state.workout);
     const dispatch = useDispatch();
 
@@ -242,7 +239,7 @@ function NewTemplate() {
     useEffect(() => {
         async function loadData() {
             let loadURI = process.env.REACT_APP_API_URI + 'loadData';
-            let res = await axios.post(loadURI, { userID: localStorage.getItem("workout_userID"), email: localStorage.getItem("workout_email")  });
+            let res = await axios.post(loadURI, { userID: localStorage.getItem("workout_userID"), email: localStorage.getItem("workout_email") });
 
             return res;
         }
@@ -265,9 +262,7 @@ function NewTemplate() {
         <div className='newtemplate container'>
             <div className='newtemplate_header row'>
                 <div className='newtemplate_header_x col-2'>
-                    {/* <Link to='/workout'> */}
-                        <button className="x_button" onClick={backWorkout}><i className="fa-solid fa-xmark fa-2x"></i></button>
-                        {/* </Link> */}
+                    <button className="x_button" onClick={backWorkout}><i className="fa-solid fa-xmark fa-2x"></i></button>
                 </div>
                 <div className='newtemplate_content_title col-8'>
                     <p className='temp_header_text'>New workout template</p>
@@ -317,7 +312,7 @@ function NewTemplate() {
                                 </div>
                                 <div className="modal-footer">
                                     <button type="button" className="btn btn-secondary" data-bs-dismiss="modal"><b>Close</b></button>
-                                    <button type="button" className="btn" onClick={addExer} style={{backgroundColor: '#9e5f2f'}}><b>Add</b></button>
+                                    <button type="button" className="btn" onClick={addExer} style={{ backgroundColor: '#9e5f2f' }}><b>Add</b></button>
                                 </div>
                             </div>
                         </div>

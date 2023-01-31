@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Login.css';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom'
 import { auth } from './FirebaseConfig';
 import { updateUserID } from './workoutSlice';
 import { useNavigate } from 'react-router-dom';
@@ -42,10 +41,6 @@ function Login() {
             }).catch((error) => alert(error.message));
     }
 
-    function goHome() {
-        navigate('/', { replace: true });
-    }
-
     function toReset() {
         localStorage.setItem("workout_comp", "reset");
         window.location.reload();
@@ -83,23 +78,15 @@ function Login() {
                         Sign In <i className="fa fa-sign-in"></i>
                     </button>
                     <br /><br />
-                    {/* <button type="submit" className="reset_pass btn" style={{ backgroundColor: 'rgb(179, 119, 71)' }} onClick={goHome}>
-                            Explore App Without Login <i className="fa-solid fa-mobile"></i>
-                        </button>
-                    <br /><br /> */}
                     <div>
-                        {/* <Link to="/signup"> */}
                         <a href='' onClick={toSignUp}>
-                        New user? Create account here.
+                            New user? Create account here.
                         </a>
-                        {/* </Link> */}
                     </div>
                     <div>
-                        {/* <Link to="/reset"> */}
                         <a href='' onClick={toReset}>
                             Forgot password? Reset password here.
                         </a>
-                        {/* </Link> */}
                     </div>
                 </form>
             </div>

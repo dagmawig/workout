@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './LogWorkout.css';
-import { useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateLoading, updateUserData } from './workoutSlice';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 var bodyParts = require('../exerBody.json');
@@ -11,11 +9,8 @@ var exercisesLocal = require('../exercisesLocal.json');
 
 function LogWorkout() {
 
-    const { state } = useLocation();
     const stateSelector = useSelector(state => state.workout);
     const dispatch = useDispatch();
-    const navigate = useNavigate();
-
 
     let userWorkObj = stateSelector.userData.workoutObj;
     let workout_user = localStorage.getItem("workout_user");
@@ -74,7 +69,7 @@ function LogWorkout() {
                 let maxVal = Math.max(...inputStateExer[0]);
                 let maxIndex = inputStateExer[0].indexOf(maxVal.toString());
                 let maxRep;
-                if(exer.metric==='wr' && maxVal===0) {
+                if (exer.metric === 'wr' && maxVal === 0) {
                     maxRep = Math.max(...inputStateExer[1]);
                     maxIndex = inputStateExer[1].indexOf(maxRep.toString());
                     console.log(maxRep, inputStateExer[1], maxIndex, maxVal)
@@ -95,8 +90,8 @@ function LogWorkout() {
                             exerRecord.pr2 = parseInt(inputStateExer[1][maxIndex]);
                         }
                     }
-                    else if(exer.metric==='wr' && maxVal===0 && exerRecord.pr1===0) {
-                        if(maxRep>exerRecord.pr2) {
+                    else if (exer.metric === 'wr' && maxVal === 0 && exerRecord.pr1 === 0) {
+                        if (maxRep > exerRecord.pr2) {
                             exerRecord.pr2 = maxRep;
                         }
                     }
@@ -158,7 +153,6 @@ function LogWorkout() {
     }
 
     function cancelWork() {
-        // navigate('/workout', { replace: true });
         window.$('#cancelWModal').modal('hide');
         localStorage.setItem("workout_comp", "workout");
         window.location.reload();
