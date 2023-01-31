@@ -78,10 +78,10 @@ function History() {
                         {i + 1}
                     </div>
                     <div className='history_value col-4' align='center'>
-                        {`${val}${(exerName in stateSelector.userData.record && val == stateSelector.userData.record[exerName].pr1) ? '*' : ''}`}
+                        {`${val}${(exerName in stateSelector.userData.record && val == stateSelector.userData.record[exerName].pr1 && val!=0) ? '*' : ''}`}
                     </div>
                     <div className='history_value col-4' align='center'>
-                        {metric2 === undefined ? '' : metric2[i]}
+                        {metric2 === undefined ? '' : `${metric2[i]}${ (stateSelector.userData.record[exerName].pr1==0 && metric2[i]== stateSelector.userData.record[exerName].pr2)? '*':''}`}
                     </div>
                 </div>
             )

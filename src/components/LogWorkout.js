@@ -73,6 +73,12 @@ function LogWorkout() {
 
                 let maxVal = Math.max(...inputStateExer[0]);
                 let maxIndex = inputStateExer[0].indexOf(maxVal.toString());
+                let maxRep;
+                if(exer.metric==='wr' && maxVal===0) {
+                    maxRep = Math.max(...inputStateExer[1]);
+                    maxIndex = inputStateExer[1].indexOf(maxRep.toString());
+                    console.log(maxRep, inputStateExer[1], maxIndex, maxVal)
+                }
 
                 if (exer.name in record) {
                     let exerRecord = record[exer.name];
@@ -86,7 +92,12 @@ function LogWorkout() {
                     if (maxVal > exerRecord.pr1) {
                         exerRecord.pr1 = maxVal;
                         if (exer.metric === 'wr' || exer.metric === 'dt') {
-                            exerRecord.pr2 = inputStateExer[1][maxIndex];
+                            exerRecord.pr2 = parseInt(inputStateExer[1][maxIndex]);
+                        }
+                    }
+                    else if(exer.metric==='wr' && maxVal===0 && exerRecord.pr1===0) {
+                        if(maxRep>exerRecord.pr2) {
+                            exerRecord.pr2 = maxRep;
                         }
                     }
                 }
@@ -98,7 +109,8 @@ function LogWorkout() {
                     exerRecord.pr1 = maxVal;
                     if (exer.metric === 'wr' || exer.metric === 'dt') {
                         exerRecord.prev2 = inputStateExer[1][inputStateExer[0].length - 1];
-                        exerRecord.pr2 = inputStateExer[1][maxIndex];
+                        exerRecord.pr2 = parseInt(inputStateExer[1][maxIndex]);
+                        console.log(maxIndex, inputStateExer[1])
                     }
 
                     record[exer.name] = exerRecord;
