@@ -245,6 +245,10 @@ function LogWorkout() {
         window.$('#exerWDetModal').modal('show');
     }
 
+    window.$("#exerWDetModal").on("hidden.bs.modal", function () {
+        updateExer('');
+    });
+
     function exerListEle() {
         return exerciseList.map((item, i) => {
             return (
@@ -322,12 +326,12 @@ function LogWorkout() {
                     </div>
                     <div className='newtemplate_lbs col-3'>
                         <div className='newtemplate_lbs_val row'>
-                            <input className='lbs_input' type={'number'} onChange={(e) => updateInput(index, 0, item, e.target.value)}></input>
+                            <input className='lbs_input' type={'number'} value={inputState[index][0][item]} onChange={(e) => updateInput(index, 0, item, e.target.value)}></input>
                         </div>
                     </div>
                     <div className='newtemplate_reps col-3'>
                         <div className='newtemplate_reps_val row'>
-                            {exer.metric === 'wr' || exer.metric === 'dt' ? <input className='reps_input' type={'number'} onChange={(e) => updateInput(index, 1, item, e.target.value)}></input> : null}
+                            {exer.metric === 'wr' || exer.metric === 'dt' ? <input className='reps_input' type={'number'} value={inputState[index][1][item]} onChange={(e) => updateInput(index, 1, item, e.target.value)}></input> : null}
                         </div>
                     </div>
                 </div>
