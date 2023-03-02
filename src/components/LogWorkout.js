@@ -15,7 +15,6 @@ function LogWorkout() {
     let userWorkObj = stateSelector.userData.workoutObj;
     let workout_user = localStorage.getItem("workout_user");
     let workout_index = parseInt(localStorage.getItem("workout_index"));
-
     const [filterArr, updateFilter] = useState(exercisesLocal);
     const [exerciseList, updateExerList] = useState([]);
     const [selectedExer, updateSelExer] = useState('3/4 sit-up');
@@ -26,13 +25,15 @@ function LogWorkout() {
 
     function updateInput(i, j, k, val) {
         inputState[i][j][k] = (val === '') ? undefined : val;
+        updateInputState(JSON.parse(JSON.stringify(inputState)))
+        localStorage.setItem("localInputState", JSON.stringify(inputState))
     }
 
     function checkInput(arr) {
         for (let exer of arr) {
             for (let metric of exer) {
                 for (let set of metric) {
-                    if (set === undefined) return false
+                    if (set === undefined || set ===null) return false
                 }
             }
         }
@@ -48,8 +49,14 @@ function LogWorkout() {
     }
 
     function saveWork() {
-        if (exerciseList.length === 0) alert('Add at least one exercise.')
-        else if (!checkInput(inputState)) alert('Some exercise sets are not complete. Either complete the sets or remove incomplete sets. If doing weightless exercise, put 0 in the LBS box.')
+        if (exerciseList.length === 0) {
+            alert('Add at least one exercise.');
+            window.$('#saveWModal').modal('hide');
+        }
+        else if (!checkInput(inputState)) {
+            alert('Some exercise sets are not complete. Either complete the sets or remove incomplete sets. If doing weightless exercise, put 0 in the LBS box.');
+            window.$('#saveWModal').modal('hide');
+        }
         else {
             let record = JSON.parse(JSON.stringify(stateSelector.userData.record));
             let timeStamp = new Date().toISOString();
@@ -178,10 +185,12 @@ function LogWorkout() {
             let tempList = JSON.parse(JSON.stringify(exerciseList));
             tempList.push(exer);
             updateExerList(tempList);
+            localStorage.setItem("eList", JSON.stringify(tempList))
             let tempArr;
             if (exer.metric === 'wr' || exer.metric === 'dt') tempArr = new Array(2).fill().map(() => new Array(4))
             else tempArr = new Array(1).fill().map(() => new Array(4));
             inputState.push(tempArr);
+            localStorage.setItem("localInputState", JSON.stringify(inputState))
             window.$('#exerWModal').modal('hide');
         }
     }
@@ -190,29 +199,35 @@ function LogWorkout() {
         let tempList = JSON.parse(JSON.stringify(exerciseList));
         tempList.splice(index, 1);
         updateExerList(tempList);
+        localStorage.setItem("eList", JSON.stringify(tempList))
         inputState.splice(index, 1);
+        localStorage.setItem("localInputState", JSON.stringify(inputState))
     }
 
     function addSet(index) {
         let tempList = JSON.parse(JSON.stringify(exerciseList));
         tempList[index].sets++;
         updateExerList(tempList);
+        localStorage.setItem("eList", JSON.stringify(tempList))
         let tempArr = inputState[index];
         tempArr.map(ar => {
             ar.push(undefined);
             return null;
         })
+        localStorage.setItem("localInputState", JSON.stringify(inputState))
     }
 
     function removeSet(index) {
         let tempList = JSON.parse(JSON.stringify(exerciseList));
         if (tempList[index].sets > 1) tempList[index].sets--;
         updateExerList(tempList);
+        localStorage.setItem("eList", JSON.stringify(tempList))
         let tempArr = inputState[index];
         tempArr.map(ar => {
             ar.pop();
             return null;
         })
+        localStorage.setItem("localInputState", JSON.stringify(inputState))
     }
 
     function getRec(exer) {
@@ -326,12 +341,12 @@ function LogWorkout() {
                     </div>
                     <div className='newtemplate_lbs col-3'>
                         <div className='newtemplate_lbs_val row'>
-                            <input className='lbs_input' type={'number'} value={inputState[index][0][item]} onChange={(e) => updateInput(index, 0, item, e.target.value)}></input>
+                            <input className='lbs_input' type={'number'} value={inputState[index][0][item]? inputState[index][0][item] : '' }  onChange={(e) => updateInput(index, 0, item, e.target.value)}></input>
                         </div>
                     </div>
                     <div className='newtemplate_reps col-3'>
                         <div className='newtemplate_reps_val row'>
-                            {exer.metric === 'wr' || exer.metric === 'dt' ? <input className='reps_input' type={'number'} value={inputState[index][1][item]} onChange={(e) => updateInput(index, 1, item, e.target.value)}></input> : null}
+                            {exer.metric === 'wr' || exer.metric === 'dt' ? <input className='reps_input' type={'number'} value={inputState[index][1][item]? inputState[index][1][item] : ''} onChange={(e) => updateInput(index, 1, item, e.target.value)}></input> : null}
                         </div>
                     </div>
                 </div>
@@ -370,16 +385,26 @@ function LogWorkout() {
                 if (data.success) {
                     dispatch(updateUserData(data.data));
                     let template = (workout_user === 'true') ? data.data.templateArr[workout_index] : data.data.fixTempArr[workout_index];
-                    updateExerList(template.exerList);
-                    let inputArr = [];
-                    template.exerList.map((exer, i) => {
-                        let arr;
-                        let totSets = exer.sets;
-                        if (exer.metric === 'wr' || exer.metric === 'dt') arr = new Array(2).fill().map(() => new Array(totSets))
-                        else arr = new Array(1).fill().map(() => new Array(totSets));
-                        inputArr.push(arr);
-                        return null;
-                    });
+                    if(!JSON.parse(localStorage.getItem("eList")))updateExerList(template.exerList);
+                    else {
+                        updateExerList(JSON.parse(localStorage.getItem("eList")));
+                    }
+                    let inputArr;
+                    if (!JSON.parse(localStorage.getItem("localInputState"))) {
+                        inputArr = [];
+                        template.exerList.map((exer, i) => {
+                            let arr;
+                            let totSets = exer.sets;
+                            if (exer.metric === 'wr' || exer.metric === 'dt') arr = new Array(2).fill().map(() => new Array(totSets))
+                            else arr = new Array(1).fill().map(() => new Array(totSets));
+                            inputArr.push(arr);
+                            return null;
+                        });
+                    }
+                    else {
+                        inputArr = JSON.parse(localStorage.getItem("localInputState"));
+                    }
+
                     updateInputState(inputArr);
                     updateTemp(template);
                     dispatch(updateLoading(false));

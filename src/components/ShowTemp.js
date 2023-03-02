@@ -67,7 +67,9 @@ function ShowTemp() {
     function toWorkout(user) {
         if (localStorage.getItem("workout_userID")) {
             localStorage.setItem("workout_comp", "logworkout");
-            localStorage.setItem("workout_start", Math.floor(Date.now()/1000))
+            localStorage.setItem("workout_start", Math.floor(Date.now()/1000));
+            localStorage.setItem("localInputState", JSON.stringify(null));
+            localStorage.setItem("eList", JSON.stringify(null));
             window.location.reload();
         }
         else {
