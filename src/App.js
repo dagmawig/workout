@@ -18,6 +18,7 @@ function App() {
 
   let homePage;
 
+  // sets page shown based on app state
   if (localStorage.getItem("workout_userID")) {
     homePage = (localStorage.getItem("workout_comp") === 'workout') ?
       <>

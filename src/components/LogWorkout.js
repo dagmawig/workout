@@ -23,17 +23,19 @@ function LogWorkout() {
     const [currentTemp, updateTemp] = useState(null);
     const [exercise, updateExer] = useState('');
 
+    // updates workout session data
     function updateInput(i, j, k, val) {
         inputState[i][j][k] = (val === '') ? undefined : val;
         updateInputState(JSON.parse(JSON.stringify(inputState)))
         localStorage.setItem("localInputState", JSON.stringify(inputState))
     }
 
+    // checks if any of the workout input fields are empty
     function checkInput(arr) {
         for (let exer of arr) {
             for (let metric of exer) {
                 for (let set of metric) {
-                    if (set === undefined || set ===null) return false
+                    if (set === undefined || set === null) return false
                 }
             }
         }
@@ -41,6 +43,7 @@ function LogWorkout() {
         return true;
     }
 
+    // updates database with user's workout session data
     async function saveWorkout(workoutObj, user, updatedTempArr, record) {
         let updateURI = process.env.REACT_APP_API_URI + 'updateWorkoutObj';
         let res = await axios.post(updateURI, { userID: localStorage.getItem("workout_userID"), workoutObj: workoutObj, user: user, updatedTempArr: updatedTempArr, record: record }).catch(err => console.log(err));
@@ -48,6 +51,7 @@ function LogWorkout() {
         return res;
     }
 
+    // saves workout session
     function saveWork() {
         if (exerciseList.length === 0) {
             alert('Add at least one exercise.');
@@ -146,25 +150,29 @@ function LogWorkout() {
         }
     }
 
+    // opens save session modal
     function openSaveModal() {
         window.$('#saveWModal').modal('show');
     }
 
+    // updates secnods elapsed since workout session started
     setTimeout(() => {
         setSeconds(Math.floor(Date.now() / 1000) - parseInt(localStorage.getItem("workout_start")));
     }, 1000);
 
-
+    // opens exercise modal
     function openExercise() {
         window.$('#exerWModal').modal('show');
     }
 
+    // cancels workout session and reroutes user to workout page
     function cancelWork() {
         window.$('#cancelWModal').modal('hide');
         localStorage.setItem("workout_comp", "workout");
         window.location.reload();
     }
 
+    // filters exercise list based on filter value
     function handleChange(value) {
         document.getElementById('exer-log-list').selectedIndex = 0;
         let tempArr = (value === 'empty') ? exercisesLocal : exercisesLocal.filter(ele => ele.bodyPart === value)
@@ -172,10 +180,12 @@ function LogWorkout() {
         updateSelExer(tempArr[0].name);
     }
 
+    // updates selceted exercise
     function handleSel(value) {
         updateSelExer(value);
     }
 
+    // adds exercise to current workout session
     function addExer() {
         if (selectedExer === 'empty') alert('please select exercise');
         else if (exerciseList.filter(ele => ele.name === selectedExer).length !== 0) alert(`${selectedExer} already exists in template. Pick a different exercise.`);
@@ -195,6 +205,7 @@ function LogWorkout() {
         }
     }
 
+    // removes exercise from current workout session
     function removeExer(index) {
         let tempList = JSON.parse(JSON.stringify(exerciseList));
         tempList.splice(index, 1);
@@ -204,6 +215,7 @@ function LogWorkout() {
         localStorage.setItem("localInputState", JSON.stringify(inputState))
     }
 
+    // adds set to a given exercise
     function addSet(index) {
         let tempList = JSON.parse(JSON.stringify(exerciseList));
         tempList[index].sets++;
@@ -217,6 +229,7 @@ function LogWorkout() {
         localStorage.setItem("localInputState", JSON.stringify(inputState))
     }
 
+    // removes set from a given exercise
     function removeSet(index) {
         let tempList = JSON.parse(JSON.stringify(exerciseList));
         if (tempList[index].sets > 1) tempList[index].sets--;
@@ -230,6 +243,7 @@ function LogWorkout() {
         localStorage.setItem("localInputState", JSON.stringify(inputState))
     }
 
+    // returns personal record and previous record data for a given exercise
     function getRec(exer) {
         if (exer.name in stateSelector.userData.record) {
             let exerRecord = stateSelector.userData.record[exer.name];
@@ -255,15 +269,18 @@ function LogWorkout() {
         else return ['-', '-'];
     }
 
+    // shows exercise detail modal
     function showDetail(exer) {
         updateExer(exer);
         window.$('#exerWDetModal').modal('show');
     }
 
+    // updates exercise value to empty string when exercise detail modal is hidden
     window.$("#exerWDetModal").on("hidden.bs.modal", function () {
         updateExer('');
     });
 
+    // returns current workout session exercise list component 
     function exerListEle() {
         return exerciseList.map((item, i) => {
             return (
@@ -328,7 +345,7 @@ function LogWorkout() {
         })
     }
 
-
+    // returns set list component of a given exercise
     function setList(exer, index) {
         let tempArr = [...Array(exer.sets).keys()];
         return tempArr.map(item => {
@@ -341,12 +358,12 @@ function LogWorkout() {
                     </div>
                     <div className='newtemplate_lbs col-3'>
                         <div className='newtemplate_lbs_val row'>
-                            <input className='lbs_input' type={'number'} value={inputState[index][0][item]? inputState[index][0][item] : '' }  onChange={(e) => updateInput(index, 0, item, e.target.value)}></input>
+                            <input className='lbs_input' type={'number'} value={inputState[index][0][item] ? inputState[index][0][item] : ''} onChange={(e) => updateInput(index, 0, item, e.target.value)}></input>
                         </div>
                     </div>
                     <div className='newtemplate_reps col-3'>
                         <div className='newtemplate_reps_val row'>
-                            {exer.metric === 'wr' || exer.metric === 'dt' ? <input className='reps_input' type={'number'} value={inputState[index][1][item]? inputState[index][1][item] : ''} onChange={(e) => updateInput(index, 1, item, e.target.value)}></input> : null}
+                            {exer.metric === 'wr' || exer.metric === 'dt' ? <input className='reps_input' type={'number'} value={inputState[index][1][item] ? inputState[index][1][item] : ''} onChange={(e) => updateInput(index, 1, item, e.target.value)}></input> : null}
                         </div>
                     </div>
                 </div>
@@ -354,6 +371,7 @@ function LogWorkout() {
         })
     }
 
+    // returns exercise list component from a filtered exercise array
     function optionsList() {
         return filterArr.map((item, i) => {
             return (
@@ -362,6 +380,7 @@ function LogWorkout() {
         })
     }
 
+    // returns body part list component from an array
     function filterList() {
         return bodyParts.map((item, i) => {
             return (
@@ -370,6 +389,7 @@ function LogWorkout() {
         })
     }
 
+    // loads data from database and from local storage
     useEffect(() => {
         async function loadData() {
             let loadURI = process.env.REACT_APP_API_URI + 'loadData';
@@ -385,7 +405,7 @@ function LogWorkout() {
                 if (data.success) {
                     dispatch(updateUserData(data.data));
                     let template = (workout_user === 'true') ? data.data.templateArr[workout_index] : data.data.fixTempArr[workout_index];
-                    if(!JSON.parse(localStorage.getItem("eList")))updateExerList(template.exerList);
+                    if (!JSON.parse(localStorage.getItem("eList"))) updateExerList(template.exerList);
                     else {
                         updateExerList(JSON.parse(localStorage.getItem("eList")));
                     }

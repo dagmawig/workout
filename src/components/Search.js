@@ -17,6 +17,7 @@ function Search() {
     const [hidden, updateHidden] = useState(true);
     const [myRef] = useState(React.createRef());
 
+    // returns exercise list component from exercise array
     function optionsList(list) {
         return list.map((item, i) => {
             return (
@@ -25,6 +26,7 @@ function Search() {
         })
     }
 
+    // returns exercise detail list components from an arary
     function exercisesList(list) {
         return list.map((item, i) => {
             return (
@@ -58,6 +60,7 @@ function Search() {
         })
     }
 
+    // handles changes of exercise filter criteria
     function handleChange(value) {
         updateFilter(value);
         document.getElementById('option').selectedIndex = 0;
@@ -73,6 +76,7 @@ function Search() {
         }
     }
 
+    // updates exrcise list based on filter type
     function handleChangeOpt(value) {
         myRef.current.scrollTo(0, 0);
 
@@ -83,6 +87,7 @@ function Search() {
     }
 
 
+    // reloads data from database
     useEffect(() => {
         async function loadData() {
             let loadURI = process.env.REACT_APP_API_URI + 'loadData';

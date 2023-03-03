@@ -35,16 +35,19 @@ function SignUp() {
             .catch((error) => alert(error));
     }
 
+    // reroutes to password reset page
     function toReset() {
         localStorage.setItem("workout_comp", "reset");
         window.location.reload();
     }
 
+    // reroutes to login page
     function toLogin() {
         localStorage.setItem("workout_comp", "login");
         window.location.reload();
     }
 
+    // reroutes to home page when user is logged in
     useEffect(() => {
         if (localStorage.getItem("workout_userID")) {
             navigate('/', { replace: true })

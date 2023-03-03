@@ -9,7 +9,7 @@ function History() {
     const dispatch = useDispatch();
     let userWorkObj = stateSelector.userData.workoutObj;
 
-
+    // returns workout history list component
     function historyItem(workoutObj) {
         return Object.keys(workoutObj).sort((a, b) => new Date(b) - new Date(a)).map(key => {
             return (
@@ -40,6 +40,7 @@ function History() {
         })
     }
 
+    // returns exercise list component for a given workout session
     function exerList(list, key) {
         return list.map((exer, i) => {
             return (
@@ -70,6 +71,7 @@ function History() {
         })
     }
 
+    // returns set list component for a given exercise 
     function setList(metric1, metric2, exerName) {
         return metric1.map((val, i) => {
             return (
@@ -88,6 +90,7 @@ function History() {
         })
     }
 
+    // loads data from database
     useEffect(() => {
         async function loadData() {
             let loadURI = process.env.REACT_APP_API_URI + 'loadData';

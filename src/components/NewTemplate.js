@@ -16,7 +16,7 @@ function NewTemplate() {
     const [selectedExer, updateSelExer] = useState('3/4 sit-up');
     const [templateName, updateName] = useState('');
 
-
+    // updates exercise array based on filter value
     function handleChange(value) {
         document.getElementById('exer-list').selectedIndex = 0;
         let tempArr = (value === 'empty') ? exercisesLocal : exercisesLocal.filter(ele => ele.bodyPart === value)
@@ -24,15 +24,18 @@ function NewTemplate() {
         updateSelExer(tempArr[0].name);
     }
 
+    // updates selected exercise
     function handleSel(value) {
         updateSelExer(value);
     }
 
+    // reroutes to workout page
     function backWorkout() {
         localStorage.setItem("workout_comp", "workout");
         window.location.reload();
     }
 
+    // adds exercise to template
     function addExer() {
         if (selectedExer === 'empty') alert('please select exercise');
         else if (exerciseList.filter(ele => ele.name === selectedExer).length !== 0) alert(`${selectedExer} already exists in template. Pick a different exercise.`);
@@ -46,30 +49,35 @@ function NewTemplate() {
         }
     }
 
+    // removes exercise from template
     function removeExer(index) {
         let tempList = JSON.parse(JSON.stringify(exerciseList));
         tempList.splice(index, 1);
         updateExerList(tempList);
     }
 
+    // adds a set to a given exercise
     function addSet(index) {
         let tempList = JSON.parse(JSON.stringify(exerciseList));
         tempList[index].sets++;
         updateExerList(tempList);
     }
 
+    // removes a set from a given exercise
     function removeSet(index) {
         let tempList = JSON.parse(JSON.stringify(exerciseList));
         if (tempList[index].sets > 1) tempList[index].sets--;
         updateExerList(tempList);
     }
 
+    // updates database with new exercise template
     async function saveTemplate(newTempArr) {
         let updateURI = process.env.REACT_APP_API_URI + 'updateTemp';
         let res = await axios.post(updateURI, { userID: localStorage.getItem("workout_userID"), templateArr: newTempArr }).catch(err => console.log(err));
         return res;
     }
 
+    // saves new exercise template
     function saveTemp() {
         if (!templateName.split(' ').join('')) alert('enter wolrkout template name');
         else if (stateSelector.userData.templateArr.filter(ele => ele.name === templateName).length !== 0) alert('workout template name already exist. use a different template name.');
@@ -103,10 +111,12 @@ function NewTemplate() {
         }
     }
 
+    // opens exrecise modal
     function openExercise() {
         window.$('#exerciseModal').modal('show');
     }
 
+    // gets personal record and previous record data for a given exercise
     function getRec(exer) {
         if (exer.name in stateSelector.userData.record) {
             let exerRecord = stateSelector.userData.record[exer.name];
@@ -132,6 +142,7 @@ function NewTemplate() {
         else return ['-', '-'];
     }
 
+    // returns exercise list component
     function exerListEle() {
         return exerciseList.map((item, i) => {
             return (
@@ -195,6 +206,7 @@ function NewTemplate() {
         })
     }
 
+    // return set list component for a given component
     function setList(exer, index) {
         let tempArr = [...Array(exer.sets).keys()];
         return tempArr.map(item => {
@@ -220,6 +232,7 @@ function NewTemplate() {
         })
     }
 
+    // returns exrcise list component from a filtered exrcise array
     function optionsList() {
         return filterArr.map((item, i) => {
             return (
@@ -228,6 +241,7 @@ function NewTemplate() {
         })
     }
 
+    // returns body part list component from an array
     function filterList() {
         return bodyParts.map((item, i) => {
             return (
@@ -236,6 +250,7 @@ function NewTemplate() {
         })
     }
 
+    // reloads data from database
     useEffect(() => {
         async function loadData() {
             let loadURI = process.env.REACT_APP_API_URI + 'loadData';

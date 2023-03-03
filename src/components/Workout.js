@@ -9,12 +9,15 @@ function Workout() {
     const stateSelector = useSelector(state => state.workout);
     const dispatch = useDispatch();
 
+    // reroutes to show template page for user created templates
     function toTemp(i) {
         localStorage.setItem("workout_comp", 'showtemp');
         localStorage.setItem("workout_user", true);
         localStorage.setItem("workout_index", i);
         window.location.reload();
     }
+
+    // reroutes to show template page for example templates
     function toFixTemp(i) {
         localStorage.setItem("workout_comp", 'showtemp');
         localStorage.setItem("workout_user", false);
@@ -22,6 +25,7 @@ function Workout() {
         window.location.reload();
     }
 
+    // reroutes to new template page
     function toNewTemp() {
         if (localStorage.getItem("workout_userID")) {
             localStorage.setItem("workout_comp", 'template');
@@ -32,12 +36,14 @@ function Workout() {
         }
     }
 
+    // reroutes to login page
     function toLogin() {
         window.$('#loginModal').modal('hide');
         localStorage.setItem("workout_comp", 'login');
         window.location.reload();
     }
 
+    // return time elapsed since last workout session for a given template
     function calcTime(template) {
         let arr = template.workoutTimeArr;
         if (arr.length === 0) return 'Never';
@@ -46,6 +52,7 @@ function Workout() {
         return (hourDiff < 24) ? `${hourDiff} hour(s) ago` : `${Math.floor(hourDiff / 24)} day(s) ago`;
     }
 
+    // returns template list component
     function templateEle(tempArr, userTemp) {
         return tempArr.map((item, i) => {
             return (
@@ -66,6 +73,7 @@ function Workout() {
         })
     }
 
+    // returns exercise list component for a given template
     function tempExerEle(template, userTemp) {
         return template.exerList.map((item, i) => {
             return (
@@ -75,6 +83,7 @@ function Workout() {
         })
     }
 
+    // reloads data from database
     useEffect(() => {
         async function loadData() {
             let loadURI = process.env.REACT_APP_API_URI + 'loadData';

@@ -17,6 +17,8 @@ function EditTemplate() {
     const [selectedExer, updateSelExer] = useState('3/4 sit-up');
 
     let workout_index = parseInt(localStorage.getItem("workout_index"));
+
+    // handles exercise list filter
     function handleChange(value) {
         document.getElementById('exer-edit-list').selectedIndex = 0;
         let tempArr = (value === 'empty') ? exercisesLocal : exercisesLocal.filter(ele => ele.bodyPart === value)
@@ -24,10 +26,12 @@ function EditTemplate() {
         updateSelExer(tempArr[0].name);
     }
 
+    // updates selected exercise 
     function handleSel(value) {
         updateSelExer(value);
     }
 
+    // updates userdatabase with updated exercise template
     async function saveTemplate(newTempArr) {
         let updateURI = process.env.REACT_APP_API_URI + 'updateTemp';
         let res = await axios.post(updateURI, { userID: localStorage.getItem("workout_userID"), templateArr: newTempArr }).catch(err => console.log(err));
@@ -35,6 +39,7 @@ function EditTemplate() {
         return res;
     }
 
+    // saves updated template
     function saveTemp() {
         if (!tempName.split(' ').join('')) alert('enter wolrkout template name');
         else if (stateSelector.userData.templateArr.filter((ele, i) => ele.name === tempName && i !== workout_index).length !== 0) alert('workout template name already exist. use a different template name.');
@@ -68,6 +73,7 @@ function EditTemplate() {
         }
     }
 
+    // saves updated template from modal
     function saveTempModal() {
         if (!tempName.split(' ').join('')) alert('enter wolrkout template name');
         else if (stateSelector.userData.templateArr.filter((ele, i) => ele.name === tempName && i !== workout_index).length !== 0) alert('workout template name already exist. use a different template name.');
@@ -101,16 +107,19 @@ function EditTemplate() {
         }
     }
 
+    // cancels exercise template chages and reroutes app
     function noSaveModal() {
         window.$('#saveModal').modal('hide');
         localStorage.setItem("workout_comp", "workout");
         window.location.reload();
     }
 
+    // opens save modal
     function openSaveModal() {
         window.$('#saveModal').modal('show');
     }
 
+    // adds exercise to template
     function addExer() {
         if (selectedExer === 'empty') alert('please select exercise');
         else if (exerciseList.filter(ele => ele.name === selectedExer).length !== 0) alert(`${selectedExer} already exists in template. Pick a different exercise.`);
@@ -124,24 +133,28 @@ function EditTemplate() {
         }
     }
 
+    // removes exercise from template
     function removeExer(index) {
         let tempList = JSON.parse(JSON.stringify(exerciseList));
         tempList.splice(index, 1);
         updateExerList(tempList);
     }
 
+    // adds set to exercise
     function addSet(index) {
         let tempList = JSON.parse(JSON.stringify(exerciseList));
         tempList[index].sets++;
         updateExerList(tempList);
     }
 
+    // removes set from exercise
     function removeSet(index) {
         let tempList = JSON.parse(JSON.stringify(exerciseList));
         if (tempList[index].sets > 1) tempList[index].sets--;
         updateExerList(tempList);
     }
 
+    // gets personal record and previous record data for a given exercise
     function getRec(exer) {
         if (exer.name in stateSelector.userData.record) {
             let exerRecord = stateSelector.userData.record[exer.name];
@@ -167,6 +180,7 @@ function EditTemplate() {
         else return ['-', '-'];
     }
 
+    // returns a component with a list of exercises in a template
     function exerListEle(list) {
         return list.map((item, i) => {
             return (
@@ -230,6 +244,7 @@ function EditTemplate() {
         })
     }
 
+    // returns a component with a list of sets for a given exercise
     function setList(exer, index) {
         let tempArr = [...Array(exer.sets).keys()];
         return tempArr.map(item => {
@@ -255,10 +270,12 @@ function EditTemplate() {
         })
     }
 
+    // opens exercise modal
     function openExercise() {
         window.$('#exerModal').modal('show');
     }
 
+    // returns a list of exercises component from a filtered exercise array
     function optionsList() {
         return filterArr.map((item, i) => {
             return (
@@ -267,6 +284,7 @@ function EditTemplate() {
         })
     }
 
+    // returns a list of body parts component from an array
     function filterList() {
         return bodyParts.map((item, i) => {
             return (
@@ -275,6 +293,7 @@ function EditTemplate() {
         })
     }
 
+    // loads data from database
     useEffect(() => {
         async function loadData() {
             let loadURI = process.env.REACT_APP_API_URI + 'loadData';

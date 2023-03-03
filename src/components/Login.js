@@ -12,6 +12,7 @@ function Login() {
     const [email, getEmail] = useState('');
     const [password, getPassword] = useState('');
 
+    // signs in user using firebase authentication
     function signIn(e) {
         e.preventDefault();
 
@@ -41,16 +42,19 @@ function Login() {
             }).catch((error) => alert(error.message));
     }
 
+    // reroutes user to password reset page
     function toReset() {
         localStorage.setItem("workout_comp", "reset");
         window.location.reload();
     }
 
+    // reroutes user to sign up page
     function toSignUp() {
         localStorage.setItem("workout_comp", "signup");
         window.location.reload();
     }
 
+    // reroutes page to user account if user is logged in
     useEffect(() => {
         if (localStorage.getItem("workout_userID")) {
             navigate('/', { replace: true })

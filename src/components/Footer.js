@@ -3,16 +3,19 @@ import './Footer.css';
 
 function Footer() {
 
+    // reroutes to workout page
     function toWork() {
         localStorage.setItem("workout_comp", 'workout');
         window.location.reload();
     }
 
+    // reroutes to history page
     function toHistory() {
         localStorage.setItem("workout_comp", 'history');
         window.location.reload();
     }
 
+    // reroutes to home page
     function toHome() {
         localStorage.setItem("workout_comp", 'home');
         window.location.reload();

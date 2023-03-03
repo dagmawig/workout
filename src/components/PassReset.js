@@ -22,16 +22,19 @@ function Reset() {
         }).catch(err => alert(err.message));
     }
 
+    // reroutes to signup page
     function toSignUp() {
         localStorage.setItem("workout_comp", "signup");
         window.location.reload();
     }
 
+    // reroutes to login page
     function toLogin() {
         localStorage.setItem("workout_comp", "login");
         window.location.reload();
     }
 
+    // disables loading component
     useEffect(() => {
         dispatch(updateLoading(false))
     }, []);

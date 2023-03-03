@@ -10,20 +10,24 @@ function Header() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
+    // logs off user from app
     function logOff() {
         localStorage.setItem("workout_userID", '');
         navigate('/', { replace: true });
         window.location.reload();
     }
 
+    // opens reset modal
     function showReset() {
         window.$('#resetModal').modal('show');
     }
 
+    // shows log off modal
     function showLogOff() {
         window.$('#logOffModal').modal('show');
     }
 
+    // updates user data with reset account
     async function resetD() {
         let updateURI = process.env.REACT_APP_API_URI + 'resetData';
         let res = await axios.post(updateURI, { userID: localStorage.getItem("workout_userID") }).catch(err => console.log(err));
@@ -31,6 +35,7 @@ function Header() {
         return res;
     }
 
+    // resets user account
     function resetData() {
 
         dispatch(updateLoading(false));
