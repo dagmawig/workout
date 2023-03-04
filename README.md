@@ -1,70 +1,20 @@
-# Getting Started with Create React App
+# Workout App
+This app is used log workout sessions. It allows users to created their own custome workout templates from a list of over a thousand exercises. It logs workout session exercises and their corresponding exercise data (such as weight, time and rep) under workout history page. The history pages also shows the date each session is performed and the time it took to complete the session. During the workout session the app gives the users the flexibility to modify the workout template by adding and removing exercises and sets. It also gives users the ability to edit and save workout templates if needed. 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The app also shows previous record and personal record for each exercise type. In addition, it has both visual (gif) and textual details of each exercise to help users perform the exercises properly. The exercise search component gives users the option to filter out exercises based on body part, target muscle group and exercise name.
 
-## Available Scripts
+# App is published at https://dagmawig.github.io/workout/
 
-In the project directory, you can run:
+## Server side 
+Server side is written in Javascript with Node framework and is located at https://github.com/dagmawig/workout-backend
+It is hosted on Glitch platform.
 
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Services and Functions Used
+I used reactJS to build the frontend.
+I used Bootstrap CSS framework for styling.
+I used firebase authentication to verify user email and authenticate using email and password. 
+I used axios method to make https request to server side. 
+I used MongoDB to store user data. 
+I used Glitch.com to host server code.
+I used Redux Toolkit to manage global app state. 
+I used useState hook to manage local app state.
