@@ -13,6 +13,7 @@ import Loading from './components/Loading';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
 import Reset from './components/PassReset';
+import Profile from './components/Profile';
 
 function App() {
 
@@ -56,13 +57,18 @@ function App() {
                   <Loading />
                   <LogWorkout />
                   <Footer />
-                </> :
-                <>
+                </> : (localStorage.getItem("workout_comp") === 'profile') ? <>
                   <Header />
                   <Loading />
-                  <Search />
+                  <Profile />
                   <Footer />
-                </>
+                </> :
+                  <>
+                    <Header />
+                    <Loading />
+                    <Search />
+                    <Footer />
+                  </>
 
   }
   else {

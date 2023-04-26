@@ -21,17 +21,26 @@ function Footer() {
         window.location.reload();
     }
 
+    // reroutes to profile page
+    function toProfile() {
+        localStorage.setItem("workout_comp", 'profile');
+        window.location.reload();
+    }
+
     return (
         <div className='footer container' style={{ backgroundColor: '#873e23' }}>
             <div className='footer_row row'>
-                <div className='footer_search col-4'>
+                <div className='footer_search col-3'>
                     <button className="footer_button" onClick={toHome}><i className="fa-solid fa-dumbbell fa-2x"></i></button>
                 </div>
-                <div className='footer_profile col-4'>
+                <div className='footer_profile col-3'>
                     <button className="footer_button" onClick={toWork}><i className="fa fa-plus fa-2x"></i></button>
                 </div>
-                <div className='footer_profile col-4'>
+                <div className='footer_profile col-3'>
                     <button className="footer_button" onClick={toHistory}><i className="fa fa-clock-rotate-left fa-2x"></i></button>
+                </div>
+                <div className='footer_profile col-3'>
+                    <button className="footer_button" onClick={toProfile}><i className="fa-solid fa-user fa-2x"></i></button>
                 </div>
             </div>
         </div>
