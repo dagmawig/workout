@@ -54,7 +54,6 @@ function Profile() {
 
         if (localStorage.getItem("workout_email") !== email) {
             alert('Email not correct!');
-            window.$('#deleteModal').modal('hide');
             dispatch(updateLoading(false));
         }
         else {
@@ -70,17 +69,16 @@ function Profile() {
                             window.location.reload();
                             alert('User account deleted!!');
                             window.$('#deleteModal').modal('hide');
+                            setPassword('');
                             dispatch(updateLoading(false));
                         }).catch(e => {
                             console.log(e);
                             alert(e);
                             dispatch(updateLoading(false));
-                            window.$('#deleteModal').modal('hide');
                         })
                     }
                     else {
                         alert('User data deletion failed!');
-                        window.$('#deleteModal').modal('hide');
                         dispatch(updateLoading(false));
                     }
                 }).catch(e => console.log(e))
@@ -88,13 +86,15 @@ function Profile() {
                 console.log(e);
                 alert(e);
                 dispatch(updateLoading(false));
-                window.$('#deleteModal').modal('hide');
             })
         }
-
-
-
     }
+
+    window.$("#deleteModal").on("hidden.bs.modal", function () {
+        setEmail('');
+        setPassword('');
+    });
+    
 
     function openResetModal() {
         window.$('#resetAccModal').modal('show');
@@ -162,8 +162,8 @@ function Profile() {
                         </div>
                         <div className="modal-footer">
                             <div className='row'>
-                                <input className='col-11 my-1' type='email' placeholder='email' defaultValue={email} onChange={(e)=>setEmail(e.target.value)} ></input>
-                                <input className='col-11 my-1' type='password' placeholder='password' defaultValue={password} onChange={(e)=>setPassword(e.target.value)} ></input>
+                                <input className='col-11 my-1' type='email' placeholder='email' value={email} onChange={(e) => setEmail(e.target.value)} ></input>
+                                <input className='col-11 my-1' type='password' placeholder='password' value={password} onChange={(e) => setPassword(e.target.value)} ></input>
                             </div>
                             <button type="button" className="btn col-5" onClick={deleteAcccount} style={{ backgroundColor: '#9e5f2f' }}><b>Yes</b></button>
 
